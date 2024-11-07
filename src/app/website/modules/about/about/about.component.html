@@ -1,0 +1,63 @@
+<div class="page-background">
+    <div class="about">
+        <div class="title"><h2>Главная / О клинике</h2></div>
+        <div class="main">
+            <div class="onePart">
+                <h2 style="margin-right: 13.5vw;font-size: 36px; line-height: 43.88px;">Контактные данные </h2>
+                <p style="margin-right:  13.5vw; font-size: 16px;">8(8552) 25-05-03</p>
+                <p style="width: 172px; font-size: 15px; text-align: center;">г.Набережные Челны, ул.Ахметшина, д.116</p>
+            </div>
+            <div class="twoPart">
+                <div class="picture"></div>
+                <div class="infoOne">
+                    <h2>Клиника 03</h2>
+                    <p>это клиника, которая станет вашим другом и поддержкой в вопросах здоровья детей и взрослых. </p>
+                </div>
+            </div>
+            <div class="thirdPart">
+                <div class="info">
+                    <h2>Основа нашего успеха – это профессионалы, преданные своему делу. </h2>
+                    <p>Мы оказываем широкий спектр лечебно-диагностических услуг, процедурный кабинет клиники выполняет все виды анализов. А услуга вызова педиатра на дом вообще не заменима в тех случаях когда нет возможности выйти из дома.</p>
+                </div>
+                <div class="picturetwo"></div>
+            </div>
+            <div class="fourthPart">
+                <div class="titlee">
+                    <h2 style="font-size: 25px;">Юридическая информация</h2>
+                </div>
+                <div class="littletit" style="border-top: 1px solid black;margin-top: 35px;">
+                    <div class="topbox" (click)="LookOrNo()">
+                        <p>Сведения о медицинской лиццензии</p>
+                        <img [src]="lookMore ? '../../../../../assets/data/icon/close.svg' : '../../../../../assets/data/icon/add.svg'" alt="">
+                    </div>
+                    <div class="inLittle" *ngIf="lookMore">
+                        <p>Финальное заключение СОУТ</p>
+                        <p>Медицинская лицензия, выписка из реестра лицензий</p>
+                        <p>Что-нибудь еще</p>
+                        <p>Список контролирующих организаций</p>
+                    </div>
+                </div>
+                <div class="littletit" >
+                    <div class="topbox">
+                        <p>Правила, положения, образцы договоров</p>
+                        <img src="../../../../../assets/data/icon/add.svg" alt="">
+                    </div>
+                </div>
+                <div class="littletit">
+                    <div class="topbox">
+                        <p>Законадательство</p>
+                        <img src="../../../../../assets/data/icon/add.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="fifthPart">
+                <h2>ЛИЦЕНЗИЯ И СВИДЕТЕЛЬСТВО</h2>
+                <div class="dyploms">
+                    <img src="../../../../../assets/data/image/dyplom 1.svg">
+                    <img style="padding-left: 5px;" src="../../../../../assets/data/image/dyplom 2.svg">
+                    <img style="padding-left: 7px;" src="../../../../../assets/data/image/dyplom 3.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
