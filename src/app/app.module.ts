@@ -3,27 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from './website/shared/pages/main/main.component';
-import { HeaderComponent } from './website/shared/layout/header/header.component';
-import { AboutModule } from './website/modules/about/about.module';
-import { FooterComponent } from './website/shared/layout/footer/footer.component';
-
-
-
+import { SharedModule } from './website/shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
-    HeaderComponent,
-    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AboutModule
+    SharedModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

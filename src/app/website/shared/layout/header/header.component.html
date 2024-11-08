@@ -1,26 +1,28 @@
 <header>
-    <div class="TopHeader">
+    <div class="top-header" *ngIf="!isScrolled">
         <h2 class="first">г.Набережные Челны, ул.Ахметшина,116</h2>
         <h2 class="second">+7(8552)25-05-03</h2>
         
-        <div class="IconsHead">
+        <div class="icons-head">
             <img src="../../../../../assets/data/icon/whatsapp.svg">
             <img src="../../../../../assets/data/icon/vk.svg">
             <img src="../../../../../assets/data/icon/insta.svg">
         </div>
         <img class="search" src="../../../../../assets/data/icon/circum_search.svg">
     </div>
-    <div class="BottomHeader">
-        <div class="leftto">
-            <h1>Главная</h1>
-            <h1>Специалисты</h1>
-            <h1>Анализы</h1>
-        </div>
-        <img src="../../../../../assets/data/image/logo.svg" alt="">
-        <div class="rigthto">
-            <h1 routerLink="./about">О клинике</h1>
-            <h1>Акции</h1>
-            <h1>Прайс-лист</h1>
+    <div class="main-header-wrapper" [ngClass]="{ scrolled: isScrolled, noscrolled: !isScrolled }">
+        <div class="main-header">
+            <ul class="nav-list">
+                <li routerLink="">Главная</li>
+                <li>Специалисты</li>
+                <li>Анализы</li>
+            </ul>
+            <img src="../../../../../assets/data/image/logo.svg" alt="">
+            <ul class="nav-list">
+                <li routerLink="/about">О клинике</li>
+                <li>Акции</li>
+                <li>Прайс-лист</li>
+            </ul>
         </div>
     </div>
 </header>

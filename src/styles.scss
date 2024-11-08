@@ -47,6 +47,16 @@ p {
     padding: 0;
     color: rgba(0, 0, 0, 1);
 }
+button {
+    cursor: pointer;
+    font-family: 'Montserrat';
+    border: none;
+}
+ul {
+    li {
+        list-style: none;
+    }
+}
 .page-background {
     background-color: #ffffff;
     width: 100%;
