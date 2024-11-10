@@ -19,6 +19,14 @@ const routes: Routes = [
   title: 'about',
 },
 {
+  path: 'analyzes',
+  loadChildren: () =>
+      import('./website/modules/analyzes/analyzes.module').then(
+          (m) => m.AnalyzesModule
+      ),
+  title: 'analyzes',
+},
+{
   path: '**',
   component: MainComponent,
   redirectTo: '',
