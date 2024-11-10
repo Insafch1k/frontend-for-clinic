@@ -10,17 +10,19 @@
         </div>
         <img class="search" src="../../../../../assets/data/icon/circum_search.svg">
     </div>
-    <div class="BottomHeader">
-        <div class="leftto">
-            <h1>Главная</h1>
-            <h1>Специалисты</h1>
-            <h1>Анализы</h1>
-        </div>
-        <img src="../../../../../assets/data/image/logo.svg" alt="">
-        <div class="rigthto">
-            <h1 routerLink="./about">О клинике</h1>
-            <h1>Акции</h1>
-            <h1>Прайс-лист</h1>
+    <div class="main-header-wrapper" [ngClass]="{ scrolled: isScrolled, noscrolled: !isScrolled }">
+        <div class="main-header">
+            <ul class="nav-list">
+                <li routerLink="">Главная</li>
+                <li routerLink="/specialists">Специалисты</li>
+                <li routerLink="/analyzes">Анализы</li>
+            </ul>
+            <img src="../../../../../assets/data/image/logo.svg" alt="">
+            <ul class="nav-list">
+                <li routerLink="/about">О клинике</li>
+                <li>Акции</li>
+                <li>Прайс-лист</li>
+            </ul>
         </div>
     </div>
 </header>
