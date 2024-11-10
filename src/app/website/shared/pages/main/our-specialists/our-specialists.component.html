@@ -1,0 +1,19 @@
+<div class="specialists">
+  <div (click)="prev()">
+    <img src="assets/data/icon/other/arrow-left.svg" alt="" />
+  </div>
+  <ul #specList>
+    <li *ngFor="let person of visibleSpecialists; let i = index">
+      <div
+        class="person-img"
+      ></div>
+      <div class="person-info">
+        <p class="person-fio">{{ person.fio }}</p>
+        <p class="person-speciality">{{ person.speciality }}</p>
+      </div>
+    </li>
+  </ul>
+  <div (click)="next()">
+    <img src="assets/data/icon/other/arrow-rigth.svg" alt="" />
+  </div>
+</div>

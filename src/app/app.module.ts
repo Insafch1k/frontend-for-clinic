@@ -7,10 +7,6 @@ import { MainComponent } from './website/shared/pages/main/main.component';
 import { HeaderComponent } from './website/shared/layout/header/header.component';
 import { AboutModule } from './website/modules/about/about.module';
 import { FooterComponent } from './website/shared/layout/footer/footer.component';
-import { AnalyzesModule } from './website/modules/analyzes/analyzes.module';
-import { SpecialistsModule } from './website/modules/specialists/specialists.module';
-
-
 
 
 
@@ -18,18 +14,13 @@ import { SpecialistsModule } from './website/modules/specialists/specialists.mod
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
-    HeaderComponent,
-    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AboutModule,
-    AnalyzesModule,
-    SpecialistsModule,
+    AboutModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,9 +1,9 @@
 <header>
-    <div class="TopHeader">
+    <div class="top-header" *ngIf="!isScrolled">
         <h2 class="first">г.Набережные Челны, ул.Ахметшина,116</h2>
         <h2 class="second">+7(8552)25-05-03</h2>
         
-        <div class="IconsHead">
+        <div class="icons-head">
             <img src="../../../../../assets/data/icon/whatsapp.svg">
             <img src="../../../../../assets/data/icon/vk.svg">
             <img src="../../../../../assets/data/icon/insta.svg">
@@ -14,7 +14,7 @@
         <div class="leftto">
             <h1>Главная</h1>
             <h1>Специалисты</h1>
-            <h1 routerLink="./analyzes">Анализы</h1>
+            <h1>Анализы</h1>
         </div>
         <img src="../../../../../assets/data/image/logo.svg" alt="">
         <div class="rigthto">

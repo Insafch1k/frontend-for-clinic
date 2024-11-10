@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './website/shared/pages/main/main.component';
 
-
-
 const routes: Routes = [
   {
     path: '',
@@ -19,14 +17,6 @@ const routes: Routes = [
   title: 'about',
 },
 {
-  path: 'analyzes',
-  loadChildren: () =>
-      import('./website/modules/analyzes/analyzes.module').then(
-          (m) => m.AnalyzesModule
-      ),
-  title: 'analyzes',
-},
-{
   path: '**',
   component: MainComponent,
   redirectTo: '',
@@ -34,9 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
 })
-export class AppRoutingModule { 
-
-}
+export class AppRoutingModule {}
