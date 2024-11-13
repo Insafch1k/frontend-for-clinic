@@ -1,0 +1,201 @@
+.title {
+    margin-left: 10.5%;
+    margin-top: 25px;
+    h2 {
+      font-size: 12px;
+      line-height: 14.63px;
+    }
+  }
+  
+  .categories {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 10.5%;
+    margin-right: 10.5%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-select {
+    appearance: none;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(126, 179, 193, 1);
+    optiin {
+      font-size: 13px;
+    }
+  }
+  
+  .checkbox-container {
+    display: flex;
+    margin-left: auto;
+    .custom-checkbox {
+      display: none;
+    }
+    .custom-label {
+      position: relative;
+      padding-left: 30px;
+      cursor: pointer;
+    }
+  
+    .custom-label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1px solid rgba(126, 179, 193, 1);
+      background-color: white;
+    }
+  
+    .custom-checkbox:checked + .custom-label::before {
+      background-color: rgba(126, 179, 193, 1);
+    }
+  
+    .custom-label::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0px;
+      width: 6px;
+      height: 12px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      display: none;
+    }
+  
+    .custom-checkbox:checked + .custom-label::after {
+      display: block;
+    }
+  }
+  
+  .main {
+    margin-left: 10.5%;
+    margin-right: 10.5%;
+    margin-bottom: 50px;
+  }
+  
+  .spisok {
+    width: 100%;
+    height: 45vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень справа */
+                -2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень слева */
+                0 5px 10px rgba(0, 0, 0, 0.3); /* Чуть сильная тень снизу */
+    margin-bottom: 2vh;
+    display: grid;
+    grid-template-areas:
+    "A A B B   B B C C   C C C C"
+    "A A B B   B B C C   C C C C"
+    "A A F F   F F F F   F F F F";
+    grid-gap: 10px;
+
+    .one{
+        // background-color: aqua;
+        grid-area: A;
+        width: 13vw;
+        height: 45vh;
+    }
+    .two{
+        // background-color: rgb(11, 242, 53);
+        grid-area: B;
+        width: 27vw;
+        height: 26vh;
+    }
+    .three{
+        // background-color: rgb(115, 51, 188);
+        grid-area: C;
+        width: 34vw;
+        height: 26vh;
+    }
+    .four{
+        // background-color: rgb(190, 207, 43);
+        grid-area: F;
+        width: 63vw;
+        height: 16vh;
+    }
+    .one-info{
+        padding-top: 10px;
+        margin-left: 5%;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        .avatarka{
+            height: 30vh;
+            background-color: rgb(229, 250, 250);
+            margin-left: auto;
+            margin-right: auto;
+            img{
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+        }
+        .stars{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 8%;
+        }
+        .number{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 6%;
+        }
+    }
+    .two-info{
+        display: flex;
+        flex-direction: column;
+        h2{padding-top: 15px; padding-left: 5%; font-size: 18px;}
+        p{padding-top: 15px; padding-left: 5%; font-size: 14px;}
+        .price-btn {
+            margin-top: 25px;
+            margin-left: 5%;
+            width: 124px;
+            height: 45px;
+            color: rgba(255,255,255,1);
+            background: rgba(126,179,193,1);
+            opacity: 1;
+            font-size: 14px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+      }
+    }
+    .three-info{
+        background-color: rgba(217, 217, 217, 1);
+        margin-top: 2%;
+        height: 24vh;
+        p{
+            text-align: center;
+        }
+    }
+
+    .four-info{
+        padding: 7px;
+        padding-left: 15px;
+        width: 70%;
+        p{font-size: 14px;}
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 

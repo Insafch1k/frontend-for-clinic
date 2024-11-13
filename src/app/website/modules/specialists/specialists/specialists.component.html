@@ -1,1 +1,63 @@
-<p>specialists works!</p>
+<div class="page-background">
+    <div class="specialists">
+        <div class="title"><h2>Главная / Специалисты</h2></div>
+        <div class="categories">
+            <select id="doctorCategory" [(ngModel)]="selectedDoctorCategory" class="custom-select" style="width: 37vw;">
+                <option value="" disabled selected>Все категории</option>
+                <option *ngFor="let category of doctorCategories" [value]="category">{{ category }}</option>
+            </select>
+          
+            <select id="experience" [(ngModel)]="selectedExperience" class="custom-select" style="width: 15vw; margin-left: 15px;">
+                <option value="" disabled selected>Стаж</option>
+                <option *ngFor="let experience of experiences" [value]="experience">{{ experience }}</option>
+            </select>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="homeVisit" [(ngModel)]="homeVisitChecked" class="custom-checkbox">
+                <label for="homeVisit" class="custom-label">Вызов на дом</label>
+            </div>
+        </div>
+        <div class="main">
+            <div class="spisok" *ngFor="let specialist of specialists">
+                <div class="one">
+                    <div class="one-info">
+                        <div class="avatarka">
+                            <img src="../../../../../assets/data/icon/specialists/ava.png" alt="">
+                        </div>
+                        <div class="stars">
+                            <img src="../../../../../assets/data/icon/specialists/звезды.svg" alt="">
+                        </div>
+                        <div class="number">
+                            <p>{{ specialist.numberOfReviews}} отзывов</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="two">
+                    <div class="two-info">
+                        <h2>{{ specialist.fullName }}</h2>
+                        <p>{{ specialist.position }}</p>
+                        <p>Стаж: {{ specialist.experience }}</p>
+                        <span class="price-btn">стоимость</span>
+                    </div>
+                </div>
+                <div class="three">
+                    <div class="three-info">
+                        <p>Время и дни записи</p>
+                    </div>
+                </div>
+                <div class="four">
+                    <div class="four-info">
+                        <p>{{ specialist.review }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="number">Число отзывов: {{ specialist.numberOfReviews }}</div>
+            <h2>{{ specialist.fullName }}</h2>
+            <p>{{ specialist.position }}</p>
+            <p>Стаж: {{ specialist.experience }}</p>
+            <p>{{ specialist.review }}</p>
+            <span *ngFor="let star of getStars(specialist.rating)" [ngClass]="star"></span> -->
+
