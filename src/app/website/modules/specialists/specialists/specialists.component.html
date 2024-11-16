@@ -2,19 +2,20 @@
     <div class="specialists">
         <div class="title"><h2>Главная / Специалисты</h2></div>
         <div class="categories">
-            <select id="doctorCategory" [(ngModel)]="selectedDoctorCategory" class="custom-select" style="width: 37vw;">
+            <select id="doctorCategory" [(ngModel)]="selectedDoctorCategory" class="custom-select-one">
                 <option value="" disabled selected>Все категории</option>
                 <option *ngFor="let category of doctorCategories" [value]="category">{{ category }}</option>
             </select>
-          
-            <select id="experience" [(ngModel)]="selectedExperience" class="custom-select" style="width: 15vw; margin-left: 15px;">
-                <option value="" disabled selected>Стаж</option>
-                <option *ngFor="let experience of experiences" [value]="experience">{{ experience }}</option>
-            </select>
-
-            <div class="checkbox-container">
-                <input type="checkbox" id="homeVisit" [(ngModel)]="homeVisitChecked" class="custom-checkbox">
-                <label for="homeVisit" class="custom-label">Вызов на дом</label>
+            <div class="second-row">
+                <select id="experience" [(ngModel)]="selectedExperience" class="custom-select-two">
+                    <option value="" disabled selected>Стаж</option>
+                    <option *ngFor="let experience of experiences" [value]="experience">{{ experience }}</option>
+                </select>
+    
+                <div class="checkbox-container">
+                    <input type="checkbox" id="homeVisit" [(ngModel)]="homeVisitChecked" class="custom-checkbox">
+                    <label for="homeVisit" class="custom-label">Вызов на дом</label>
+                </div>
             </div>
         </div>
         <div class="main">

@@ -12,66 +12,91 @@
     margin-bottom: 50px;
     margin-left: 10.5%;
     margin-right: 10.5%;
+    width: 89%;
     display: flex;
     align-items: center;
-  }
-  
-  .custom-select {
+}
+
+.custom-select-one {
+    appearance: none;
+    width: 37vw;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(126, 179, 193, 1);
+    optiin {
+        font-size: 13px;
+    }
+}
+
+.custom-select-two {
+    margin-right: 10vw;
+    width: 15vw;
     appearance: none;
     background-color: white;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgba(126, 179, 193, 1);
     optiin {
-      font-size: 13px;
+        font-size: 13px;
     }
-  }
-  
-  .checkbox-container {
+}
+
+.second-row {
     display: flex;
+    align-items: center;
     margin-left: auto;
-    .custom-checkbox {
-      display: none;
-    }
-    .custom-label {
-      position: relative;
-      padding-left: 30px;
-      cursor: pointer;
-    }
-  
-    .custom-label::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 18px;
-      height: 18px;
-      border-radius: 5px;
-      border: 1px solid rgba(126, 179, 193, 1);
-      background-color: white;
-    }
-  
-    .custom-checkbox:checked + .custom-label::before {
-      background-color: rgba(126, 179, 193, 1);
-    }
-  
-    .custom-label::after {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 0px;
-      width: 6px;
-      height: 12px;
-      border: solid white;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-      display: none;
-    }
-  
-    .custom-checkbox:checked + .custom-label::after {
-      display: block;
-    }
-  }
+    margin-right: 10.5vw;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox {
+    display: none;
+}
+
+.custom-label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.custom-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid rgba(126, 179, 193, 1);
+    background-color: white;
+}
+
+.custom-checkbox:checked + .custom-label::before {
+    background-color: rgba(126, 179, 193, 1);
+}
+
+.custom-label::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
+}
+
+.custom-checkbox:checked + .custom-label::after {
+    display: block;
+}
+
   
   .main {
     margin-left: 10.5%;
@@ -81,7 +106,7 @@
   
   .spisok {
     width: 100%;
-    height: 45vh;
+    height: 332px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень справа */
                 -2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень слева */
                 0 5px 10px rgba(0, 0, 0, 0.3); /* Чуть сильная тень снизу */
@@ -96,20 +121,22 @@
     .one{
         // background-color: aqua;
         grid-area: A;
-        width: 13vw;
+        width:200px;
         height: 45vh;
     }
     .two{
         // background-color: rgb(11, 242, 53);
         grid-area: B;
-        width: 27vw;
+        width: 22vw;
         height: 26vh;
+        
     }
     .three{
         // background-color: rgb(115, 51, 188);
         grid-area: C;
         width: 34vw;
         height: 26vh;
+        margin-right: 5vw;
     }
     .four{
         // background-color: rgb(190, 207, 43);
@@ -124,7 +151,7 @@
         display: flex;
         flex-direction: column;
         .avatarka{
-            height: 30vh;
+            height: 183px;
             background-color: rgb(229, 250, 250);
             margin-left: auto;
             margin-right: auto;
@@ -167,8 +194,10 @@
     }
     .three-info{
         background-color: rgba(217, 217, 217, 1);
-        margin-top: 2%;
+        margin-top: 10px;
+        width: 100%;
         height: 24vh;
+        
         p{
             text-align: center;
         }
@@ -182,20 +211,479 @@
     }
   }
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1075px) {
+    .title{
+        margin-left: 5.5%;
+    }
+    .categories{
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        width: 100%;
+        .custom-select-one{
+            width: 44vw;
+        }
+        .custom-select-two{
+            width: 20vw;
+        }
+    }
+    .main{
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        .spisok{
+            .two{
+                width: 25vw;
+                margin-right: 3vw;
+                .two-info{h2{padding-right: 0; padding-top: 30px;} p{padding: 0; padding-left: 12px;}}
+            }
+            .three{
+                width: 34vw;
+                height: 26vh;
+                margin-left: 5%;
+                padding-right: 5px;
+            }
+        }
+    }
+
+}
+
+@media (max-width:933px) {
+    .categories{
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        width: 100%;
+        .custom-select-one{
+            width: 35vw;
+        }
+        .second-row {
+            display: flex;
+            align-items: center;
+           
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        .custom-select-two{
+            width: 20vw;
+        }
+    }
+}
+
+@media (max-width:903px) {
+    .main{
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        .spisok{
+            .two{
+                width: 21vw;
+                height: 28vh;
+                .two-info{h2{padding: 0;padding-top: 10px;} p{padding: 0;}}
+            }
+            .three{
+                width: 34vw;
+                height: 26vh;
+                margin-left: -100px;
+            }
+            .four{
+                margin-top: -8vh;
+                margin-left: -2vw;
+                width: 83vw;
+                height: 16vh;
+            }
+        }
+    }
+}
+
+@media (max-width:675px) {
+    .main{
+        .spisok{
+            height:500px;
+            display: grid;
+            grid-template-areas:
+            "A A A A   B B B B   B B B B"
+            "A A A A   B B B B   B B B B"
+            "A A A A   F F F F   F F F F"
+            "A A A A   F F F F   F F F F"
+            "C C C C   C C C C   C C C C";
+            grid-gap: 10px;
+
+            .one{
+               
+                grid-area: A;
+                width:250px;
+                margin: 0;
+                height: 55vh;
+            }
+            .two{
+                
+                grid-area: B;
+                margin: 0;
+                width: 45vw;
+                height: 26vh;
+                
+            }
+            .three{
+                
+                grid-area: F;
+                margin-left: 0px;
+                width: 44vw;
+                height: 26vh;
+                margin: 0;
+                padding: 0;
+            }
+            .four{
+                
+                grid-area: C;
+                padding: 0;
+                margin: 0;
+                width: 84vw;
+                height: 16vh;
+            }
+            .one-info{
+                padding-top: 10px;
+                margin-left: 5%;
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+                .avatarka{
+                    height: 253px;
+                    background-color: rgb(229, 250, 250);
+                    margin-left: auto;
+                    margin-right: auto;
+                    img{
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 100%;
+                    }
+                }
+                .stars{
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 8%;
+                }
+                .number{
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 6%;
+                }
+            }
+            .two-info{
+                .price-btn {
+                    margin-left: 0%;
+                    
+              }
+            }
+            .four-info{
+                padding: 0px;
+                padding-left: 15px;
+                width: 90%;
+                overflow: hidden;
+                p{font-size: 14px;}
+            }
+        }
+    }
+}
+
+
+@media (max-width: 546px) {
+    .categories {
+        width: 89vw;
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        flex-direction: column; /* Изменяем направление на колонку */
+        align-items: stretch; /* Растягиваем элементы на всю ширину */
+        .custom-select-one {
+            width: 100%; /* Первый селект на всю ширину */
+            margin-bottom: 10px; /* Добавляем отступ снизу */
+        }
+        .custom-select-two {
+            width: 50%; /* Второй селект на 70% ширины */
+            margin-left: 0; /* Убираем отступ слева */
+            margin-right: 10px; /* Добавляем отступ справа */
+          }
+        
+          .checkbox-container {
+            margin-left: 0; /* Убираем отступ слева */
+            width: 50%; /* Ширина чекбокса */
+          }
+        
+          .second-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+          }
+    }
   
+    
   
+    
+
+
+
+    .main {
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        margin-bottom: 50px;
+        .spisok {
+            width: 100%;
+            height: 95vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень справа */
+                        -2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень слева */
+                        0 5px 10px rgba(0, 0, 0, 0.3); /* Чуть сильная тень снизу */
+            margin-bottom: 2vh;
+            display: flex;
+            flex-direction: column;
+        
+            .one{
+                // background-color: aqua;
+                margin-left: auto;
+                margin-right: auto;
+                width:66%;
+            }
+            .two{
+                // background-color: rgb(11, 242, 53);
+                width: 100%;
+                height: 26vh;
+            }
+            .three{
+                // background-color: rgb(115, 51, 188);
+                width: 100%;
+                height: 26vh;
+            }
+            .four{
+                // background-color: rgb(190, 207, 43);
+                width: 63vw;
+                height: 16vh;
+            }
+            .one-info{
+                margin-top: 40px;
+                margin-left: 5%;
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+                .avatarka{
+                    height: 239px;
+                    background-color: rgb(229, 250, 250);
+                    margin-left: auto;
+                    margin-right: auto;
+                    img{
+                        margin-left: auto;
+                        margin-right: auto;
+                        display: block;
+                        width: 80%;
+                    }
+                }
+                .stars{
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 5%;
+                }
+                .number{
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 2%;
+                }
+            }
+            .two-info{
+                h2{margin-top: -350px; margin-bottom: 310px; font-size: 18px;margin-left: auto; margin-right: auto;}
+                p{padding-top: 8px; padding-left: 5%; font-size: 14px; margin-left: 5.5%;}
+                .price-btn {
+                    margin-left: 5.5%;
+                    margin-top: 15px;
+                    width: 124px;
+                    height: 45px;
+                    color: rgb(0, 0, 0);
+                    background: rgba(126,179,193,1);
+                    opacity: 1;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+              }
+            }
+            .three-info{
+                background-color: rgba(217, 217, 217, 1);
+                margin-top: 2%;
+                height: 22vh;
+                width: 89%;
+                margin-left: auto;
+                margin-right: auto;
+                p{
+                    text-align: center;
+                }
+            }
+        
+            .four-info{
+                display: none;
+            }
+          }
+      }
+  }
+
+
+
+
+@media (max-width: 420px) {
+    .categories {
+        width: 89vw;
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        flex-direction: column; /* Изменяем направление на колонку */
+        align-items: stretch; /* Растягиваем элементы на всю ширину */
+        .custom-select-one {
+            width: 100%; /* Первый селект на всю ширину */
+            margin-bottom: 10px; /* Добавляем отступ снизу */
+        }
+        .custom-select-two {
+            width: 50%; /* Второй селект на 70% ширины */
+            margin-left: 0; /* Убираем отступ слева */
+            margin-right: 10px; /* Добавляем отступ справа */
+          }
+        
+          .checkbox-container {
+            margin-left: 0; /* Убираем отступ слева */
+            width: 50%; /* Ширина чекбокса */
+          }
+        
+          .second-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+          }
+    }
   
+    
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
+    
+
+
+
+    .main {
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        margin-bottom: 50px;
+        .spisok {
+            width: 100%;
+            height: 95vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень справа */
+                        -2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень слева */
+                        0 5px 10px rgba(0, 0, 0, 0.3); /* Чуть сильная тень снизу */
+            margin-bottom: 2vh;
+            display: flex;
+            flex-direction: column;
+        
+            .one{
+                // background-color: aqua;
+                margin-left: auto;
+                margin-right: auto;
+                width:96%;
+            }
+            .two{
+                // background-color: rgb(11, 242, 53);
+                width: 100%;
+                height: 26vh;
+            }
+            .three{
+                // background-color: rgb(115, 51, 188);
+                width: 100%;
+                height: 26vh;
+            }
+            .four{
+                // background-color: rgb(190, 207, 43);
+                width: 63vw;
+                height: 16vh;
+            }
+            .one-info{
+                margin-top: 40px;
+                margin-left: 5%;
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+                .avatarka{
+                    height: 259px;
+                    background-color: rgb(229, 250, 250);
+                    margin-left: auto;
+                    margin-right: auto;
+                    img{
+                        margin-left: auto;
+                        margin-right: auto;
+                        display: block;
+                        width: 80%;
+                    }
+                }
+                .stars{
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 5%;
+                }
+                .number{
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 2%;
+                }
+            }
+            .two-info{
+                h2{margin-top: -370px; margin-bottom: 330px; font-size: 18px;margin-left: auto; margin-right: auto;}
+                p{padding-top: 8px; padding-left: 5%; font-size: 14px; margin-left: 5.5%;}
+                .price-btn {
+                    margin-left: 5.5%;
+                    margin-top: 15px;
+                    width: 124px;
+                    height: 45px;
+                    color: rgb(0, 0, 0);
+                    background: rgba(126,179,193,1);
+                    opacity: 1;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+              }
+            }
+            .three-info{
+                background-color: rgba(217, 217, 217, 1);
+                margin-top: 2%;
+                height: 22vh;
+                width: 89%;
+                margin-left: auto;
+                margin-right: auto;
+                p{
+                    text-align: center;
+                }
+            }
+        
+            .four-info{
+                display: none;
+            }
+          }
+      }
+  }
