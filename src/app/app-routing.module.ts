@@ -33,6 +33,14 @@ const routes: Routes = [
         title: 'specialists',
     },
     {
+        path: 'doctor',
+        loadChildren: () =>
+            import('./website/modules/doctor/doctor.module').then(
+                (m) => m.DoctorModule
+            ),
+        title: 'specialists',
+    },
+    {
         path: '**',
         component: MainComponent,
         redirectTo: '',
