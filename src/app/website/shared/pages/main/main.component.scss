@@ -10,14 +10,23 @@
     justify-content: space-around;
     height: calc(100vh - 157px);
     margin: 0 40px;
+    @media (max-width: 768px) {
+        margin: 0;
+    }
     & .main-title {
         margin-top: 50px;
         width: 600px;
         text-align: center;
+        @media (max-width: 768px) {
+            width: 85%;
+        }
         h1 {
             text-transform: uppercase;
             font-size: 32px;
             font-weight: 400;
+            @media (max-width: 768px) {
+                font-size: 24px;
+            }
         }
     }
     & .btn-make-appointment {
@@ -41,6 +50,7 @@
         width: 80%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         & .contact-whatsapp {
             cursor: pointer;
@@ -65,7 +75,6 @@
             border: 1px solid #0081EC;
             border-radius: 50%;
             padding: 5px;
-            user-select: none;
             & div {
                 width: 75px;
                 padding: 23px 0;
@@ -96,6 +105,7 @@
 
 .main-about-company {
     margin: 40px 0;
+
     & .main-why-exactly {
         & h1 {
             font-size: 25px;
@@ -112,6 +122,9 @@
         margin-top: 35px;
         display: flex;
         align-items: center;
+        @media (max-width: 1024px) {
+            flex-direction: column;
+        }
         & .first-block {
             width: 440px;
             padding: 40px;
@@ -120,6 +133,9 @@
             font-size: 15px;
             background-color: #fff;
             z-index: 1;
+            @media (max-width: 768px) {
+                width: 80%;
+            }
             & div {
                 display: flex;
                 gap: 20px;
@@ -152,6 +168,10 @@
             display: flex;
             gap: 40px;
             padding: 28px 66.5px;
+            @media (max-width: 1024px) {
+                left: 0px;
+                top: -20px;
+            }
             & div {
                 text-align: center;
                 h2 {

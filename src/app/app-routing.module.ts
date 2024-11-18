@@ -4,9 +4,9 @@ import { MainComponent } from './website/shared/pages/main/main.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'main',
         component: MainComponent,
-        title: 'main',
+        title: 'Главная',
     },
     {
         path: 'about',

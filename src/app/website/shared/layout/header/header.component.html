@@ -1,28 +1,37 @@
 <header>
-    <div class="top-header" *ngIf="!isScrolled">
-        <h2 class="first">г.Набережные Челны, ул.Ахметшина,116</h2>
-        <h2 class="second">+7(8552)25-05-03</h2>
-        
-        <div class="icons-head">
-            <img src="../../../../../assets/data/icon/whatsapp.svg">
-            <img src="../../../../../assets/data/icon/vk.svg">
-            <img src="../../../../../assets/data/icon/insta.svg">
-        </div>
-        <img class="search" src="../../../../../assets/data/icon/circum_search.svg">
+    <div *ngIf="isMobileView">
+        <app-burger-menu></app-burger-menu>
     </div>
-    <div class="main-header-wrapper" [ngClass]="{ scrolled: isScrolled, noscrolled: !isScrolled }">
-        <div class="main-header">
-            <ul class="nav-list">
-                <li routerLink="">Главная</li>
-                <li routerLink="/specialists">Специалисты</li>
-                <li routerLink="/analyzes">Анализы</li>
-            </ul>
-            <img src="../../../../../assets/data/image/logo.svg" alt="">
-            <ul class="nav-list">
-                <li routerLink="/about">О клинике</li>
-                <li>Акции</li>
-                <li>Прайс-лист</li>
-            </ul>
+    <div *ngIf="!isMobileView" class="header-desktop">
+        <div class="top-header" *ngIf="!isScrolled">
+            <div>
+                <h2>г.Набережные Челны, ул.Ахметшина,116</h2>
+            </div>
+            <div class="left-side">
+                <h2>+7(8552)25-05-03</h2>
+                
+                <div class="icons-head">
+                    <img src="../../../../../assets/data/icon/header/whatsapp.svg" alt="">
+                    <img src="../../../../../assets/data/icon/header/vk.svg" alt="">
+                    <img src="../../../../../assets/data/icon/header/instagram.svg" alt="">
+                </div>
+                <!-- <img class="search" src="../../../../../assets/data/icon/circum_search.svg" alt=""> -->
+            </div>
+        </div>
+        <div class="main-header-wrapper" [ngClass]="{ scrolled: isScrolled, noscrolled: !isScrolled }">
+            <div class="main-header">
+                <ul class="nav-list">
+                    <li routerLink="/main">Главная</li>
+                    <li routerLink="/specialists">Специалисты</li>
+                    <li routerLink="/analyzes">Анализы</li>
+                </ul>
+                <img src="../../../../../assets/data/icon/header/logo.svg" alt="">
+                <ul class="nav-list">
+                    <li routerLink="/about">О клинике</li>
+                    <li>Акции</li>
+                    <li>Прайс-лист</li>
+                </ul>
+            </div>
         </div>
     </div>
 </header>

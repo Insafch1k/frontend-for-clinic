@@ -9,6 +9,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { MainComponent } from './pages/main/main.component';
 import { RouterModule } from '@angular/router';
 import { OurSpecialistsComponent } from './pages/main/our-specialists/our-specialists.component';
+import { BurgerMenuComponent } from './layout/header/burger-menu/burger-menu.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { OurSpecialistsComponent } from './pages/main/our-specialists/our-specia
     FooterComponent,
     MainComponent,
     OurSpecialistsComponent,
+    BurgerMenuComponent,
   ],
   imports: [
     BrowserModule,
