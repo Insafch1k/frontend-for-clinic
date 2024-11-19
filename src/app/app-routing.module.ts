@@ -42,8 +42,8 @@ const routes: Routes = [
     },
     {
         path: '**',
-        component: MainComponent,
-        redirectTo: '',
+        //component: MainComponent,
+        redirectTo: 'main',
     },
 ];
 

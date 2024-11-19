@@ -85,6 +85,7 @@
     margin: 0;
     cursor: pointer;
     z-index: 10;
+    user-select: none;
 }
 .menu-icon:checked + label:before,
 .menu-icon:not(:checked) + label:before {
