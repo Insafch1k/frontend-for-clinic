@@ -12,23 +12,23 @@
         gap: 20px;
         padding: 0;
         margin: 0 20px;
-        
+
         li {
             min-width: 224px;
-            &:nth-last-child(n+1) {
-            & .person-img {
-                height: 332px;
-                background-color: #ECECEC;
-            }
-            & .person-info {
-                border: 1px solid #7EB3C1;
-                border-top: none;
-                height: 75px;
-
-                & .person-speciality {
-
+            &:nth-last-child(n + 1) {
+                & .person-img {
+                    height: 332px;
+                    background-color: #ececec;
                 }
-            }}
+                & .person-info {
+                    border: 1px solid #7eb3c1;
+                    border-top: none;
+                    height: 75px;
+
+                    & .person-speciality {
+                    }
+                }
+            }
         }
     }
 }
@@ -38,4 +38,8 @@
 }
 .red {
     background-color: red;
+}
+
+img {
+    cursor: pointer;
 }

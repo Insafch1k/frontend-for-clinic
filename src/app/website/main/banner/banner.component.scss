@@ -1,0 +1,98 @@
+.main-cover {
+    justify-content: space-around;
+    height: calc(100vh - 157px);
+    margin: 0 40px;
+
+    @media (max-width: 768px) {
+        margin: 0;
+    }
+    & .main-title {
+        margin-top: 50px;
+        width: 600px;
+        text-align: center;
+
+        @media (max-width: 768px) {
+            width: 85%;
+        }
+        h1 {
+            text-transform: uppercase;
+            font-size: 32px;
+            font-weight: 400;
+            @media (max-width: 768px) {
+                font-size: 24px;
+            }
+        }
+    }
+    & .btn-make-appointment {
+        font-size: 15px;
+        font-weight: 500;
+        background-color: #0081ec;
+        color: #ffffff;
+        padding: 14px 23px;
+        border-radius: 8px;
+
+        &:hover {
+            transform: scale(1.03);
+            background-color: #2e90df;
+        }
+        &:active {
+            transform: scale(1.06);
+            background: #034982;
+        }
+    }
+    & .main-contact {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & .contact-whatsapp {
+            cursor: pointer;
+            border: 1px solid #0081ec;
+            border-radius: 50%;
+            padding: 5px;
+            padding-bottom: 1px;
+            height: 57px;
+
+            &:hover {
+                border: none;
+                padding-top: 6px;
+                padding-left: 6px;
+                transform: scale(1.2);
+            }
+            &:active {
+                transform: scale(1.3);
+            }
+        }
+        & .online-appointment {
+            cursor: pointer;
+            border: 1px solid #0081ec;
+            border-radius: 50%;
+            padding: 5px;
+            & div {
+                width: 75px;
+                padding: 23px 0;
+                text-align: center;
+                background-color: #0081ec;
+                border-radius: 50%;
+                font-size: 12px;
+                font-weight: 500;
+                color: #ffffff;
+            }
+            &:hover {
+                border: none;
+                padding-bottom: 6px;
+                padding-right: 6px;
+                transform: scale(1.15);
+                background-color: #2e90df;
+            }
+            &:active {
+                transform: scale(1.2);
+                background: #034982;
+                & div {
+                    background-color: #034982;
+                }
+            }
+        }
+    }
+}
