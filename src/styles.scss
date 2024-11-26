@@ -21,11 +21,11 @@
 html {
     font-size: 16px; // Устанавливаем значение по умолчанию
 
-    @media (max-width: 320px) {
+    @media (max-width: 360px) {
         font-size: 10px;
     }
 
-    @media (min-width: 321px) and (max-width: 480px) {
+    @media (min-width: 360px) and (max-width: 480px) {
         font-size: 12px;
     }
 
