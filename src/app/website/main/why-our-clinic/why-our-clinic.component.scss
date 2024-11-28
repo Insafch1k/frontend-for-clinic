@@ -2,9 +2,7 @@
     margin: 40px 0;
 
     & .main-why-exactly {
-        & h1 {
-            font-size: 1.5rem;
-            font-weight: 500;
+        & .title {
             text-transform: uppercase;
             h2 {
                 display: inline;
@@ -89,8 +87,6 @@
                 top: -10px;
                 width: 70%;
                 padding-top: 20px !important;
-            }
-            @media (max-width: 1200px) {
                 padding: 5%;
             }
             & div {
