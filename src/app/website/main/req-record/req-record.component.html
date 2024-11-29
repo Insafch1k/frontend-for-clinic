@@ -1,0 +1,140 @@
+<div class="image-container">
+    <div class="req-inside">
+        <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+            <div class="left-side">
+                <h1 class="title">
+                    Оставьте заявку на запись и мы вам перезвоним
+                </h1>
+
+                <div class="check-block">
+                    <input
+                        type="checkbox"
+                        formControlName="consent"
+                        id="consent"
+                        required
+                    />
+                    <label for="consent"
+                        >даю согласие на обработку персональных данных в
+                        соответствии с “
+                        <p>Политикой конфиденциальности</p>
+                        ”.</label
+                    >
+                    <div
+                        *ngIf="
+                            appointmentForm.get('consent')?.invalid &&
+                            appointmentForm.get('consent')?.touched
+                        "
+                        class="error"
+                    >
+                        <small
+                            >Вы должны согласиться на обработку данных.</small
+                        >
+                    </div>
+                </div>
+
+                <div class="btn-wrapper">
+                    <button type="submit" [disabled]="!appointmentForm.valid">
+                        Отправить
+                    </button>
+                </div>
+            </div>
+
+            <div class="rigth-side">
+                <div class="input-block">
+                    <input
+                        id="surname"
+                        formControlName="surname"
+                        placeholder="Фамилия"
+                        required
+                    />
+                    <div
+                        *ngIf="
+                            appointmentForm.get('surname')?.invalid &&
+                            appointmentForm.get('surname')?.touched
+                        "
+                        class="error"
+                    >
+                        <small>Это поле обязательно для заполнения.</small>
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <input
+                        id="name"
+                        formControlName="name"
+                        placeholder="Имя"
+                        required
+                    />
+                    <div
+                        *ngIf="
+                            appointmentForm.get('name')?.invalid &&
+                            appointmentForm.get('name')?.touched
+                        "
+                        class="error"
+                    >
+                        <small>Это поле обязательно для заполнения.</small>
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <input
+                        id="birthDate"
+                        formControlName="birthDate"
+                        placeholder="Дата Рождения"
+                        required
+                    />
+                    <div
+                        *ngIf="
+                            appointmentForm.get('birthDate')?.invalid &&
+                            appointmentForm.get('birthDate')?.touched
+                        "
+                        class="error"
+                    >
+                        <small>Пожалуйста, введите корректную дату.</small>
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <input
+                        id="phone"
+                        formControlName="phone"
+                        placeholder="Номер телефона"
+                        required
+                    />
+                    <div
+                        *ngIf="
+                            appointmentForm.get('phone')?.invalid &&
+                            appointmentForm.get('phone')?.touched
+                        "
+                        class="error"
+                    >
+                        <small>Введите корректный номер телефона.</small>
+                    </div>
+                </div>
+
+                <div class="select-doc">
+                    <select id="doctor" formControlName="doctor" required>
+                        <option value="">Все врачи</option>
+                        <option *ngFor="let doctor of doctors" [value]="doctor">
+                            {{ doctor }}
+                        </option>
+                    </select>
+                    <div
+                        *ngIf="
+                            appointmentForm.get('doctor')?.invalid &&
+                            appointmentForm.get('doctor')?.touched
+                        "
+                        class="error-l"
+                    >
+                        <small>Выберите врача из списка.</small>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h1 class="title titles-m">
+                    Оставьте заявку на запись и мы вам перезвоним
+                </h1>
+            </div>
+        </form>
+    </div>
+</div>

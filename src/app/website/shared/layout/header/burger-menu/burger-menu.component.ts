@@ -20,15 +20,18 @@ export class BurgerMenuComponent {
     constructor(private router: Router) {}
 
     ngOnInit() {
+        this.currentRoute = this.router.url;
+        console.log(this.currentRoute)
+
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
+                console.log(event.url)
                 this.currentRoute = event.url; // Получаем текущий маршрут
             }
         });
     }
     // Метод для закрытия чекбокса
     closeMenu() {
-        console.log(this.currentRoute)
         const checkbox = document.getElementById(
             'menu-icon'
         ) as HTMLInputElement;

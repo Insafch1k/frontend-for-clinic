@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './website/shared/pages/main/main.component';
 
 const routes: Routes = [
+    { path: '', redirectTo: '/main', pathMatch: 'full' },
     {
         path: 'main',
-        component: MainComponent,
+        loadChildren: () =>
+            import('./website/main/main.module').then((m) => m.MainModule),
         title: 'Главная',
     },
     {
