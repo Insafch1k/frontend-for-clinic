@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PriceListService {
-  private API = 'Покага просто пример'; 
+  private API = 'https://your-api-url.com'; 
 
   constructor(private http: HttpClient) {}
 

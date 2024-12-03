@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
-import { PriceListService } from '../services/price-list.service';
+import { PriceListService } from '../services/price-list.service'; // Обновленный путь к сервису
 
 interface Service {
   name: string;
@@ -105,7 +105,6 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.services[this.selectedSpecialist!] || [];
   }
 
-  //скачивание прайс-листа одной специальности
   downloadPriceList(specialist: string): void {
     this.priceListService.downloadPriceList(specialist).subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
@@ -119,7 +118,6 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  //скачивание фулл прайс-листа 
   downloadFullPriceList(): void {
     this.priceListService.downloadFullPriceList().subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
