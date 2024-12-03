@@ -26,6 +26,14 @@ const routes: Routes = [
         title: 'analyzes',
     },
     {
+        path: 'PriceList',
+        loadChildren: () =>
+            import('./website/modules/price-list/price-ltst.module').then(
+                (m) => m.PriceListModule
+            ),
+        title: 'PriceList',
+    },
+    {
         path: 'specialists',
         loadChildren: () =>
             import('./website/modules/specialists/specialists.module').then(
