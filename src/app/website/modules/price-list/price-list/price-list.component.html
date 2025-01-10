@@ -1,0 +1,37 @@
+<div class="page-background">
+    <div class="title"><h2>Главная / Прайс-лист</h2></div>
+    <div class="main">
+        <div class="choice-menu">
+            <div class="dropdown" *ngIf="isMobile">
+                <select (change)="onSelectSpecialistFromDropdown($event)">
+                    <option *ngFor="let specialist of specialists" [value]="specialist" [selected]="selectedSpecialist === specialist">
+                    {{ specialist }}
+                    </option>
+                </select>
+            </div>
+            <ul *ngIf="!isMobile">
+                <li
+                    *ngFor="let specialist of specialists"
+                    (click)="onSelectSpecialistFromList(specialist)"
+                    [class.selected]="selectedSpecialist === specialist"
+                    class="menu-item"
+                >
+                    {{ specialist }}
+                </li>
+            </ul>
+        </div>
+        <div class="main-service">
+            <div class="services">
+                <div *ngFor="let service of getSelectedServices()" class="service-item" #serviceItem>
+                    <div class="service-name">{{ service.name }}</div>
+                    <div class="service-divider"></div>
+                    <div class="service-price">{{ service.price }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="dowload">
+            <p class="dow-left" (click)="downloadPriceList(selectedSpecialist!)">Скачать этот прайс-лист</p>
+            <p class="dow-right" (click)="downloadFullPriceList()">Скачать полный прайс-лист</p>
+        </div>
+    </div>
+</div>
