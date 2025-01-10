@@ -8,6 +8,7 @@ import { WhyOurClinicComponent } from './why-our-clinic/why-our-clinic.component
 import { ReqRecordComponent } from './req-record/req-record.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SuperiorityComponent } from './superiority/superiority.component';
+import { PhotoCollageComponent } from './photo-collage/photo-collage.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { SuperiorityComponent } from './superiority/superiority.component';
         WhyOurClinicComponent,
         ReqRecordComponent,
         SuperiorityComponent,
+        PhotoCollageComponent,
     ],
     imports: [CommonModule, MainRoutingModule, ReactiveFormsModule],
 })

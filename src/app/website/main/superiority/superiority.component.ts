@@ -12,27 +12,27 @@ export class SuperiorityComponent {
     }[] = [
         {
             url: 'bx_clinic',
-            text: 'd',
+            text: 'Специалисты высокого уровня',
         },
         {
             url: 'carbon_education',
-            text: '',
+            text: 'Онлайн медицина',
         },
         {
             url: 'covid_virus-lab-research-test-tube',
-            text: '',
+            text: 'Комфортная и доброжелательная обстановка',
         },
         {
             url: 'ic_outline-people-alt',
-            text: '',
+            text: 'Прием педиатра на дому',
         },
         {
             url: 'ion_home-outline',
-            text: '',
+            text: 'Современные методы лечения',
         },
         {
             url: 'mdi_school-online',
-            text: '',
+            text: 'Индивидуальный подход',
         },
     ];
 }

@@ -1,5 +1,129 @@
 .section-wrapper {
-    margin: 10% 0;
-    & .section {
+    margin: 3% 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.superiorities {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    justify-items: center;
+    width: 80%;
+
+    @media (max-width: 1400px) {
+        width: 90%;
+    }
+    @media (max-width: 1100px) {
+        grid-template-columns: 50% 50%;
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: 100%;
+    }
+
+    & section {
+        width: 80%;
+
+        & div.superiority-block:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgb(159 108 108 / 80%);
+
+            & .text {
+                color: #7eb3c1;
+                transform: scale(1.1);
+                transition: transform 1s ease; /* Плавный переход для трансформации */
+                transform-origin: center;
+            }
+            & .sec-icon {
+                transform: scale(1.4);
+                transition: transform 1s ease; /* Плавный переход для трансформации */
+                transform-origin: center;
+            }
+            & .sec-number {
+                animation: rotate 1s forwards;
+            }
+        }
+
+        @media (max-width: 1300px) {
+            width: 90%;
+        }
+
+        & div.superiority-block {
+            cursor: grab;
+            background-image: url("/assets/data/icon/sec/fon.svg");
+            background-repeat: no-repeat;
+            background-position: right;
+            height: 110px;
+            margin-top: 50px;
+            border: 1px solid #7eb3c1;
+            border-radius: 5px;
+            position: relative;
+
+            @media (max-width: 768px) {
+                margin-top: 30px;
+            }
+
+            & .text {
+                position: relative;
+                z-index: 2;
+                padding-left: 25px;
+                font-weight: 500;
+                font-size: 15px;
+                width: 55%;
+                @media (max-width: 360px) {
+                    width: 70%;
+                    padding-left: 15px;
+                    position: absolute;
+                }
+            }
+
+            & .sec-icon {
+                float: right;
+                margin: 30px;
+                position: relative;
+                z-index: 2;
+            }
+
+            & .sec-number {
+                padding: 0 5px;
+                background-color: white;
+                position: relative;
+                z-index: 2;
+                left: 30px;
+                bottom: 15px;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.superiority-block::after {
+    content: "";
+    position: absolute; /* Псевдоэлемент будет абсолютным */
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg); /* Начальная позиция */
+    }
+    70% {
+        transform: rotate(
+            360deg
+        ); /* Окончательное положение (1 полное вращение) */
+    }
+    100% {
+        transform: rotate(
+            360deg
+        ); /* Окончательное положение (оставляем в конце на том же угле) */
     }
 }

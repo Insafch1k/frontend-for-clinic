@@ -1,9 +1,22 @@
 <article class="section-wrapper">
     <h1 class="title">КЛИНИКА-03:</h1>
-    <section *ngFor="let block of sectionList" class="section">
-        <img
-            src="../../../../assets/data/icon/sec/{{ block.url }}.svg"
-            alt=""
-        />
-    </section>
+    <div class="superiorities">
+        <section *ngFor="let block of sectionList; let i = index">
+            <div class="superiority-block">
+                <img
+                    class="sec-icon"
+                    src="assets/data/icon/sec/name/{{ block.url }}.svg"
+                    alt=""
+                />
+                <img
+                    class="sec-number"
+                    src="assets/data/icon/sec/number/{{ i + 1 }}.svg"
+                    alt=""
+                />
+                <div class="text">
+                    {{ block.text }}
+                </div>
+            </div>
+        </section>
+    </div>
 </article>
