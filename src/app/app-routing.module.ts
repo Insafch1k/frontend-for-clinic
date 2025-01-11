@@ -47,7 +47,15 @@ const routes: Routes = [
             import('./website/modules/doctor/doctor.module').then(
                 (m) => m.DoctorModule
             ),
-        title: 'specialists',
+        title: 'doctor',
+    },
+    {
+        path: 'admin',
+        loadChildren: () =>
+            import('./website/admin/admin.module').then(
+                (m) => m.AdminModule
+            ),
+        title: 'admin',
     },
     {
         path: '**',

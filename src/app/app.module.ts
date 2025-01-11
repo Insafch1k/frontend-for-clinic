@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './website/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './website/admin/admin.component';
 
 @NgModule({
   declarations: [

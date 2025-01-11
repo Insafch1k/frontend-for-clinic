@@ -1,0 +1,38 @@
+.header-left-main{
+    position: fixed;
+    top: 100px;
+    width: 250px;
+    height: calc(100vh - 100px);
+    background-color: rgba(112, 178, 226, 1);
+    
+}
+.basic{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.title{
+    margin-top: 35px;
+    margin-bottom: 5px;
+    margin-left: 25px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 1);
+}
+.modul-part{
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    padding: 2px 2px;
+    margin-top: 6px;
+    img{
+        cursor: pointer;
+        width: 25px;
+        padding: 5px;
+    }
+    p{
+        padding: 5px;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 1);
+    }
+}
