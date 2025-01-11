@@ -9,6 +9,12 @@ import { ReqRecordComponent } from './req-record/req-record.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SuperiorityComponent } from './superiority/superiority.component';
 import { PhotoCollageComponent } from './photo-collage/photo-collage.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { ReviewDatePipe } from './reviews/pipes/review-date.pipe';
+import { MonthYearPipe } from './reviews/pipes/month-year.pipe';
+import { PhoneFormatPipe } from './reviews/pipes/phone-format.pipe';
+import { EmergencyServiceComponent } from './emergency-service/emergency-service.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +25,12 @@ import { PhotoCollageComponent } from './photo-collage/photo-collage.component';
         ReqRecordComponent,
         SuperiorityComponent,
         PhotoCollageComponent,
+        ReviewsComponent,
+        ReviewDatePipe,
+        MonthYearPipe,
+        PhoneFormatPipe,
+        EmergencyServiceComponent,
+        MapComponent,
     ],
     imports: [CommonModule, MainRoutingModule, ReactiveFormsModule],
 })

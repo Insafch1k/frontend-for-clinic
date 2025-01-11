@@ -1,0 +1,28 @@
+<div class="reviews">
+    <section *ngFor="let review of reviews; let i = index" class="review">
+        <div class="first-side">
+            <div class="pacient">
+                <p>Пациент</p>
+                <p>{{ review.contact | phoneFormat }}</p>
+            </div>
+            <p class="review-date">{{ review.date | reviewDate }}</p>
+
+            <div>{{ review.rating }}</div>
+        </div>
+        <div class="second-side">
+            <div>
+                <p class="weight">История пациента</p>
+                <p class="light">{{ review.history }}</p>
+            </div>
+            <div>
+                <p class="weight">Понравилось</p>
+                <p class="light">{{ review.review }}</p>
+            </div>
+            <div class="date-admission">
+                <img src="assets/data/icon/header/calendar.svg" alt="" />
+                <p>Приём был в {{ review.dateAdmission | monthYear }}</p>
+            </div>
+        </div>
+    </section>
+    <button class="button" type="button">Загрузить ещё</button>
+</div>

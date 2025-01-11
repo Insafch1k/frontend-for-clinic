@@ -67,6 +67,7 @@
         & .online-appointment {
             cursor: pointer;
             border: 1px solid #0081ec;
+            user-select: none;
             border-radius: 50%;
             padding: 5px;
             & div {

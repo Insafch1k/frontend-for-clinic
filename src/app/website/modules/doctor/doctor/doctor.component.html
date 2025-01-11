@@ -1,15 +1,25 @@
 <div class="page-background">
     <div class="doctor">
-        <div class="title"><h2>Главная / Специалисты / Гастроэнтеролог / Фамилия Имя Отчество</h2></div>
+        <div class="title">
+            <h2>
+                Главная / Специалисты / Гастроэнтеролог / Фамилия Имя Отчество
+            </h2>
+        </div>
         <div class="main">
             <div class="about">
                 <div class="one">
                     <div class="one-info">
                         <div class="avatarka">
-                            <img src="../../../../../assets/data/icon/specialists/ava.png" alt="">
+                            <img
+                                src="assets/data/icon/specialists/ava.png"
+                                alt=""
+                            />
                         </div>
                         <div class="stars">
-                            <img src="../../../../../assets/data/icon/specialists/звезды.svg" alt="">
+                            <img
+                                src="assets/data/icon/specialists/звезды.svg"
+                                alt=""
+                            />
                         </div>
                         <div class="number">
                             <p>222 отзывов</p>
@@ -58,7 +68,9 @@
                                 <div class="one-object"></div>
                                 <div class="one-object"></div>
                             </div>
-                            <div class="title-block"><p>время и дни записи</p></div>
+                            <div class="title-block">
+                                <p>время и дни записи</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,12 +79,21 @@
                 <div class="education">
                     <h2>Квалификация и образование</h2>
                     <div class="education-spisok">
-                        <p>2003 год - Казанский государственный медицинский университет (педиатрия)   Базовое образование</p>
-                        <p>2003 год - Казанский государственный медицинский университет (педиатрия)   Базовое образование</p>
-                        <p>2003 год - Казанский государственный медицинский университет (педиатрия)   Базовое образование</p>
+                        <p>
+                            2003 год - Казанский государственный медицинский
+                            университет (педиатрия) Базовое образование
+                        </p>
+                        <p>
+                            2003 год - Казанский государственный медицинский
+                            университет (педиатрия) Базовое образование
+                        </p>
+                        <p>
+                            2003 год - Казанский государственный медицинский
+                            университет (педиатрия) Базовое образование
+                        </p>
                     </div>
                 </div>
-    
+
                 <div class="otz-spisok">
                     <div class="otz-spisok-title">
                         <h2>Отзывы</h2>
@@ -83,24 +104,40 @@
                         <p class="otz-true">Положительно 68</p>
                         <p class="otz-false">Отрицательно 0</p>
                     </div>
-                    <div class="otz-spisok-main" *ngFor="let review of reviews | slice:0:displayedReviews">
+                    <div
+                        class="otz-spisok-main"
+                        *ngFor="
+                            let review of reviews | slice : 0 : displayedReviews
+                        "
+                    >
                         <div class="spisok-main-left">
                             <p class="otz-role">{{ review.role }}</p>
-                            <p class="otz-phonenumber">{{ review.phoneNumber }}</p>
+                            <p class="otz-phonenumber">
+                                {{ review.phoneNumber }}
+                            </p>
                             <p class="otz-date">{{ review.date }}</p>
                             <p class="otz-time">{{ review.time }}</p>
                         </div>
                         <div class="spisok-main-right">
-                            <div class="otz-name"><p>{{ review.name }}</p></div>
-                            <div class="otz-situation"><p>{{ review.situation }}</p></div>
+                            <div class="otz-name">
+                                <p>{{ review.name }}</p>
+                            </div>
+                            <div class="otz-situation">
+                                <p>{{ review.situation }}</p>
+                            </div>
                             <div class="reception-date">
-                                <img src="../../../../../assets/data/icon/doctor/Vector (5).svg" alt="">
+                                <img
+                                    src="assets/data/icon/doctor/Vector (5).svg"
+                                    alt=""
+                                />
                                 <p>{{ review.receptionDate }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="button-more">
-                        <button  (click)="loadMoreReviews()">Загрузить еще</button>
+                        <button (click)="loadMoreReviews()">
+                            Загрузить еще
+                        </button>
                     </div>
                 </div>
             </div>
