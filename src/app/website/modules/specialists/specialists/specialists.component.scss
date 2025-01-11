@@ -128,21 +128,21 @@
         // background-color: rgb(11, 242, 53);
         grid-area: B;
         width: 22vw;
-        height: 26vh;
+        height: 22vh;
         
     }
     .three{
         // background-color: rgb(115, 51, 188);
         grid-area: C;
         width: 34vw;
-        height: 26vh;
+        height: 22vh;
         margin-right: 5vw;
     }
     .four{
         // background-color: rgb(190, 207, 43);
         grid-area: F;
         width: 63vw;
-        height: 16vh;
+        height: 26vh;
     }
     .one-info{
         padding-top: 10px;
@@ -159,6 +159,9 @@
                 margin-left: auto;
                 margin-right: auto;
                 width: 100%;
+            }
+            @media (max-width:885px) {
+                height: 230px;
             }
         }
         .stars{
@@ -177,6 +180,14 @@
         flex-direction: column;
         h2{padding-top: 15px; padding-left: 5%; font-size: 18px;}
         p{padding-top: 15px; padding-left: 5%; font-size: 14px;}
+        @media (max-width: 975px) {
+            h2{font-size: 16px; width: 40%;}
+            p{font-size: 12px;}
+          }
+          @media (max-width:885px) {
+            h2{font-size: 26px; width: 90%;}
+            p{font-size: 1.125rem; margin-top: 10px;}
+          }
         .price-btn {
             margin-top: 25px;
             margin-left: 5%;
@@ -191,23 +202,127 @@
             align-items: center;
             justify-content: center;
       }
+     
     }
     .three-info{
-        background-color: rgba(217, 217, 217, 1);
-        margin-top: 10px;
-        width: 100%;
-        height: 24vh;
-        
-        p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffffff;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        .date-picker {
+            display: flex;
+            align-items: center;
+    
+            button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            }
+    
+            .date {
             text-align: center;
+            margin: 0 5px;
+            padding: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 12px;
+            @media (max-width: 556px) {
+                padding: 5px;
+                margin: 0 5px;
+            }
+            @media (max-width: 478px) {
+                padding: 3px;
+                margin: 0 3px;
+                width: 50%;
+            }
+            &.selected {
+                background-color: #ffffff;
+                border-radius: 8px 8px 0 0; 
+                &.selected {
+                    background-color: #ffffff;
+                    border-radius: 8px 8px 0 0;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 -4px 6px rgba(0, 0, 0, 0.1); /* Слабая тень снизу и сверху */
+                }
+            }
+            }
+            
         }
+        .time-slots {
+            padding: 0 35px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color:#ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 88%;
+            border-radius: 8px;
+            @media (max-width: 1200px) {
+                width: 100%;
+            }
+            @media (max-width: 1064px) {
+                width: 110%;
+            }
+            @media (max-width: 975px) {
+                width: 140%;
+            }
+            @media (max-width: 556px) {
+                padding: 0 10px;
+                width: 100%;
+            }
+            @media (max-width: 478px) {
+                margin: 0 2px;
+                padding: 0 2px;
+            }
+            @media (max-width: 415px) {
+                margin-left: 45px;
+            }
+            @media (max-width: 376px) {
+                margin-left: 30px;
+            }
+            .time-slot {
+            margin: 12px 5px;
+            font-size: 12px;
+            padding: 10px 15px;
+            border: 1px solid rgba(126,179,193,1);
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgba(126,179,193,1);
+            color: white;
+            &:hover {
+                background-color: rgb(112, 174, 190);
+            }
+            &.selected {
+                background-color: rgb(69, 133, 151);
+                border-radius: 5px;
+            }
+            @media (max-width: 478px) {
+                margin: 5px 3px;
+                padding: 5px 5px;
+                width: auto;
+            }
+            }
+        }
+        @media (max-width: 975px) {
+            margin-right: 20%;
+        }
+        @media (max-width: 478px) {
+            margin: 0;
+            width: 30%;
+        }
+        
     }
 
     .four-info{
         padding: 7px;
         padding-left: 15px;
-        width: 70%;
+        width: 80%;
         p{font-size: 14px;}
+        @media (max-width: 750px) {
+            p{font-size: 12px;}
+        }
     }
   }
   
@@ -225,11 +340,37 @@
 
 
 
-
+@media (max-width: 1310px) {
+    .four-info{
+        margin-top: 15px;
+    }
+}
+@media (max-width: 1200px) {
+    .three-info{
+    .time-slots {
+        width: 100%;
+    }
+    }
+}
 
   
-
-
+@media (max-width: 1125px) {
+    .main {
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+    }
+    .categories{
+        margin-left: 5.5%;
+        margin-right: 5.5%;
+        width: 100%;
+        .custom-select-one{
+            width: 44vw;
+        }
+        .custom-select-two{
+            width: 20vw;
+        }
+    }  
+}
 
 
 
@@ -253,26 +394,14 @@
             width: 20vw;
         }
     }
-    .main{
-        margin-left: 5.5%;
-        margin-right: 5.5%;
-        .spisok{
-            .two{
-                width: 25vw;
-                margin-right: 3vw;
-                .two-info{h2{padding-right: 0; padding-top: 30px;} p{padding: 0; padding-left: 12px;}}
-            }
-            .three{
-                width: 34vw;
-                height: 26vh;
-                margin-left: 5%;
-                padding-right: 5px;
-            }
-        }
+    .four-info{
+        margin-top: 40px;
     }
 
 }
-
+@media (max-width: 1075px) {
+    
+}
 @media (max-width:933px) {
     .categories{
         margin-left: 5.5%;
@@ -298,6 +427,7 @@
 }
 
 @media (max-width:903px) {
+
     .main{
         margin-left: 5.5%;
         margin-right: 5.5%;
@@ -305,7 +435,13 @@
             .two{
                 width: 21vw;
                 height: 28vh;
-                .two-info{h2{padding: 0;padding-top: 10px;} p{padding: 0;}}
+                .two-info{h2{padding: 0;padding-top: 20px;} p{padding: 0;}
+                .price-btn{
+                    padding: 0;
+                    margin-left: -2px;
+                    margin-top: 60px;
+                }
+                }
             }
             .three{
                 width: 34vw;
@@ -313,7 +449,7 @@
                 margin-left: -100px;
             }
             .four{
-                margin-top: -8vh;
+                margin-top: -80px;
                 margin-left: -2vw;
                 width: 83vw;
                 height: 16vh;
@@ -322,368 +458,224 @@
     }
 }
 
-@media (max-width:675px) {
+@media (max-width:885px) {
     .main{
+        margin-left: 10%;
+        margin-right: 10%;
         .spisok{
-            height:500px;
+            height: 600px;
             display: grid;
-            grid-template-areas:
+            grid-template-areas: 
             "A A A A   B B B B   B B B B"
             "A A A A   B B B B   B B B B"
-            "A A A A   F F F F   F F F F"
-            "A A A A   F F F F   F F F F"
-            "C C C C   C C C C   C C C C";
-            grid-gap: 10px;
-
+            "C C C C   C C C C   C C C C"
+            "F F F F   F F F F   F F F F";
             .one{
-               
                 grid-area: A;
                 width:250px;
                 margin: 0;
-                height: 55vh;
+                height: 140px;
             }
             .two{
-                
                 grid-area: B;
                 margin: 0;
                 width: 45vw;
-                height: 26vh;
-                
+                height: 140px;
             }
             .three{
-                
-                grid-area: F;
-                margin-left: 0px;
-                width: 44vw;
-                height: 26vh;
+                grid-area: C;
+                width: 64vw;
+                height: 100px;
                 margin: 0;
                 padding: 0;
+                .three-info{
+                    margin-left: 20vw;
+                    .time-slots {
+                        width: 370px;
+                    }
+                }
             }
             .four{
                 
-                grid-area: C;
+                grid-area: F;
                 padding: 0;
                 margin: 0;
-                width: 84vw;
-                height: 16vh;
-            }
-            .one-info{
-                padding-top: 10px;
-                margin-left: 5%;
-                width: 90%;
-                display: flex;
-                flex-direction: column;
-                .avatarka{
-                    height: 253px;
-                    background-color: rgb(229, 250, 250);
-                    margin-left: auto;
-                    margin-right: auto;
-                    img{
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 100%;
-                    }
-                }
-                .stars{
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: 8%;
-                }
-                .number{
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: 6%;
-                }
-            }
-            .two-info{
-                .price-btn {
-                    margin-left: 0%;
-                    
-              }
-            }
-            .four-info{
-                padding: 0px;
-                padding-left: 15px;
-                width: 90%;
-                overflow: hidden;
-                p{font-size: 14px;}
+                margin-left: 10px;
+                margin-top: -80px;
+                width: 88vw;
+                height: 0;
             }
         }
     }
 }
-
-
-@media (max-width: 546px) {
-    .categories {
-        width: 89vw;
+@media (max-width:675px) {
+    .main{
         margin-left: 5.5%;
         margin-right: 5.5%;
-        flex-direction: column; /* Изменяем направление на колонку */
-        align-items: stretch; /* Растягиваем элементы на всю ширину */
-        .custom-select-one {
-            width: 100%; /* Первый селект на всю ширину */
-            margin-bottom: 10px; /* Добавляем отступ снизу */
+        .spisok{
+            .three{
+                .three-info{
+                    margin-left: 35vw;
+                    .time-slots {
+                        width: 370px;
+                    }
+                }
+            }
         }
-        .custom-select-two {
-            width: 50%; /* Второй селект на 70% ширины */
-            margin-left: 0; /* Убираем отступ слева */
-            margin-right: 10px; /* Добавляем отступ справа */
-          }
-        
-          .checkbox-container {
-            margin-left: 0; /* Убираем отступ слева */
-            width: 50%; /* Ширина чекбокса */
-          }
-        
-          .second-row {
-            display: flex;
-            align-items: center;
-            width: 100%;
-          }
     }
-  
-    
-  
-    
-
-
-
-    .main {
-        margin-left: 5.5%;
-        margin-right: 5.5%;
-        margin-bottom: 50px;
-        .spisok {
-            width: 100%;
-            height: 95vh;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень справа */
-                        -2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень слева */
-                        0 5px 10px rgba(0, 0, 0, 0.3); /* Чуть сильная тень снизу */
-            margin-bottom: 2vh;
+}
+@media (max-width: 556px) {
+    .categories {
+                width: 89vw;
+                margin-left: 5.5%;
+                margin-right: 5.5%;
+                flex-direction: column; /* Изменяем направление на колонку */
+                align-items: stretch; /* Растягиваем элементы на всю ширину */
+                .custom-select-one {
+                    width: 100%; /* Первый селект на всю ширину */
+                    margin-bottom: 10px; /* Добавляем отступ снизу */
+                }
+                .custom-select-two {
+                    width: 50%; /* Второй селект на 70% ширины */
+                    margin-left: 0; /* Убираем отступ слева */
+                    margin-right: 10px; /* Добавляем отступ справа */
+                  }
+                
+                  .checkbox-container {
+                    margin-left: 0; /* Убираем отступ слева */
+                    width: 50%; /* Ширина чекбокса */
+                  }
+                
+                  .second-row {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                  }
+            }
+    .main{
+        .spisok{
+            height: 800px;
             display: flex;
             flex-direction: column;
-        
             .one{
                 // background-color: aqua;
                 margin-left: auto;
                 margin-right: auto;
-                width:66%;
-            }
-            .two{
-                // background-color: rgb(11, 242, 53);
-                width: 100%;
-                height: 26vh;
-            }
-            .three{
-                // background-color: rgb(115, 51, 188);
-                width: 100%;
-                height: 26vh;
-            }
-            .four{
-                // background-color: rgb(190, 207, 43);
-                width: 63vw;
-                height: 16vh;
-            }
-            .one-info{
-                margin-top: 40px;
-                margin-left: 5%;
-                width: 90%;
-                display: flex;
-                flex-direction: column;
+                width:60%;
+                margin-top: 50px;
                 .avatarka{
-                    height: 239px;
+                    height: 273px;
                     background-color: rgb(229, 250, 250);
                     margin-left: auto;
                     margin-right: auto;
-                    img{
-                        margin-left: auto;
-                        margin-right: auto;
-                        display: block;
-                        width: 80%;
+                }
+            }
+            .two{
+                 // background-color: rgb(11, 242, 53);
+                text-align: center;
+                width: 100vw;
+                height: 26vh;
+                margin: 0;
+                padding: 0;
+                .two-info{
+                    h2{margin-top: -210px;margin-bottom: 370px;}
+                    p{margin-left: 25px; text-align: left;}
+                    .price-btn{
+                        margin-top: 10px;
+                        margin-left: 25px;
                     }
                 }
-                .stars{
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: 5%;
-                }
-                .number{
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: 2%;
+            }
+            .three{
+                .three-info{
+                    margin-top: 140px;
                 }
             }
-            .two-info{
-                h2{margin-top: -350px; margin-bottom: 310px; font-size: 18px;margin-left: auto; margin-right: auto;}
-                p{padding-top: 8px; padding-left: 5%; font-size: 14px; margin-left: 5.5%;}
-                .price-btn {
-                    margin-left: 5.5%;
-                    margin-top: 15px;
-                    width: 124px;
-                    height: 45px;
-                    color: rgb(0, 0, 0);
-                    background: rgba(126,179,193,1);
-                    opacity: 1;
-                    font-size: 14px;
-                    border-radius: 5px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-              }
-            }
-            .three-info{
-                background-color: rgba(217, 217, 217, 1);
-                margin-top: 2%;
-                height: 22vh;
-                width: 89%;
-                margin-left: auto;
-                margin-right: auto;
-                p{
-                    text-align: center;
+            .four{
+                .four-info{
+                    margin-top: 270px;
                 }
             }
-        
-            .four-info{
-                display: none;
-            }
-          }
-      }
-  }
-
-
-
-
-@media (max-width: 420px) {
-    .categories {
-        width: 89vw;
-        margin-left: 5.5%;
-        margin-right: 5.5%;
-        flex-direction: column; /* Изменяем направление на колонку */
-        align-items: stretch; /* Растягиваем элементы на всю ширину */
-        .custom-select-one {
-            width: 100%; /* Первый селект на всю ширину */
-            margin-bottom: 10px; /* Добавляем отступ снизу */
         }
-        .custom-select-two {
-            width: 50%; /* Второй селект на 70% ширины */
-            margin-left: 0; /* Убираем отступ слева */
-            margin-right: 10px; /* Добавляем отступ справа */
-          }
-        
-          .checkbox-container {
-            margin-left: 0; /* Убираем отступ слева */
-            width: 50%; /* Ширина чекбокса */
-          }
-        
-          .second-row {
-            display: flex;
-            align-items: center;
-            width: 100%;
-          }
     }
-  
-    
-  
-    
-
-
-
-    .main {
-        margin-left: 5.5%;
-        margin-right: 5.5%;
-        margin-bottom: 50px;
-        .spisok {
-            width: 100%;
-            height: 95vh;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень справа */
-                        -2px 0 5px rgba(0, 0, 0, 0.01), /* Слабая тень слева */
-                        0 5px 10px rgba(0, 0, 0, 0.3); /* Чуть сильная тень снизу */
-            margin-bottom: 2vh;
-            display: flex;
-            flex-direction: column;
-        
+}
+@media (max-width: 478px) {
+    .main{
+        margin-left: 1%;
+        margin-right: 1%;
+        .spisok{
+            height: 720px;
             .one{
                 // background-color: aqua;
                 margin-left: auto;
                 margin-right: auto;
-                width:96%;
-            }
-            .two{
-                // background-color: rgb(11, 242, 53);
-                width: 100%;
-                height: 26vh;
-            }
-            .three{
-                // background-color: rgb(115, 51, 188);
-                width: 100%;
-                height: 26vh;
-            }
-            .four{
-                // background-color: rgb(190, 207, 43);
-                width: 63vw;
-                height: 16vh;
-            }
-            .one-info{
-                margin-top: 40px;
-                margin-left: 5%;
-                width: 90%;
-                display: flex;
-                flex-direction: column;
+                width:250px;
+                margin-top: 50px;
                 .avatarka{
-                    height: 259px;
+                    height: 233px;
                     background-color: rgb(229, 250, 250);
                     margin-left: auto;
                     margin-right: auto;
-                    img{
-                        margin-left: auto;
-                        margin-right: auto;
-                        display: block;
-                        width: 80%;
+                }
+            }
+            .two{
+                // background-color: rgb(11, 242, 53);
+               .two-info{
+                   h2{margin-top: -210px;margin-bottom: 320px;}
+                   p{margin-left: 25px; text-align: left;}
+                   .price-btn{
+                       margin-top: 10px;
+                       margin-left: 25px;
+                   }
+               }
+           }
+           .three{
+                .three-info{
+                    margin-top: 90px;
+                }
+            }
+            .four{
+                .four-info{
+                    margin-top: 180px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 415px) {
+    .main{
+        .spisok{
+            height: 750px;
+            .two{
+                .two-info{
+                    h2{
+                        margin-left: 14px;
                     }
                 }
-                .stars{
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: 5%;
-                }
-                .number{
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: 2%;
+            }
+            .three{
+                .three-info{
+                    margin-top: 35px;
                 }
             }
-            .two-info{
-                h2{margin-top: -370px; margin-bottom: 330px; font-size: 18px;margin-left: auto; margin-right: auto;}
-                p{padding-top: 8px; padding-left: 5%; font-size: 14px; margin-left: 5.5%;}
-                .price-btn {
-                    margin-left: 5.5%;
-                    margin-top: 15px;
-                    width: 124px;
-                    height: 45px;
-                    color: rgb(0, 0, 0);
-                    background: rgba(126,179,193,1);
-                    opacity: 1;
-                    font-size: 14px;
-                    border-radius: 5px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-              }
-            }
-            .three-info{
-                background-color: rgba(217, 217, 217, 1);
-                margin-top: 2%;
-                height: 22vh;
-                width: 89%;
-                margin-left: auto;
-                margin-right: auto;
-                p{
-                    text-align: center;
+            .four{
+                .four-info{
+                    margin-top: 130px;
                 }
             }
-        
-            .four-info{
-                display: none;
+        }
+    }
+}
+@media (max-width: 376px) {
+    .main{
+        .spisok{
+            .two{
+                .two-info{
+                    h2{
+                        margin-left: 12px;
+                    }
+                }
             }
-          }
-      }
-  }
+        }
+    }
+}

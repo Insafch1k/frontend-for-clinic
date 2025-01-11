@@ -43,7 +43,18 @@
                 </div>
                 <div class="three">
                     <div class="three-info">
-                        <p>Время и дни записи</p>
+                        <div class="date-picker">
+                            <button (click)="removeDates()">←</button>
+                            <div *ngFor="let date of dates" class="date" [class.selected]="date === selectedDate" (click)="selectedDate = date">
+                              {{ date | date: 'dd' }} {{ getDayOfWeekAndMonth(date) }}
+                            </div>
+                            <button (click)="addDates()">→</button>
+                        </div>
+                        <div class="time-slots">
+                            <div *ngFor="let time of timeSlots[selectedDate]" class="time-slot" [class.selected]="time === selectedTime" (click)="selectTimeSlot(time)">
+                              {{ time }}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="four">
