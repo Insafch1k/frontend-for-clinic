@@ -1,49 +1,154 @@
-.title{
-    margin-left: 10.5%;
-    margin-top: 25px;
-    margin-bottom: 50px;
-    h2{font-size: 12px; line-height: 14.63px;}
+.anal-wrapper {
+    margin: 0 10vw;
 }
-.main{
-    margin-left: 10.5%;
-    margin-right: 10.5%;
-    margin-bottom: 50px;
-}
-.onePart{
+
+.checkup-select,
+.checkup-block {
+    font-size: 1rem;
+    border: 1px solid #7a7a7a6a;
+    background: rgba(255, 255, 255, 1);
+    padding: 0 40px;
+    height: 50px;
     display: flex;
-    .leftPart{
-        width: 40vw;
-        height: 30vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.checkup-select {
+    border-radius: 8px;
+    position: relative;
+    top: 5px;
+}
+
+.checkup-block {
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.01);
+        border-radius: 10px;
+        background-color: rgb(255, 246, 246);
     }
-    .rightPart{
-        z-index: 2;
-        width: 40vw;
-        height: 30vh;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 8px;
-        border: 1px solid rgb(210, 210, 210);
-        .info{
-            z-index: 3;
-        h2{
-            font-size: 18px; text-align: center;
-            padding-top: 30px;
-            padding-bottom: 10px;
+}
+
+.border-bottom {
+    border-radius: 0 0 8px 8px;
+}
+
+.anal-sec,
+.checkup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3%;
+    background-repeat: no-repeat;
+
+    & .name {
+        padding: 0 3%;
+        max-width: 40%;
+        & p.anal-name {
+            font-size: 0.9rem;
         }
-        .list-container ul {
-            list-style-type: disc; 
-            padding-left: 8vw; 
-           
-            margin: 10px 0;
-        }
-        .list-container ul li {
-            padding-bottom:5px;
-            margin: 5px 0; 
-            font-size: 12px;
-        }
+        & p.anal-desc {
+            font-size: 1.4rem;
         }
 
+        & p.check-name {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+        & p.check-desc {
+            margin-top: 30px;
+            font-size: 0.7rem;
+        }
     }
+
+    .description {
+        width: 50%;
+        padding: 3%;
+        border-radius: 8px;
+        border: 1px solid #7a7a7a6a;
+        background: rgba(255, 255, 255, 0.3); /* Полупрозрачный фон */
+        backdrop-filter: blur(10px); /* Эффект размытия заднего фона */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для большей выразительности */
+
+        &:hover {
+            transform: scale(1.02);
+            border: 1px solid #7a7a7a;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        & .anal-sec-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        ul li {
+            font-size: 0.7rem;
+        }
+        .check-list-name {
+            margin: 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0 20px;
+        }
+        .check-list {
+            width: 90%;
+            margin: 0 20px;
+            font-size: 0.9rem;
+            padding: 0;
+            li {
+                margin-top: 15px;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+.checkup {
+    & .description {
+        background: rgba(255, 255, 255, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.left {
+    flex-direction: row-reverse;
+}
+
+.right {
+    background-position: right;
+}
+
+div.cost {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 10px 0;
+    p {
+        color: #e31d24;
+    }
+    & p.cost-all {
+        font-size: 0.95rem;
+    }
+    & p.cost-discounted {
+        font-size: 0.7rem;
+        color: black;
+        text-decoration: line-through;
+    }
+    & p.cost-sum {
+        font-size: 1.4rem;
+    }
+    div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.discounted-complex {
+    font-size: 0.6rem;
 }

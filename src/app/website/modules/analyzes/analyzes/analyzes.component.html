@@ -1,31 +1,104 @@
-<div class="page-background">
-    <div class="about">
-        <div class="title"><h2>Главная / Анализы</h2></div>
-        <div class="main">
-            <div class="onePart">
-                <div class="leftPart">
-                    <div class="info">
-                        <p style="font-size: 14px;">КЛИНИКА-03 предлагает более</p>
-                        <p style="font-size: 26px;">2000 видов </p>
-                        <p style="font-size: 14px;">различных лабораторных исследований</p>
-                    </div>
+<div class="anal-wrapper">
+    <div>
+        <section
+            *ngFor="let analSec of analyzDesc; let i = index"
+            class="anal-sec"
+            [ngStyle]="{
+                'background-image':
+                    'url(../../../../../assets/data/image/analyzes/' +
+                    (i + 1) +
+                    '.svg)'
+            }"
+            [ngClass]="{ left: i % 2 !== 0, right: i % 2 === 0 }"
+        >
+            <div class="name">
+                <p class="anal-name">{{ analSec.name }}</p>
+                <p class="anal-desc">{{ analSec.description }}</p>
+                <p *ngIf="analSec.answer" class="anal-name">
+                    {{ analSec.answer }}
+                </p>
+            </div>
+            <div class="description gradient-border">
+                <p class="anal-sec-name">{{ analSec.listName }}</p>
+                <ul>
+                    <li
+                        *ngFor="let desc of analSec.listServ"
+                        class="anal-sec-child"
+                    >
+                        {{ desc }}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div>
+        <div class="checkup-select">Выберите необходимый чек-ап</div>
+        <div *ngFor="let checkup of checkUpList; let i = index">
+            <div
+                class="checkup-block"
+                (click)="openBlock(i)"
+                [ngClass]="{ 'border-bottom': isOpenCheckUp[i] }"
+            >
+                {{ checkup.name }}
+
+                <svg
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    [ngStyle]="{
+                        transform: !isOpenCheckUp[i]
+                            ? 'rotate(180deg)'
+                            : 'rotate(0deg)'
+                    }"
+                >
+                    <path
+                        d="M0.630859 7.8586H11.3696L6.00021 0.741699L0.630859 7.8586Z"
+                        fill="#7A7A7A"
+                    />
+                </svg>
+            </div>
+            <section
+                *ngIf="isOpenCheckUp[i]"
+                class="checkup"
+                [ngStyle]="{
+                    'background-image':
+                        'url(../../../../../assets/data/image/analyzes/' +
+                        (6 - i) +
+                        '.svg)'
+                }"
+                [ngClass]="{ left: i % 2 !== 0, right: i % 2 === 0 }"
+            >
+                <div class="name">
+                    <p class="check-name">{{ checkup.name }}</p>
+                    <p class="check-desc">{{ checkup.description }}</p>
                 </div>
-                <div class="rightPart">
-                    <div class="info">
-                        <h2>Наиболее востребованные у пациентов услуги:</h2>
-                        <div class="list-container">
-                            <ul>
-                                <li>общеклинический анализ крови и мочи</li>
-                                <li>биохимия</li>
-                                <li>тесты на гормоны</li>
-                                <li>аллергопробы</li>
-                                <li>определение резус-фактора и др.</li>
-                            </ul>
+                <div class="description">
+                    <p class="check-list-name">{{ checkup.complex }}</p>
+                    <ul class="check-list">
+                        <li *ngFor="let desc of checkup.listAnal">
+                            <p>{{ desc.name }}</p>
+                            <p>{{ desc.price }} p.</p>
+                        </li>
+                    </ul>
+                    <div class="cost">
+                        <p class="cost-all">ВСЕГО</p>
+                        <div>
+                            <p
+                                class="cost-discounted"
+                                *ngIf="checkup.discounted"
+                            >
+                                {{ checkup.discounted }} p.
+                            </p>
+                            <p class="cost-sum">{{ checkup.sum }} p.</p>
                         </div>
                     </div>
+                    <div class="discounted-complex">
+                        *скидка 15 % предоставляется при сдаче всего комплекса
+                    </div>
                 </div>
-            </div>
-
+            </section>
         </div>
     </div>
 </div>

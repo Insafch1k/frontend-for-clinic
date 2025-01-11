@@ -33,6 +33,7 @@
         position: fixed;
         width: 100%;
         top: 85px;
+        z-index: 10;
         & .page-name {
             background-color: #7eb3c1;
             padding: 25px 0;
