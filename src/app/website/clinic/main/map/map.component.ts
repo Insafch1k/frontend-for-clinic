@@ -1,11 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import * as L from 'leaflet';
-import { event } from 'yandex-maps';
-
-interface DgMap {
-    map: (container: string, options: object) => any;
-    marker: (coords: [number, number]) => any;
-}
 
 @Component({
     selector: 'app-map',

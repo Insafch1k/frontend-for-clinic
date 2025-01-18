@@ -1,21 +1,30 @@
 <div>
     <div (click)="lala()">
         <div class="main-route" *ngIf="currentRoute === '/main'">
-            <img routerLink="/main" src="assets/data/icon/header/logo.svg" alt="">
+            <img
+                routerLink="/main"
+                src="assets/data/icon/header/logo.svg"
+                alt=""
+            />
         </div>
         <div class="other-route" *ngIf="currentRoute !== '/main'">
             <div class="upper-header">
-                <img routerLink="/main" src="assets/data/icon/header/logo.svg" alt="">
-                <h1>КЛИНИКА-<p>03</p></h1>
+                <img
+                    routerLink="/main"
+                    src="assets/data/icon/header/logo.svg"
+                    alt=""
+                />
+                <h1>
+                    КЛИНИКА-
+                    <p>03</p>
+                </h1>
             </div>
-            <div class="page-name-wrapper" [ngClass]="{ scrolled: isScrolled}">
+            <div class="page-name-wrapper" [ngClass]="{ scrolled: isScrolled }">
                 <div class="page-name">
-                    <h1>{{pagesList[currentRoute]}}</h1>
+                    <h1>{{ pagesList[currentRoute] }}</h1>
                 </div>
             </div>
-            
         </div>
-
     </div>
 
     <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" />
@@ -27,12 +36,12 @@
             <li routerLink="/analyzes" (click)="closeMenu()">Анализы</li>
             <li routerLink="/about" (click)="closeMenu()">О клинике</li>
             <li (click)="closeMenu()">Акции</li>
-            <li (click)="closeMenu()">Прайс-лист</li>
+            <li (click)="closeMenu()" routerLink="/price-list">Прайс-лист</li>
             <li class="burger-other">
                 <div class="icons">
-                    <img src="assets/data/icon/header/whatsapp.svg" alt="">
-                    <img src="assets/data/icon/header/vk.svg" alt="">
-                    <img src="assets/data/icon/header/instagram.svg" alt="">
+                    <img src="assets/data/icon/header/whatsapp.svg" alt="" />
+                    <img src="assets/data/icon/header/vk.svg" alt="" />
+                    <img src="assets/data/icon/header/instagram.svg" alt="" />
                 </div>
                 <div>
                     <p>г.Набережные Челны, ул.Ахметшина,116</p>
