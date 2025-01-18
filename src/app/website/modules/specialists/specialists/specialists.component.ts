@@ -1,117 +1,257 @@
-import { Component } from '@angular/core';
-
-interface Specialist {
-  fullName: string;
-  rating: number;
-  numberOfReviews: number;
-  position: string;
-  experience: string;
-  review: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { SpecialistsService } from 'src/app/website/core/services/specialists.service';
+import {
+    IDoctor,
+    ISpecialists,
+} from 'src/app/website/core/types/spacialict.interface';
 
 @Component({
-  selector: 'app-specialists',
-  templateUrl: './specialists.component.html',
-  styleUrls: ['./specialists.component.scss']
+    selector: 'app-specialists',
+    templateUrl: './specialists.component.html',
+    styleUrls: ['./specialists.component.scss'],
 })
-export class SpecialistsComponent {
-  doctorCategories: string[] = ['Терапевт', 'Хирург', 'Кардиолог', 'Педиатр'];
-  experiences: string[] = ['0-3 года', '3-5 лет', '5-10 лет', '10+ лет'];
+export class SpecialistsComponent implements OnInit {
+    experiences: string[] = ['0-3 года', '3-5 лет', '5-10 лет', '10+ лет'];
 
-  selectedDoctorCategory: string;
-  selectedExperience: string;
-  homeVisitChecked: boolean = false;
+    specialists: ISpecialists | null = null; // Хранение данных врачей
+    displayDoctors: IDoctor[] = []; // Для хранения отображаемых врачей
+    categories: string[] = [];
 
-  specialists: Specialist[] = [
-    {
-      fullName: 'Иванов Иван Иванович',
-      rating: 4.5,
-      numberOfReviews: 120,
-      position: 'Терапевт',
-      experience: '5-10 лет',
-      review: 'текст с одним отзывом текст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывом'
-    },
-    {
-      fullName: 'Петров Петр Петрович',
-      rating: 5,
-      numberOfReviews: 200,
-      position: 'Хирург',
-      experience: '10+ лет',
-      review: 'текст с одним отзывом текст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывом'
-    },
-    {
-      fullName: 'Сидоров Сидор Сидорович',
-      rating: 3.7,
-      numberOfReviews: 50,
-      position: 'Кардиолог',
-      experience: '3-5 лет',
-      review: 'текст с одним отзывом текст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывом'
-    }
-  ];
+    showHouseCallOnly: boolean = false; // Флаг для фильтрации
+    selectedDoctorCategory!: string;
+    selectedExperience!: string;
+    experienceRange: [number, number] = [0, Infinity];
 
-  startDate: Date = new Date();
+    isOpenDayDoctor: {
+        doctorId: number;
+        currentIndex: number;
+        currentView: number;
+        displayedSlots: string[];
+        lenght: number;
+        days: {
+            day: string;
+            isSelect: boolean;
+            slot: boolean[];
+        }[];
+    }[] = [];
+
+    startDate: Date = new Date();
     // Массивы для дат и временных слотов
-    dates: string[] = this.generateDates(7, this.startDate);
-    selectedDate: string = this.dates[0];
-    selectedTime: string = '';
-    timeSlots: { [key: string]: string[] } = {
-      '2025-01-10': ['17:00', '17:40', '18:20', '19:00'],
-      '2025-01-11': ['09:00', '09:40', '10:20', '11:00'],
-    };
+    selectedCategory: string | null = null;
 
-  constructor() {
-    //по умолчанию
-    this.selectedDoctorCategory = '';
-    this.selectedExperience = '';
-  }
+    constructor(private readonly specServ: SpecialistsService) {}
 
-  getStars(rating: number): string[] {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating - fullStars >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    ngOnInit(): void {
+        this.fetchSpecialists();
+    }
 
-    return Array(fullStars).fill('full').concat(hasHalfStar ? ['half'] : []).concat(Array(emptyStars).fill('empty'));
-  }
+    fetchSpecialists() {
+        this.specServ.getSpecialists().subscribe((answer: ISpecialists) => {
+            this.specialists = answer;
+            this.displayDoctors = answer.data.doctors; // Инициализация отображаемых врачей
+            this.categories = answer.data.categories;
 
-    // Метод для генерации дат
-    generateDates(count: number, startDate: Date): string[] {
-      const dates: string[] = [];
-      for (let i = 0; i < count; i++) {
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + i);
-        dates.push(date.toISOString().split('T')[0]);
-      }
-      return dates;
+            this.fillDoctorsTimeSlots();
+            console.log(answer);
+        });
+    }
+
+    getSlotDateKeys(slotDate: { [key: string]: string[] }): string[] {
+        const keys = Object.keys(slotDate);
+        return keys.slice(0, 7); // Возвращаем первые 7 элементов или меньше
+    }
+
+    get getDisplayDoctors() {
+        return this.displayDoctors;
+    }
+
+    //заполнить временные промежутки врачей
+    fillDoctorsTimeSlots() {
+        this.displayDoctors.forEach((doctor: IDoctor) => {
+            const days: {
+                day: string;
+                isSelect: boolean;
+                slot: boolean[];
+            }[] = [];
+            for (let slot in doctor.slot_date) {
+                days.push({
+                    day: slot,
+                    isSelect: false,
+                    slot: doctor.slot_date[slot].map(() => false),
+                });
+            }
+            let currentIndex = 0;
+            const keys = Object.keys(doctor.slot_date);
+            const endIndex = Math.min(currentIndex + 7, keys.length); // Убедимся, что не выйдем за пределы
+            const displayedSlots = keys.slice(currentIndex, endIndex);
+            this.isOpenDayDoctor.push({
+                doctorId: doctor.doctor.doctor_id,
+                currentIndex,
+                displayedSlots,
+                days,
+                currentView: 0,
+                lenght: Object.keys(doctor.slot_date).length,
+            });
+        });
+    }
+
+    // Метод для прокрутки влево
+    scrollLeft(doctorId: number) {
+        const doctor = this.isOpenDayDoctor.find(
+            (d) => d.doctorId === doctorId
+        );
+        if (doctor) {
+            if (doctor.currentIndex > 0) {
+                doctor.currentIndex--;
+                this.updateDisplayedSlots(doctor);
+            }
+        }
+    }
+
+    // Метод для прокрутки вправо
+    scrollRight(doctorId: number) {
+        const doctor = this.isOpenDayDoctor.find(
+            (d) => d.doctorId === doctorId
+        );
+        if (doctor) {
+            const keys = Object.keys(this.getDoctorSlotDates(doctorId));
+            if (doctor.currentIndex + 7 < keys.length) {
+                doctor.currentIndex++;
+                this.updateDisplayedSlots(doctor);
+            }
+        }
+    }
+
+    // Метод для получения временных слотов врача по ID
+    private getDoctorSlotDates(doctorId: number): { [key: string]: any } {
+        const doctor = this.displayDoctors.find(
+            (d) => d.doctor.doctor_id === doctorId
+        );
+        return doctor ? doctor.slot_date : {};
+    }
+
+    // Метод для обновления отображаемых слотов
+    private updateDisplayedSlots(doctor: any) {
+        const keys = Object.keys(this.getDoctorSlotDates(doctor.doctorId)); // Получаем все доступные слоты для врача
+        const endIndex = Math.min(doctor.currentIndex + 7, keys.length);
+        doctor.displayedSlots = keys.slice(doctor.currentIndex, endIndex);
+    }
+
+    selectDay(doctorId: any, dayIndex: number) {
+        this.isOpenDayDoctor.forEach((doctor: any, index: number) => {
+            if (doctorId === doctor.doctorId) {
+                this.isOpenDayDoctor[index].days.forEach((day: any) => {
+                    day.isSelect = false;
+                });
+                this.isOpenDayDoctor[index].currentView = dayIndex;
+                this.isOpenDayDoctor[index].days[dayIndex].isSelect =
+                    !this.isOpenDayDoctor[index].days[dayIndex].isSelect;
+            }
+        });
     }
 
     // Метод для получения дня недели и месяца
-  getDayOfWeekAndMonth(date: string): string {
-    const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-    const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-    const dayIndex = new Date(date).getDay();
-    const monthIndex = new Date(date).getMonth();
-    return `${daysOfWeek[dayIndex]}, ${months[monthIndex]}`;
-  }
-
-  addDates(): void {
-    const newStartDate = new Date(this.dates[this.dates.length - 1]);
-    newStartDate.setDate(newStartDate.getDate() + 1);
-    this.dates = this.generateDates(7, newStartDate);
-    this.selectedDate = this.dates[3];
-  }
-  
-  removeDates(): void {
-    const newStartDate = new Date(this.dates[0]);
-    newStartDate.setDate(newStartDate.getDate() - 1);
-    if (newStartDate.getTime() >= this.startDate.getTime()) {
-      this.dates = this.generateDates(7, newStartDate);
-      this.selectedDate = this.dates[3];
+    getDayOfWeekAndMonth(date: string): string {
+        const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+        const months = [
+            'Янв',
+            'Фев',
+            'Мар',
+            'Апр',
+            'Май',
+            'Июн',
+            'Июл',
+            'Авг',
+            'Сен',
+            'Окт',
+            'Ноя',
+            'Дек',
+        ];
+        const dayIndex = new Date(date).getDay();
+        const monthIndex = new Date(date).getMonth();
+        return `${daysOfWeek[dayIndex]}, ${months[monthIndex]}`;
     }
-  }
 
-  // Метод для выбора временного слота
-  selectTimeSlot(time: string): void {
-    this.selectedTime = time;
-    console.log('Выбран временной слот:', time);
-  }
+    //Метод для выбора временного слота
+    selectTimeSlot(time: string): void {
+        // this.selectedTime = time;
+        // console.log('Выбран временной слот:', time);
+    }
+
+    // Метод для фильтрации докторов по категории
+    onCategoryChange(event: Event) {
+        const selectElement = event.target as HTMLSelectElement;
+        this.selectedCategory = selectElement.value;
+        this.allFliter();
+    }
+
+    // Метод для фильтрации докторов по стажу
+    filterDoctorsByExperience(event: Event): void {
+        const selectedExperience = (event.target as HTMLSelectElement).value;
+        // Здесь вы можете фильтровать докторов на основе selectedExperience
+        // Например, преобразуем строку в нужный диапазон лет стажа
+        switch (selectedExperience) {
+            case '0-3 года':
+                this.experienceRange = [0, 3];
+                break;
+            case '3-5 лет':
+                this.experienceRange = [3, 5];
+                break;
+            case '5-10 лет':
+                this.experienceRange = [5, 10];
+                break;
+            case '10+ лет':
+                this.experienceRange = [10, Infinity];
+                break;
+            default:
+                this.experienceRange = [0, Infinity];
+                break;
+        }
+        this.allFliter();
+    }
+
+    // Метод для фильтрации докторов по вызову на дом
+    toggleHouseCallDoctors() {
+        console.log(this.showHouseCallOnly);
+        this.showHouseCallOnly = !this.showHouseCallOnly; // Переключение флага
+        this.allFliter();
+    }
+
+    // Общая фильтрация
+    allFliter() {
+        let doctors: IDoctor[] = [];
+        this.specialists?.data.doctors.forEach((doctor: IDoctor) => {
+            console.log(
+                doctor.doctor.experience >= this.experienceRange[0],
+                doctor.doctor.experience < this.experienceRange[1],
+                !this.showHouseCallOnly ||
+                    (this.showHouseCallOnly &&
+                        this.showHouseCallOnly === doctor.house_call),
+                doctor.specialties.some(
+                    (specialty) =>
+                        specialty.speciality_name === this.selectedCategory
+                )
+            );
+            if (
+                doctor.doctor.experience >= this.experienceRange[0] &&
+                doctor.doctor.experience < this.experienceRange[1] &&
+                (!this.showHouseCallOnly ||
+                    (this.showHouseCallOnly &&
+                        this.showHouseCallOnly === doctor.house_call))
+            ) {
+                if (
+                    doctor.specialties.some(
+                        (specialty) =>
+                            specialty.speciality_name === this.selectedCategory
+                    )
+                ) {
+                    doctors.push(doctor);
+                } else if (this.selectedCategory === 'all') {
+                    doctors.push(doctor);
+                }
+            }
+        });
+        this.displayDoctors = doctors;
+        console.log('ddd');
+    }
 }

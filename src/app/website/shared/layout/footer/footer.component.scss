@@ -59,6 +59,10 @@
                 }
             }
             & .contact-wrap {
+                ul li a {
+                    text-decoration: none;
+                    color: black;
+                }
                 @media (max-width: 480px) {
                     width: 100%;
                     & .contact {

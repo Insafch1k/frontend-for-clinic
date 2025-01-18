@@ -4,6 +4,7 @@
             <div class="navbar flex-pos">
                 <img
                     routerLink="/main"
+                    (click)="openMainRoute()"
                     src="assets/data/icon/header/logo.svg"
                     alt=""
                     class="img-logo"
@@ -37,30 +38,30 @@
                 </div>
                 <div class="contact-wrap">
                     <div class="picstr">
-                        <img
-                            src="assets/data/icon/insta.svg"
-                            alt=""
-                        />
-                        <img
-                            src="assets/data/icon/vk.svg"
-                            alt=""
-                        />
-                        <img
-                            src="assets/data/icon/whatsapp.svg"
-                            alt=""
-                        />
+                        <img src="assets/data/icon/insta.svg" alt="" />
+                        <img src="assets/data/icon/vk.svg" alt="" />
+                        <img src="assets/data/icon/whatsapp.svg" alt="" />
                     </div>
                     <ul class="contact">
-                        <li>8(8552) 25-05-03</li>
-                        <li>{{ email }}</li>
-                        <li>будни 09:00 - 17:00</li>
-                        <li>выходные 09:00 - 17:00</li>
+                        <li>
+                            <a class="two" href="tel:+88552250503"
+                                >8(8552) 25-05-03</a
+                            >
+                        </li>
+                        <li>
+                            <a href="mailto:{{ email }}">{{ email }}</a>
+                        </li>
+                        <li>будни 07:00 - 19:00</li>
+                        <li>Суббота 09:00 - 19:00</li>
+                        <li>Воскресенье 09:00 - 15:00</li>
                     </ul>
                 </div>
             </div>
         </div>
         <ul class="policy">
-            <li class="location">г.Набережные Челны, ул.Ахметшина, д.116</li>
+            <li class="location" (click)="goToYandex()">
+                г.Набережные Челны, ул.Ахметшина, д.116
+            </li>
             <li class="text-grey">Оферта</li>
             <li class="text-grey">Политика конфиденциальности</li>
             <li class="text-grey">Политика обработки персональных данных</li>
@@ -90,18 +91,9 @@
         <div class="info">
             <p>ООО "КЛИНИКА-03" ОГРН - 1223600016001 ИНН - 3665819839</p>
             <div class="diploms">
-                <img
-                    src="assets/data/image/dyplom 1.svg"
-                    alt=""
-                />
-                <img
-                    src="assets/data/image/dyplom 2.svg"
-                    alt=""
-                />
-                <img
-                    src="assets/data/image/dyplom 3.svg"
-                    alt=""
-                />
+                <img src="assets/data/image/dyplom 1.svg" alt="" />
+                <img src="assets/data/image/dyplom 2.svg" alt="" />
+                <img src="assets/data/image/dyplom 3.svg" alt="" />
             </div>
             <div class="taxes-info">
                 <p>Справка для налоговой</p>

@@ -110,9 +110,7 @@ ul {
     background-color: #ffffff;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
 }
-
 
 .colm-vert--cent {
     display: flex;
@@ -124,9 +122,6 @@ ul {
     font-weight: 500;
     font-size: 1.5rem;
 }
-
-
-
 
 .pg-background {
     margin-left: 275px;
@@ -193,11 +188,11 @@ ul {
 
     .main-button {
         position: absolute;
-        bottom: 10px; 
+        bottom: 10px;
         left: 50%;
-        transform: translateX(-50%); 
+        transform: translateX(-50%);
         display: flex;
-        gap: 10px; 
+        gap: 10px;
     }
 
     .select-all {
@@ -214,7 +209,7 @@ ul {
         background-color: rgba(255, 255, 255, 1);
         color: rgba(240, 68, 56, 1);
         font-weight: 500;
-        border:none;
+        border: none;
         cursor: pointer;
     }
 }
