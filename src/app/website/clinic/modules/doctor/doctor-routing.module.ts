@@ -5,13 +5,13 @@ import { AppointmentComponent } from './appointment/appointment.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'profile/:id',
         component: DoctorComponent,
     },
     {
-        path:'zap',
-        component:AppointmentComponent
-    }
+        path: 'appointment',
+        component: AppointmentComponent,
+    },
 ];
 
 @NgModule({

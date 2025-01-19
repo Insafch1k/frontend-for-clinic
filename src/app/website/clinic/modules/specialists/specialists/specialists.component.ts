@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SpecialistsService } from 'src/app/website/core/services/specialists.service';
 import {
     IDoctor,
@@ -39,7 +40,10 @@ export class SpecialistsComponent implements OnInit {
     // Массивы для дат и временных слотов
     selectedCategory: string | null = null;
 
-    constructor(private readonly specServ: SpecialistsService) {}
+    constructor(
+        private readonly specServ: SpecialistsService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         this.fetchSpecialists();
@@ -253,5 +257,9 @@ export class SpecialistsComponent implements OnInit {
         });
         this.displayDoctors = doctors;
         console.log('ddd');
+    }
+
+    goToDoctor(doctorId: number) {
+        this.router.navigate(['/doctor/profile', doctorId]);
     }
 }

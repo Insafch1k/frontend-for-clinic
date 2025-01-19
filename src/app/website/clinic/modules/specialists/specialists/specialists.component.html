@@ -54,14 +54,16 @@
                 </div>
                 <div class="two">
                     <div class="two-info">
-                        <h2>{{ specialist.doctor.fullname }}</h2>
+                        <h2 (click)="goToDoctor(specialist.doctor.doctor_id)">
+                            {{ specialist.doctor.fullname }}
+                        </h2>
                         <p>{{ specialist.qualification[0].education_name }}</p>
                         <p>Стаж: {{ specialist.doctor.experience }}</p>
                     </div>
                 </div>
                 <div class="three">
                     <div class="three-info">
-                        <div class="date-picker" #datePicker>
+                        <div class="date-picker">
                             <button
                                 (click)="
                                     scrollLeft(specialist.doctor.doctor_id)

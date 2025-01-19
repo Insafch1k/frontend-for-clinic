@@ -55,6 +55,14 @@ const routes: Routes = [
                 title: 'Главная - доктор',
             },
             {
+                path: 'stock',
+                loadChildren: () =>
+                    import('./modules/stock/stock.module').then(
+                        (m) => m.StockModule
+                    ),
+                title: 'Главная - акции',
+            },
+            {
                 path: '**',
                 redirectTo: 'main',
             },

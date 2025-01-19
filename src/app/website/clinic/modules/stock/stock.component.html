@@ -1,0 +1,16 @@
+<div class="stock-wrapper">
+    <div class="route">Главная / Акции</div>
+
+    <div class="stock">
+        <nav>
+            <div routerLink="promotions" routerLinkActive="active">Акции</div>
+            <div routerLink="tests" routerLinkActive="active">Тесты</div>
+            <div routerLink="discountns" routerLinkActive="active">Скидки</div>
+            <div routerLink="other" routerLinkActive="active">Другое</div>
+        </nav>
+
+        <div class="lists">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
