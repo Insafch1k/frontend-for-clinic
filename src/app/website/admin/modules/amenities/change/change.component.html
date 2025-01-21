@@ -1,0 +1,25 @@
+<div class="pg-background">
+    <h1 class="title">Изменить услугу</h1>
+    <div class="main-window">
+        <div class="titlee">
+            <h2>Основная информация</h2>
+        </div>
+        <div class="spisok">
+            <div class="item">
+                <h2>Услуга</h2>
+                <input type="text" class="text-field">
+            </div>
+            <div class="item">
+                <h2>Стоимость</h2>
+                <input type="text" class="text-field">
+            </div>
+            <div class="item">
+                <h2>Специализация</h2>
+                <select class="text-fieeld">
+                    <option *ngFor="let specialization of specializations" [value]="specialization">{{ specialization }}</option>
+                </select>
+            </div>
+        </div>
+        <button class="save">Сохранить изменения</button>
+    </div>
+</div>

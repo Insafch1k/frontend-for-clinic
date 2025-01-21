@@ -1,0 +1,31 @@
+<div class="pg-background">
+    <h1 class="title">Изменить анализ</h1>
+    <div class="main-window">
+        <div class="titlee">
+            <h2>Основная информация</h2>
+        </div>
+        <div class="spisok">
+            <div class="item">
+                <h2>Название</h2>
+                <input type="text" class="text-field">
+            </div>
+            <div class="item">
+                <h2>Врач</h2>
+                <select (change)="onDoctorChange($event)" class="text-field">
+                    <option *ngFor="let doctor of doctors" [value]="doctor.name">{{ doctor.name }}</option>
+                </select>
+            </div>
+            <div class="item">
+                <h2>Категория</h2>
+                <select (change)="onAnalysisChange($event)" class="text-field">
+                    <option *ngFor="let analysis of analyses" [value]="analysis.name">{{ analysis.name }}</option>
+                </select>
+            </div>
+            <div class="item">
+                <h2>Стоимость</h2>
+                <input type="text" class="text-field">
+            </div>
+        </div>
+        <button class="save">Сохранить изменения</button>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+.main-window {
+    height: calc(96vh - 185px);
+}
+
+.title {
+    margin-bottom: 15px;
+    h2 {
+        margin-top: 10px;
+        font-size: 28px;
+    }
+}
+
+.titlee {
+    padding: 10px;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    h2 {
+        margin-top: 10px;
+        font-size: 28px;
+    }
+}
+
+.spisok {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 35vw;
+    align-items: center;
+    margin-bottom: 15px;
+    h2 {
+        font-size: 18px;
+    }
+    input, select {
+        font-size: 16px;
+    }
+}
+
+.text-field {
+    width: 50%;
+    padding: 8px;
+    margin-left: 20px;
+    border: 1px solid rgba(153, 153, 153, 1);
+    border-radius: 0px;
+}
+
+.text-fieeld {
+    width: 52.5%;
+    padding: 8px;
+    margin-left: 20px;
+    border: 1px solid rgba(153, 153, 153, 1);
+    border-radius: 0px;
+}
+
+.save {
+    background-color: rgba(112, 178, 226, 1);
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    bottom: 15px; /* Размещаем внизу контейнера */
+    left: 50%;
+    transform: translateX(-50%); /* Центрируем по горизонтали */
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 500;
+}

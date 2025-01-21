@@ -1,32 +1,58 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { AmenitiesComponent } from './pages/amenities/amenities.component';
-import { AnalyzesComponent } from './pages/analyzes/analyzes.component';
-
-import { DoctorsComponent } from './pages/doctors/doctors.component';
-import { RecordsComponent } from './pages/records/records.component';
 
 const routes: Routes = [
-    {
+{
         path: '',
         component: AdminComponent,
-    },
-    {
-        path: 'amenities',
-        component: AmenitiesComponent,
-    },
-    {
-        path: 'analyzes',
-        component: AnalyzesComponent,
-    },
-    {
-        path: 'doctors',
-        component: DoctorsComponent,
-    },
-    {
-        path: 'records',
-        component: RecordsComponent,
+        children: [
+            { path: '', redirectTo: 'amenities', pathMatch: 'full' },
+            {
+                path: 'amenities',
+                loadChildren: () =>
+                    import('./modules/amenities/amenities.module').then(
+                        (m) => m.AmenitiesModule
+                    ),
+                title: 'Админ - Услуги',
+            },
+            {
+                path: 'analyzes',
+                loadChildren: () =>
+                    import('./modules/analyzes/analyzes.module').then(
+                        (m) => m.AnalyzesModule
+                    ),
+                title: 'Админ - Анализы',
+            },
+            {
+                path: 'applications-record',
+                loadChildren: () =>
+                    import('./modules/applications-record/applications-record.module').then(
+                        (m) => m.ApplicationsRecordModule
+                    ),
+                title: 'Админ - Заявки на запись',
+            },
+            {
+                path: 'doctors',
+                loadChildren: () =>
+                    import('./modules/doctors/doctors.module').then(
+                        (m) => m.DoctorsModule
+                    ),
+                title: 'Админ - Специалисты',
+            },
+            {
+                path: 'stocks',
+                loadChildren: () =>
+                    import('./modules/stocks/stocks.module').then(
+                        (m) => m.StocksModule
+                    ),
+                title: 'Админ - Анализы',
+            },
+            {
+                path: '**',
+                redirectTo: 'amenities',
+            },
+        ],
     },
 ];
 

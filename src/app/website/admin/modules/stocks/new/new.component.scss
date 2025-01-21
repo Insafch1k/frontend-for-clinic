@@ -1,0 +1,118 @@
+.main-window {
+    height: calc(96vh - 185px);
+}
+
+.title {
+    margin-bottom: 15px;
+    h2 {
+        margin-top: 10px;
+        font-size: 28px;
+    }
+}
+
+.titlee {
+    padding: 10px;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    h2 {
+        margin-top: 10px;
+        font-size: 28px;
+    }
+}
+
+.spisok {
+    display: flex;
+    align-items: start;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 30px;
+    h2 {
+        font-size: 18px;
+    }
+    input, select {
+        font-size: 16px;
+    }
+}
+
+.text-field {
+    width: 15vw;
+    padding: 8px;
+    margin-left: 20px;
+    border: 1px solid rgba(153, 153, 153, 1);
+    border-radius: 0px;
+}
+
+.for-picture {
+    margin-top: -50px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: auto;
+    margin-right: 15vw;
+    h2 {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+}
+
+.image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.image-placeholder-content {
+    text-align: center;
+}
+
+.picture {
+    width: 300px;
+    height: 169px;
+    background-color: #ccc;
+    margin-bottom: 10px;
+}
+
+.add-image-button, .change-image-button {
+    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(68, 62, 62, 1);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.image-requirements {
+    font-size: 12px;
+    color: rgba(68, 62, 62, 1);
+    margin-top: 10px;
+}
+.image-ready{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.preview-image {
+    width: 300px;
+    height: 169px;
+}
+
+.save {
+    background-color: rgba(112, 178, 226, 1);
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    bottom: 15px; /* Размещаем внизу контейнера */
+    left: 50%;
+    transform: translateX(-50%); /* Центрируем по горизонтали */
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 500;
+}

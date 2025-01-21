@@ -1,0 +1,29 @@
+<div class="pg-background">
+    <h1 class="title">Новая заявка на запись</h1>
+    <div class="main-window">
+        <div class="titlee">
+            <h2>Запись к врачу</h2>
+        </div>
+        <div class="spisok">
+            <div class="item">
+                <h2>Пациент</h2>
+                <input type="text" class="text-field">
+            </div>
+            <div class="item">
+                <h2>Врач</h2>
+                <select class="text-fieeld">
+                    <option *ngFor="let doctor of doctors" [value]="doctor">{{ doctor}}</option>
+                </select>
+            </div>
+            <div class="item">
+                <h2>Номер телефона</h2>
+                <input type="text" class="text-field">
+            </div>
+            <div class="item">
+                <h2>Дата рождения</h2>
+                <input type="text" class="text-field">
+            </div>
+        </div>
+        <button class="save">Добавиь запись</button>
+    </div>
+</div>

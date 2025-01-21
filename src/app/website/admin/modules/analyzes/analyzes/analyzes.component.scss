@@ -1,0 +1,103 @@
+.spisok {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    padding-top: 0px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 8px;
+    height: calc(96vh - 230px - 95px);
+    overflow-y: auto;
+}
+
+.headers {
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 1;
+}
+
+.headers h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(68, 62, 62, 1);
+    width: 24%;
+    text-align: left;
+    margin-left: 28px;
+}
+
+.request-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(245, 245, 245, 1);
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.request-item.selected {
+    background-color: rgba(220, 220, 220, 1);
+}
+
+.request-item p {
+    margin: 0;
+    width: 25%;
+    color: rgba(68, 62, 62, 1);
+    text-align: left;
+}
+
+.request-item input[type="checkbox"] {
+    display: none; /* Скрываем стандартный чекбокс */
+}
+
+.request-item input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.request-item input[type="checkbox"]:checked + label::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-left: -8px;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    color: rgba(68, 62, 62, 1);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.actions .edit {
+    color: rgba(68, 62, 62, 1);
+    font-weight: 500;
+}
+
+.actions .delete {
+    color: rgba(240, 68, 56, 1);
+    font-weight: 500;
+}

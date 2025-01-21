@@ -1,0 +1,33 @@
+<div class="pg-background">
+    <h1 class="title">Заявки на запись</h1>
+    <div class="functions">
+        <button routerLink="./new-record">+ Добавить запись</button>
+    </div>
+    <div class="main-window">
+        <div class="spisok">
+            <div class="headers">
+                <h2>Пациент</h2>
+                <h2>Врач</h2>
+                <h2>Номер телефона</h2>
+                <h2>Дата рождения</h2>
+                <h2>Действия</h2>
+            </div>
+            <div *ngFor="let request of appointmentRequests" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
+                <input type="checkbox" id="checkbox-{{request.patientName}}" [(ngModel)]="request.selected">
+                <label for="checkbox-{{request.patientName}}"></label>
+                <p>{{ request.patientName }}</p>
+                <p>{{ request.doctorName }}</p>
+                <p>{{ request.phoneNumber }}</p>
+                <p>{{ request.dateOfBirth }}</p>
+                <div class="actions">
+                    <button routerLink="./change" class="edit">Изменить</button>
+                    <button class="delete">Удалить</button>
+                </div>
+            </div>
+        </div>
+        <div class="main-button">
+            <button class="select-all" (click)="selectAll()">Выбрать все</button>
+            <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
+        </div>
+    </div>
+</div>

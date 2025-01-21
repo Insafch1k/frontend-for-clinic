@@ -1,0 +1,33 @@
+<div class="pg-background">
+    <h1 class="title">Новая акция</h1>
+    <div class="main-window">
+        <div class="titlee">
+            <h2>Основная информация</h2>
+        </div>
+        <div class="spisok">
+            <div class="item">
+                <h2>Категория</h2>
+                <select class="text-field" [(ngModel)]="newRecord.category">
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                </select>
+            </div>
+            <div class="for-picture">
+                <h2>Фотография</h2>
+                <div class="image-placeholder" *ngIf="!imagePreview">
+                    <div class="image-placeholder-content">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/*" id="fileInput" style="display: none;">
+                        <div class="picture"></div>
+                        <label for="fileInput" class="add-image-button">Загрузить изображение</label>
+                        <p class="image-requirements">Размер не более 2 МБ. <br> Формат изображения JPG.</p>
+                    </div>
+                </div>
+                <div *ngIf="imagePreview" class="image-ready">
+                    <img [src]="imagePreview" alt="Preview" class="preview-image">
+                    <input type="file" (change)="onFileSelected($event)" accept="image/*" id="fileInputChange" style="display: none;">
+                    <label for="fileInputChange" class="change-image-button">Изменить изображение</label>
+                </div>
+            </div>
+        </div>
+        <button class="save" (click)="saveRecord()">Добавить запись</button>
+    </div>
+</div>

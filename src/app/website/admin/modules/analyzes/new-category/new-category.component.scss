@@ -1,0 +1,176 @@
+.main-window {
+    height: calc(96vh - 185px);
+}
+
+.title {
+    margin-bottom: 15px;
+    h2 {
+        margin-top: 10px;
+        font-size: 28px;
+    }
+}
+
+.titlee {
+    padding: 10px;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    h2 {
+        margin-top: 10px;
+        font-size: 28px;
+    }
+}
+
+.spisok {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 35vw;
+    align-items: center;
+    margin-bottom: 15px;
+    h2 {
+        font-size: 18px;
+    }
+    input, select {
+        font-size: 16px;
+        width: 334px;
+        padding: 8px;
+        margin-left: 20px;
+        border: 1px solid rgba(153, 153, 153, 1);
+        border-radius: 0px;
+    }
+}
+
+.iteem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-right: 35.8vw;
+    h2 {
+        font-size: 18px;
+    }
+    .connector {
+        display: flex;
+        align-items: center;
+        img {
+            margin-left: -30px;
+            margin-top: 0px;
+            cursor: pointer;
+        }
+    }
+    select {
+        font-size: 16px;
+        width: 350px;
+        padding: 8px;
+        margin-left: 20px;
+        border: 1px solid rgba(153, 153, 153, 1);
+        border-radius: 0px;
+        -webkit-appearance: none; /* Для Chrome и Safari */
+        -moz-appearance: none; /* Для Firefox */
+        appearance: none; /* Для всех современных браузеров */
+        background-color: white; /* Это очень важно */ 
+    }
+}
+
+.connector {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    select{
+        cursor: pointer;
+    }
+    img {
+        margin-left: -30px;
+        margin-top: 0px;
+        cursor: pointer;
+    }
+}
+
+.experience {
+    width: 350px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+    display: flex;
+    h2 {
+        font-size: 18px;
+    }
+    input {
+        width: 335px;
+        padding: 8px;
+        font-size: 16px;
+        margin-left: 230px;
+        border: 1px solid rgba(153, 153, 153, 1);
+        color: black;
+    }
+}
+
+.OpenList {
+    position: absolute;
+    background-color: #ffffff;
+    width: 350px;
+    height: 265px;
+    margin-left: 315px;
+    border: 1px solid #264653BF;
+    border-radius: 10px;
+    margin-top: 40px;
+    z-index: 2;
+    text-align: center;
+    .topP {
+        margin-left: 20px;
+        color: #264653BF;
+        margin-bottom: 5px;
+    }
+}
+
+.candidat {
+    display: flex;
+    width: 350px;
+    input {
+        margin-top: 8px;
+        height: 15px;
+        margin-left: -100px;
+    }
+    p {
+        color: #264653BF;
+        margin-left: -100px;
+        margin-top: 6px;
+        text-align: left;
+        width: 230px;
+    }
+}
+
+.apply-button {
+    background-color: rgba(112, 178, 226, 1);
+    color: white;
+    border: none;
+    font-size: 18px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.text-field {
+    width: 50%;
+    padding: 8px;
+    margin-left: 20px;
+    border: 1px solid rgba(153, 153, 153, 1);
+    border-radius: 0px;
+}
+
+.save {
+    background-color: rgba(112, 178, 226, 1);
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    bottom: 15px; /* Размещаем внизу контейнера */
+    left: 50%;
+    transform: translateX(-50%); /* Центрируем по горизонтали */
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 500;
+}
