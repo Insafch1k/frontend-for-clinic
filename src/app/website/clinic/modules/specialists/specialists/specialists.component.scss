@@ -63,6 +63,7 @@
     padding-left: 30px;
     cursor: pointer;
     user-select: none;
+    font-size: 0.8rem;
 }
 
 .custom-label::before {
@@ -117,6 +118,11 @@
         "A A B B   B B C C   C C C C"
         "A A F F   F F F F   F F F F";
     grid-gap: 10px;
+    border-radius: 8px;
+
+    &:hover {
+        transform: scale(1.01);
+    }
 
     .one {
         // background-color: aqua;
@@ -182,6 +188,12 @@
             padding-top: 15px;
             padding-left: 5%;
             font-size: 18px;
+
+            &:hover {
+                color: #7eb3c1;
+                text-decoration: underline;
+                cursor: pointer;
+            }
         }
         p {
             padding-top: 15px;
@@ -238,6 +250,13 @@
                 border: none;
                 font-size: 20px;
                 cursor: pointer;
+
+                &:hover {
+                    color: white;
+                    border-radius: 50%;
+                    background-color: #7eb3c1;
+                    padding: 1px 8px 3px;
+                }
             }
 
             .date {
@@ -248,6 +267,16 @@
                 border: 1px solid transparent;
                 cursor: pointer;
                 font-size: 12px;
+
+                &:hover {
+                    transform: scale(1.02);
+                    background-color: #7eb3c1;
+                    border-radius: 8px;
+                    color: white;
+                    p {
+                        color: white;
+                    }
+                }
                 @media (max-width: 556px) {
                     padding: 5px;
                     margin: 0 5px;

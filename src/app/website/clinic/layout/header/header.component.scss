@@ -72,6 +72,7 @@ header {
         img {
             height: 80px;
             cursor: pointer;
+            user-select: none;
             &:hover {
                 transform: scale(1.07);
             }

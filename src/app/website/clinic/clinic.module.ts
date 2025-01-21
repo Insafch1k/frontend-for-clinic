@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ClinicComponent } from './clinic.component';
-import { HttpClientModule } from '@angular/common/http';
 import { ClinicRoutingModule } from './clinic-routing.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -14,6 +13,6 @@ import { SharedModule } from '../shared/shared.module';
         FooterComponent,
         BurgerMenuComponent,
     ],
-    imports: [HttpClientModule, ClinicRoutingModule, SharedModule],
+    imports: [ClinicRoutingModule, SharedModule],
 })
 export class ClinicModule {}
