@@ -8,10 +8,6 @@ const routes: Routes = [
         path: 'profile/:id',
         component: DoctorComponent,
     },
-    {
-        path: 'appointment',
-        component: AppointmentComponent,
-    },
 ];
 
 @NgModule({

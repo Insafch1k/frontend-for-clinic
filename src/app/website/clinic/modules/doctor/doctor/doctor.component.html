@@ -1,146 +1,180 @@
 <div class="page-background">
-    <div class="doctor">
-        <div class="title">
-            <h2>
-                Главная / Специалисты / Гастроэнтеролог / Фамилия Имя Отчество
-            </h2>
+    <div class="doctor-wrapper">
+        <div class="route">
+            Главная / Специалисты / Гастроэнтеролог /
+            {{ doctorData.doctor.fullname }}
         </div>
-        <div class="main">
-            <div class="about">
-                <div class="one">
-                    <div class="one-info">
-                        <div class="avatarka">
-                            <img
-                                src="assets/data/icon/specialists/ava.png"
-                                alt=""
-                            />
-                        </div>
-                        <div class="stars">
-                            <img
-                                src="assets/data/icon/specialists/звезды.svg"
-                                alt=""
-                            />
-                        </div>
-                        <div class="number">
-                            <p>222 отзывов</p>
-                        </div>
+        <div class="doctor">
+            <div class="doctor-block">
+                <div class="doctor-block_info">
+                    <img src="{{ doctorData.doctor.image }}" alt="" />
+                    <div class="doctor-block_info-desc">
+                        <p class="doctor-block_info-name">
+                            {{ doctorData.doctor.fullname }}
+                        </p>
+                        <p>Специальности: {{ doctorData.specialties }}</p>
+                        <p class="doctor-block_info-experience">
+                            Стаж:
+                            {{
+                                getExperienceText(doctorData.doctor.experience)
+                            }}
+                        </p>
+                        <p class="doctor-block_info-phone">
+                            + {{ doctorData.doctor.phone_number }}
+                        </p>
                     </div>
                 </div>
-                <div class="two">
-                    <div class="two-info">
-                        <div class="name">
-                            <h2>Фамилия Имя Отчество</h2>
-                        </div>
-                        <div class="work">
-                            <p>Должность 1. должность 2, должность ....</p>
-                            <p>Стаж хх лет</p>
-                        </div>
-                        <div class="services">
-                            <p>Название услуги - 800 руб.</p>
-                            <p>Название услуги - 800 руб.</p>
-                            <p>Название услуги - 800 руб.</p>
-                        </div>
-                        <p class="number">+7 (999)-999-99-99</p>
-                        <span class="otz-btn">Оставить отзыв</span>
-                    </div>
-                </div>
-                <div class="three">
-                    <div class="three-info">
-                        <div class="information">
-                            <div class="one-row">
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
+                <div class="doctor-block_record">
+                    <div class="date-wrapp">
+                        <p class="select-time">Выберите время:</p>
+                        <div class="date-block" #dateBlock>
+                            <div
+                                class="empty-arrow"
+                                *ngIf="isOpenDayDoctor.currentIndex <= 0"
+                            ></div>
+                            <div
+                                class="arrow"
+                                (click)="scrollLeft()"
+                                *ngIf="isOpenDayDoctor.currentIndex > 0"
+                            >
+                                <svg
+                                    width="6"
+                                    height="8"
+                                    viewBox="0 0 6 8"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z"
+                                        fill="#0081EC"
+                                    />
+                                </svg>
                             </div>
-                            <div class="one-row">
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
+                            <div
+                                *ngFor="
+                                    let day of isOpenDayDoctor.displayedSlots;
+                                    let i = index
+                                "
+                                class="date"
+                                (click)="selectDay(i)"
+                                [class.selected]="
+                                    isOpenDayDoctor.days[i].isSelect
+                                "
+                            >
+                                <p>{{ getDayOfWeekAndMonth(day) }}</p>
+                                <p>{{ day | date : "dd" }}</p>
                             </div>
-                            <div class="one-row">
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
-                                <div class="one-object"></div>
+                            <div
+                                class="empty-arrow"
+                                *ngIf="
+                                    isOpenDayDoctor.currentIndex + 7 ===
+                                        isOpenDayDoctor.lenght ||
+                                    isOpenDayDoctor.lenght <= 7
+                                "
+                            ></div>
+                            <div
+                                class="arrow"
+                                (click)="scrollRight()"
+                                *ngIf="
+                                    isOpenDayDoctor.currentIndex + 7 !==
+                                        isOpenDayDoctor.lenght &&
+                                    isOpenDayDoctor.lenght > 7
+                                "
+                                style="transform: rotate(180deg)"
+                            >
+                                <svg
+                                    width="6"
+                                    height="8"
+                                    viewBox="0 0 6 8"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z"
+                                        fill="#0081EC"
+                                    />
+                                </svg>
                             </div>
-                            <div class="title-block">
-                                <p>время и дни записи</p>
+                        </div>
+
+                        <div
+                            class="time-wrapper"
+                            [style.width.px]="dateBlock.offsetWidth"
+                        >
+                            <div
+                                class="time-slots"
+                                *ngIf="
+                                    isOpenDayDoctor.days[
+                                        isOpenDayDoctor.currentView
+                                    ].isSelect
+                                "
+                            >
+                                <div
+                                    *ngFor="
+                                        let time of doctorData.slot_date[
+                                            isOpenDayDoctor.days[
+                                                isOpenDayDoctor.currentView
+                                            ].day
+                                        ];
+                                        let c = index
+                                    "
+                                    class="time-slot"
+                                    [class.selected]="
+                                        isOpenDayDoctor.days[
+                                            isOpenDayDoctor.currentView
+                                        ].slot[c]
+                                    "
+                                    (click)="selectTimeSlot(time)"
+                                >
+                                    {{ time }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="detail">
-                <div class="education">
-                    <h2>Квалификация и образование</h2>
-                    <div class="education-spisok">
-                        <p>
-                            2003 год - Казанский государственный медицинский
-                            университет (педиатрия) Базовое образование
-                        </p>
-                        <p>
-                            2003 год - Казанский государственный медицинский
-                            университет (педиатрия) Базовое образование
-                        </p>
-                        <p>
-                            2003 год - Казанский государственный медицинский
-                            университет (педиатрия) Базовое образование
-                        </p>
-                    </div>
+            <div class="education">
+                <h2 class="name">Квалификация и образование</h2>
+                <div *ngFor="let ed of doctorData.qualification">
+                    {{ ed.year }} - {{ ed.education_name }}
                 </div>
-
-                <div class="otz-spisok">
-                    <div class="otz-spisok-title">
-                        <h2>Отзывы</h2>
+            </div>
+            <div class="reviews">
+                <h2 class="name">Отзывы</h2>
+                <div *ngFor="let review of doctorData.reviews" class="review">
+                    <div class="review-left-side">
+                        <p class="pacient">
+                            Пациент <br class="pacient-br" />{{
+                                review.phone | phoneFormat
+                            }}
+                        </p>
+                        <p class="date">{{ review.date | reviewDate }}</p>
                     </div>
-                    <div class="otz-spisok-top">
-                        <p class="otz-spisok-top-name">Оценка:</p>
-                        <p class="otz-all">Все 68</p>
-                        <p class="otz-true">Положительно 68</p>
-                        <p class="otz-false">Отрицательно 0</p>
-                    </div>
-                    <div
-                        class="otz-spisok-main"
-                        *ngFor="
-                            let review of reviews | slice : 0 : displayedReviews
-                        "
-                    >
-                        <div class="spisok-main-left">
-                            <p class="otz-role">{{ review.role }}</p>
-                            <p class="otz-phonenumber">
-                                {{ review.phoneNumber }}
-                            </p>
-                            <p class="otz-date">{{ review.date }}</p>
-                            <p class="otz-time">{{ review.time }}</p>
-                        </div>
-                        <div class="spisok-main-right">
-                            <div class="otz-name">
-                                <p>{{ review.name }}</p>
-                            </div>
-                            <div class="otz-situation">
-                                <p>{{ review.situation }}</p>
-                            </div>
-                            <div class="reception-date">
-                                <img
-                                    src="assets/data/icon/doctor/Vector (5).svg"
-                                    alt=""
+                    <div class="review-rigth-side">
+                        <p class="history">История пациента</p>
+                        <p>{{ review.description }}</p>
+                        <div class="was-reception">
+                            <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 12 12"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M6 6H8.5V8.5H6V6ZM9.5 1.5H9V0.5H8V1.5H4V0.5H3V1.5H2.5C1.95 1.5 1.5 1.95 1.5 2.5V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9.5C10.05 10.5 10.5 10.05 10.5 9.5V2.5C10.5 1.95 10.05 1.5 9.5 1.5ZM9.5 2.5V3.5H2.5V2.5H9.5ZM2.5 9.5V4.5H9.5V9.5H2.5Z"
+                                    fill="#5C5C5C"
                                 />
-                                <p>{{ review.receptionDate }}</p>
-                            </div>
+                            </svg>
+                            <p>Прием был в ноябре 2024</p>
                         </div>
-                    </div>
-                    <div class="button-more">
-                        <button (click)="loadMoreReviews()">
-                            Загрузить еще
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="isOpenAppointment">
+    <app-appointment></app-appointment>
+</ng-container>

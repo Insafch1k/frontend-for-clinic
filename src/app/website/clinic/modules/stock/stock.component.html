@@ -1,16 +1,41 @@
 <div class="stock-wrapper">
     <div class="route">Главная / Акции</div>
-
     <div class="stock">
         <nav>
-            <div routerLink="promotions" routerLinkActive="active">Акции</div>
-            <div routerLink="tests" routerLinkActive="active">Тесты</div>
-            <div routerLink="discountns" routerLinkActive="active">Скидки</div>
-            <div routerLink="other" routerLinkActive="active">Другое</div>
+            <div
+                (click)="selectSection(0)"
+                [ngClass]="{ active: currentIndex === 0 }"
+            >
+                Акции
+            </div>
+            <div
+                (click)="selectSection(1)"
+                [ngClass]="{ active: currentIndex === 1 }"
+            >
+                Тесты
+            </div>
+            <div
+                (click)="selectSection(2)"
+                [ngClass]="{ active: currentIndex === 2 }"
+            >
+                Скидки
+            </div>
+            <div
+                (click)="selectSection(3)"
+                [ngClass]="{ active: currentIndex === 3 }"
+            >
+                Другое
+            </div>
         </nav>
 
         <div class="lists">
-            <router-outlet></router-outlet>
+            <app-stock-loading
+                *ngIf="showStockLoading || isLoading"
+            ></app-stock-loading>
+            <app-discounts
+                *ngIf="!showStockLoading || !isLoading"
+                [actionList]="currentList"
+            ></app-discounts>
         </div>
     </div>
 </div>

@@ -4,14 +4,18 @@
         <div class="choice-menu">
             <div class="dropdown" *ngIf="isMobile">
                 <select (change)="onSelectSpecialistFromDropdown($event)">
-                    <option *ngFor="let specialist of specialists" [value]="specialist" [selected]="selectedSpecialist === specialist">
-                    {{ specialist }}
+                    <option
+                        *ngFor="let specialist of specialists; let i = index"
+                        [value]="i"
+                        [selected]="selectedSpecialist === specialist"
+                    >
+                        {{ specialist }}
                     </option>
                 </select>
             </div>
             <ul *ngIf="!isMobile">
                 <li
-                    *ngFor="let specialist of specialists"
+                    *ngFor="let specialist of specialists; let i = index"
                     (click)="onSelectSpecialistFromList(specialist)"
                     [class.selected]="selectedSpecialist === specialist"
                     class="menu-item"
@@ -22,7 +26,11 @@
         </div>
         <div class="main-service">
             <div class="services">
-                <div *ngFor="let service of getSelectedServices()" class="service-item" #serviceItem>
+                <div
+                    *ngFor="let service of selectedService.services"
+                    class="service-item"
+                    #serviceItem
+                >
                     <div class="service-name">{{ service.name }}</div>
                     <div class="service-divider"></div>
                     <div class="service-price">{{ service.price }}</div>
@@ -30,8 +38,9 @@
             </div>
         </div>
         <div class="dowload">
-            <p class="dow-left" (click)="downloadPriceList(selectedSpecialist!)">Скачать этот прайс-лист</p>
-            <p class="dow-right" (click)="downloadFullPriceList()">Скачать полный прайс-лист</p>
+            <p class="dow-right" (click)="downloadFullPriceList()">
+                Скачать полный прайс-лист
+            </p>
         </div>
     </div>
 </div>

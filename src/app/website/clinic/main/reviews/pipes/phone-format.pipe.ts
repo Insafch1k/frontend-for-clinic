@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'phoneFormat',
 })
 export class PhoneFormatPipe implements PipeTransform {
-    transform(value: number): string {
+    transform(value: string): string {
         if (!value) {
             return '';
         }

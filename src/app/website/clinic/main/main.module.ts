@@ -10,11 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SuperiorityComponent } from './superiority/superiority.component';
 import { PhotoCollageComponent } from './photo-collage/photo-collage.component';
 import { ReviewsComponent } from './reviews/reviews.component';
-import { ReviewDatePipe } from './reviews/pipes/review-date.pipe';
-import { MonthYearPipe } from './reviews/pipes/month-year.pipe';
-import { PhoneFormatPipe } from './reviews/pipes/phone-format.pipe';
 import { EmergencyServiceComponent } from './emergency-service/emergency-service.component';
 import { MapComponent } from './map/map.component';
+import { SharedModule } from '../../shared/shared.module';
+import { BidService } from './bid.service';
 
 @NgModule({
     declarations: [
@@ -26,12 +25,15 @@ import { MapComponent } from './map/map.component';
         SuperiorityComponent,
         PhotoCollageComponent,
         ReviewsComponent,
-        ReviewDatePipe,
-        MonthYearPipe,
-        PhoneFormatPipe,
         EmergencyServiceComponent,
         MapComponent,
     ],
-    imports: [CommonModule, MainRoutingModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        MainRoutingModule,
+        ReactiveFormsModule,
+        SharedModule,
+    ],
+    providers: [BidService],
 })
 export class MainModule {}

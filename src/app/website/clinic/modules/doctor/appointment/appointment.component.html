@@ -1,142 +1,150 @@
-<div class="zapis">
-    <div class="main">
-        <div class="top-box">
-            <h2>
-                Заполните и проверьте данные, чтобы записаться к выбранному
-                врачу
-            </h2>
-            <div class="close">
-                <img src="assets/data/icon/close.svg" alt="" />
-            </div>
-        </div>
-        <div class="box-main">
-            <div class="main-left">
-                <div class="left-top">
-                    <div class="select-container">
-                        <select [(ngModel)]="selectedSpecialization">
-                            <option value="" disabled selected>
-                                Специальность врача
-                            </option>
-                            <option
-                                *ngFor="let specialization of specializations"
-                                [value]="specialization"
-                            >
-                                {{ specialization }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="select-container">
-                        <select [(ngModel)]="selectedDoctor">
-                            <option value="" disabled selected>Врач</option>
-                            <option
-                                *ngFor="
-                                    let doctor of doctors[
-                                        selectedSpecialization
-                                    ]
-                                "
-                                [value]="doctor"
-                            >
-                                {{ doctor }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="select-container">
-                        <select [(ngModel)]="selectedAppointmentType">
-                            <option value="" disabled selected>
-                                Первичный прием
-                            </option>
-                            <option
-                                *ngFor="let type of appointmentTypes"
-                                [value]="type"
-                            >
-                                {{ type }}
-                            </option>
-                        </select>
-                    </div>
+<div class="popup-wrapper">
+    <div class="zapis">
+        <div class="main">
+            <div class="top-box">
+                <h2>
+                    Заполните и проверьте данные, чтобы записаться к выбранному
+                    врачу
+                </h2>
+                <div class="close">
+                    <img src="assets/data/icon/close.svg" alt="" />
                 </div>
-                <div class="left-bottom">
-                    <div class="date-picker">
-                        <button (click)="removeDates()">←</button>
-                        <div
-                            *ngFor="let date of dates"
-                            class="date"
-                            [class.selected]="date === selectedDate"
-                            (click)="selectedDate = date"
-                        >
-                            {{ date | date : "dd" }}
-                            {{ getDayOfWeekAndMonth(date) }}
+            </div>
+            <div class="box-main">
+                <div class="main-left">
+                    <div class="left-top">
+                        <div class="select-container">
+                            <select [(ngModel)]="selectedSpecialization">
+                                <option value="" disabled selected>
+                                    Специальность врача
+                                </option>
+                                <option
+                                    *ngFor="
+                                        let specialization of specializations
+                                    "
+                                    [value]="specialization"
+                                >
+                                    {{ specialization }}
+                                </option>
+                            </select>
                         </div>
-                        <button (click)="addDates()">→</button>
-                    </div>
-                    <div class="time-slots">
-                        <div
-                            *ngFor="let time of timeSlots[selectedDate]"
-                            class="time-slot"
-                            [class.selected]="time === selectedTime"
-                            (click)="selectTimeSlot(time)"
-                        >
-                            {{ time }}
+                        <div class="select-container">
+                            <select [(ngModel)]="selectedDoctor">
+                                <option value="" disabled selected>Врач</option>
+                                <option
+                                    *ngFor="
+                                        let doctor of doctors[
+                                            selectedSpecialization
+                                        ]
+                                    "
+                                    [value]="doctor"
+                                >
+                                    {{ doctor }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="select-container">
+                            <select [(ngModel)]="selectedAppointmentType">
+                                <option value="" disabled selected>
+                                    Первичный прием
+                                </option>
+                                <option
+                                    *ngFor="let type of appointmentTypes"
+                                    [value]="type"
+                                >
+                                    {{ type }}
+                                </option>
+                            </select>
                         </div>
                     </div>
+                    <div class="left-bottom">
+                        <div class="date-picker">
+                            <button (click)="removeDates()">←</button>
+                            <div
+                                *ngFor="let date of dates"
+                                class="date"
+                                [class.selected]="date === selectedDate"
+                                (click)="selectedDate = date"
+                            >
+                                {{ date | date : "dd" }}
+                                {{ getDayOfWeekAndMonth(date) }}
+                            </div>
+                            <button (click)="addDates()">→</button>
+                        </div>
+                        <div class="time-slots">
+                            <div
+                                *ngFor="let time of timeSlots[selectedDate]"
+                                class="time-slot"
+                                [class.selected]="time === selectedTime"
+                                (click)="selectTimeSlot(time)"
+                            >
+                                {{ time }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-right">
+                    <div class="select-container">
+                        <select [(ngModel)]="selectedService">
+                            <option value="" disabled selected>
+                                Название услуги
+                            </option>
+                            <option
+                                *ngFor="let service of services"
+                                [value]="service"
+                            >
+                                {{ service }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="surname">
+                        <input
+                            type="text"
+                            [(ngModel)]="surname"
+                            placeholder="Фамилия"
+                        />
+                    </div>
+                    <div class="name">
+                        <input
+                            type="text"
+                            [(ngModel)]="name"
+                            placeholder="Имя"
+                        />
+                    </div>
+                    <div class="number-phone">
+                        <input
+                            type="text"
+                            [(ngModel)]="phoneNumber"
+                            placeholder="Введите номер телефона"
+                        />
+                    </div>
+                    <div class="address">
+                        <p class="adr">Адрес</p>
+                        <p class="adr-data">
+                            г.Набережные Челны, ул.Ахметшина, д.116
+                        </p>
+                    </div>
+                    <div class="cost">
+                        <p class="co">Стоимость приема</p>
+                        <p class="co-data">ххххх руб.</p>
+                    </div>
                 </div>
             </div>
-            <div class="main-right">
-                <div class="select-container">
-                    <select [(ngModel)]="selectedService">
-                        <option value="" disabled selected>
-                            Название услуги
-                        </option>
-                        <option
-                            *ngFor="let service of services"
-                            [value]="service"
-                        >
-                            {{ service }}
-                        </option>
-                    </select>
-                </div>
-                <div class="surname">
+            <div class="buttons-for">
+                <div class="agreement">
                     <input
-                        type="text"
-                        [(ngModel)]="surname"
-                        placeholder="Фамилия"
+                        type="checkbox"
+                        id="agreementCheckbox"
+                        [(ngModel)]="agreement"
                     />
+                    <label for="agreementCheckbox"
+                        >даю согласие на обработку персональных данных в
+                        соответствии с <br />
+                        <p>“Политикой конфиденциальности”.</p>
+                    </label>
                 </div>
-                <div class="name">
-                    <input type="text" [(ngModel)]="name" placeholder="Имя" />
-                </div>
-                <div class="number-phone">
-                    <input
-                        type="text"
-                        [(ngModel)]="phoneNumber"
-                        placeholder="Введите номер телефона"
-                    />
-                </div>
-                <div class="address">
-                    <p class="adr">Адрес</p>
-                    <p class="adr-data">
-                        г.Набережные Челны, ул.Ахметшина, д.116
-                    </p>
-                </div>
-                <div class="cost">
-                    <p class="co">Стоимость приема</p>
-                    <p class="co-data">ххххх руб.</p>
-                </div>
+                <button (click)="submitForm()">Записаться</button>
             </div>
-        </div>
-        <div class="buttons-for">
-            <div class="agreement">
-                <input
-                    type="checkbox"
-                    id="agreementCheckbox"
-                    [(ngModel)]="agreement"
-                />
-                <label for="agreementCheckbox"
-                    >даю согласие на обработку персональных данных в
-                    соответствии с <br />
-                    <p>“Политикой конфиденциальности”.</p>
-                </label>
-            </div>
-            <button (click)="submitForm()">Записаться</button>
         </div>
     </div>
 </div>

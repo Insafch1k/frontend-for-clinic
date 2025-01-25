@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BidService } from '../bid.service';
+import { IBid } from '../main-bid.interface';
 
 @Component({
     selector: 'app-req-record',
@@ -15,7 +17,7 @@ export class ReqRecordComponent implements OnInit {
         'Офтальмолог',
     ];
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private readonly bidServ: BidService) {
         this.appointmentForm = this.fb.group({
             surname: ['', Validators.required],
             name: ['', Validators.required],
@@ -43,6 +45,15 @@ export class ReqRecordComponent implements OnInit {
     onSubmit() {
         if (this.appointmentForm.valid) {
             console.log(this.appointmentForm.value);
+            const sendData: IBid = {
+                patient_surname: this.appointmentForm.value.surname,
+                patient_name: this.appointmentForm.value.name,
+                patient_date_of_birth: this.appointmentForm.value.birthDate,
+                patient_phone: this.appointmentForm.value.phone,
+                speciality_id: 1,
+                personal_data: this.appointmentForm.value.consent,
+            };
+            this.bidServ.sendBid(sendData);
             this.appointmentForm.reset();
         }
     }

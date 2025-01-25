@@ -1,5 +1,5 @@
 export interface IReview {
-    contact: number;
+    contact: string;
     date: Date;
     rating: number;
     history: string;

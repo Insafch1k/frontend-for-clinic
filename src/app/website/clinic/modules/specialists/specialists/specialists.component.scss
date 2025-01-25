@@ -1,3 +1,8 @@
+.route {
+    margin-left: 10.5%;
+    margin-right: 10.5%;
+}
+
 .title {
     margin-left: 10.5%;
     margin-top: 25px;
@@ -266,7 +271,7 @@
                 padding: 10px;
                 border: 1px solid transparent;
                 cursor: pointer;
-                font-size: 12px;
+                font-size: 11px;
 
                 &:hover {
                     transform: scale(1.02);
@@ -289,6 +294,9 @@
                 &.selected {
                     background-color: #ffffff;
                     border-radius: 8px 8px 0 0;
+                    p {
+                        color: black;
+                    }
                     &.selected {
                         background-color: #ffffff;
                         border-radius: 8px 8px 0 0;

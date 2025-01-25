@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ISpecialists } from '../types/spacialict.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { API_URL } from '../constants/constant';
 import { catchError } from 'rxjs';
+import { ISpecialists } from 'src/app/website/core/types/spacialict.interface';
 
 @Injectable({
     providedIn: 'root',

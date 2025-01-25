@@ -9,7 +9,7 @@ import { IReview } from './reviews.interface';
 export class ReviewsComponent {
     reviews: IReview[] = [
         {
-            contact: 9123456789,
+            contact: '9123456789',
             date: new Date('2023-04-15T10:30:00'),
             rating: 5,
             history:
@@ -18,7 +18,7 @@ export class ReviewsComponent {
             dateAdmission: new Date('2023-04-20T14:00:00'),
         },
         {
-            contact: 9198765432,
+            contact: '9198765432',
             date: new Date('2023-05-10T11:15:00'),
             rating: 4,
             history:
@@ -27,7 +27,7 @@ export class ReviewsComponent {
             dateAdmission: new Date('2023-05-15T09:45:00'),
         },
         {
-            contact: 9012345678,
+            contact: '9012345678',
             date: new Date('2023-06-22T13:00:00'),
             rating: 3,
             history:
@@ -36,7 +36,7 @@ export class ReviewsComponent {
             dateAdmission: new Date('2023-06-25T16:30:00'),
         },
         {
-            contact: 9876543210,
+            contact: '9876543210',
             date: new Date('2023-07-30T08:45:00'),
             rating: 5,
             history:

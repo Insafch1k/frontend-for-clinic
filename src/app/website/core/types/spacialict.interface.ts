@@ -34,3 +34,11 @@ export interface ISpecialists {
     error_message: null | string;
     success: number;
 }
+
+export interface IGetDoctor {
+    data: {
+        doctor: IDoctor;
+    };
+    error_message: null | string;
+    success: number;
+}
