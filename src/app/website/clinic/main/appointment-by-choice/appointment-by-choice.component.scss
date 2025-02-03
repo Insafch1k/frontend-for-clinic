@@ -1,7 +1,10 @@
 .popup-wrapper {
-    position: absolute;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1010;
-    background-color: #ffffff3b;
+    background-color: rgba(0, 0, 0, 0.7);
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -9,34 +12,41 @@
 }
 
 .zapis {
+    max-height: 95vh;
+    overflow: overlay;
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.01),
         /* Слабая тень справа */ -2px 0 5px rgba(0, 0, 0, 0.01),
         /* Слабая тень слева */ 0 5px 10px rgba(0, 0, 0, 0.3);
     width: 80vw;
-    height: 550px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50px;
 }
 .main {
     margin: 50px;
     height: 100%;
+
+    @media (max-width: 1300px) {
+        margin: 20px;
+    }
 }
 .top-box {
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 2%;
+    margin-bottom: 2%;
     display: flex;
     justify-content: space-between;
     h2 {
         width: 60%;
-        font-size: 25px;
+        font-size: 1.2rem;
+
+        @media (max-width: 1000px) {
+            width: 90%;
+        }
     }
 }
 .close {
+    cursor: pointer;
     img {
         width: 20px;
     }
@@ -45,11 +55,21 @@
 .box-main {
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: 1000px) {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .main-left {
     margin-left: 5%;
     margin-right: 30px;
     width: 30vw;
+
+    @media (max-width: 1000px) {
+        margin: 0;
+        width: 100%;
+    }
 }
 .left-top {
     p {
@@ -59,7 +79,6 @@
     h2 {
         font-size: 20px;
     }
-    margin-bottom: -15px;
     .select-container {
         position: relative;
         margin-bottom: 20px;
@@ -75,6 +94,9 @@
             &:focus {
                 outline: none;
                 border-color: #007bff;
+            }
+            @media (max-width: 1000px) {
+                width: 100%;
             }
         }
         &::after {
@@ -154,6 +176,11 @@
     margin-bottom: 30px;
     margin-right: 5%;
 
+    @media (max-width: 1000px) {
+        margin: 0;
+        width: 100%;
+    }
+
     .select-container {
         position: relative;
         margin-bottom: 20px;
@@ -169,6 +196,9 @@
             &:focus {
                 outline: none;
                 border-color: #007bff;
+            }
+            @media (max-width: 1000px) {
+                width: 100%;
             }
         }
         &::after {
@@ -262,6 +292,157 @@
         cursor: pointer;
         p {
             text-decoration: underline;
+        }
+    }
+}
+
+.btn-wrapper {
+    text-align: center;
+    button {
+        width: 165px;
+        height: 46px;
+        background-color: #7eb3c1;
+        border-radius: 8px;
+        user-select: none;
+        &:disabled {
+            background-color: #aedae6;
+            color: black;
+            cursor: not-allowed;
+        }
+
+        &:hover {
+            background-color: #9eddef;
+            transform: scale(1.02);
+        }
+        &:active {
+            background-color: #75d4ee;
+        }
+    }
+}
+
+.error {
+    position: absolute;
+    small {
+        position: relative;
+        color: rgb(200, 9, 9);
+        font-size: 11px;
+        font-weight: 500;
+    }
+}
+
+.error-l {
+    position: absolute;
+    small {
+        position: relative;
+        color: rgb(200, 9, 9);
+        font-size: 11px;
+        font-weight: 500;
+        @media (max-width: 1000px) {
+            top: 8px;
+        }
+    }
+}
+
+.error-consent {
+    top: 22px;
+}
+
+select {
+    cursor: pointer;
+}
+
+.date-block {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    // gap: 10px;
+
+    & .date {
+        user-select: none;
+        text-align: center;
+        padding: 7px;
+        margin: 0 3px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-size: 0.6rem;
+        width: 35px;
+
+        @media (max-width: 768px) {
+            width: 20px;
+            padding: 7px 4px;
+        }
+
+        @media (max-width: 360px) {
+            width: 14px;
+            padding: 7px 3px;
+            margin: 0 2px;
+        }
+
+        &:hover {
+            transform: scale(1.02);
+            background-color: #7eb3c1;
+            border-radius: 8px;
+            p {
+                color: white;
+            }
+        }
+        &.selected {
+            p {
+                color: black;
+            }
+            background-color: #ffffff;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                0 -4px 6px rgba(0, 0, 0, 0.1); /* Слабая тень снизу и сверху */
+        }
+    }
+}
+
+.time-wrapper {
+    position: relative;
+    & .time-slots {
+        display: flex;
+        flex-wrap: wrap;
+
+        background-color: #fff;
+        box-shadow: 0px 2px 4.8px 0px rgba(0, 0, 0, 0.15);
+        border-radius: 3px;
+        padding: 10px 20px;
+        gap: 10px;
+        & .time-slot {
+            background-color: #0081ec;
+            color: white;
+            font-weight: 600;
+            font-size: 0.7rem;
+            padding: 10px;
+            border-radius: 3px;
+            user-select: none;
+            cursor: pointer;
+        }
+    }
+}
+
+.empty-arrow {
+    min-width: 30px;
+    height: 30px;
+}
+
+.arrow {
+    cursor: pointer;
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    box-shadow: 0px 2px 4.8px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+
+    svg {
+        margin: 11px 12px;
+    }
+
+    &:hover {
+        background-color: #7eb3c1;
+        svg path {
+            fill: white;
         }
     }
 }

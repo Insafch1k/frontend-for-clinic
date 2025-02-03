@@ -6,7 +6,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { BannerComponent } from './banner/banner.component';
 import { WhyOurClinicComponent } from './why-our-clinic/why-our-clinic.component';
 import { ReqRecordComponent } from './req-record/req-record.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuperiorityComponent } from './superiority/superiority.component';
 import { PhotoCollageComponent } from './photo-collage/photo-collage.component';
 import { ReviewsComponent } from './reviews/reviews.component';
@@ -14,6 +14,8 @@ import { EmergencyServiceComponent } from './emergency-service/emergency-service
 import { MapComponent } from './map/map.component';
 import { SharedModule } from '../../shared/shared.module';
 import { BidService } from './bid.service';
+import { AppointmentByChoiceComponent } from './appointment-by-choice/appointment-by-choice.component';
+import { SpecialistsService } from '../modules/specialists/services/specialists.service';
 
 @NgModule({
     declarations: [
@@ -27,13 +29,15 @@ import { BidService } from './bid.service';
         ReviewsComponent,
         EmergencyServiceComponent,
         MapComponent,
+        AppointmentByChoiceComponent,
     ],
     imports: [
         CommonModule,
         MainRoutingModule,
         ReactiveFormsModule,
         SharedModule,
+        FormsModule,
     ],
-    providers: [BidService],
+    providers: [BidService, SpecialistsService],
 })
 export class MainModule {}

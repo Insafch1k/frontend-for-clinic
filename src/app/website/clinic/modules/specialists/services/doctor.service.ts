@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IGetDoctor } from 'src/app/website/core/types/spacialict.interface';
+import { IGetDoctor } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
 
 @Injectable({
     providedIn: 'root',

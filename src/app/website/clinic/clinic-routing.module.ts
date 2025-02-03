@@ -20,7 +20,7 @@ const routes: Routes = [
                     import('./modules/about/about.module').then(
                         (m) => m.AboutModule
                     ),
-                title: 'Главная - о нас',
+                title: 'О нас',
             },
             {
                 path: 'analyzes',
@@ -28,7 +28,7 @@ const routes: Routes = [
                     import('./modules/analyzes/analyzes.module').then(
                         (m) => m.AnalyzesModule
                     ),
-                title: 'Главная - анализы',
+                title: 'Анализы',
             },
             {
                 path: 'price-list',
@@ -36,7 +36,7 @@ const routes: Routes = [
                     import('./modules/price-list/price-ltst.module').then(
                         (m) => m.PriceListModule
                     ),
-                title: 'Главная - прайс-лист',
+                title: 'Прайс-лист',
             },
             {
                 path: 'specialists',
@@ -44,15 +44,7 @@ const routes: Routes = [
                     import('./modules/specialists/specialists.module').then(
                         (m) => m.SpecialistsModule
                     ),
-                title: 'Главная - специалисты',
-            },
-            {
-                path: 'doctor',
-                loadChildren: () =>
-                    import('./modules/doctor/doctor.module').then(
-                        (m) => m.DoctorModule
-                    ),
-                title: 'Главная - доктор',
+                title: 'Cпециалисты',
             },
             {
                 path: 'stock',
@@ -60,7 +52,7 @@ const routes: Routes = [
                     import('./modules/stock/stock.module').then(
                         (m) => m.StockModule
                     ),
-                title: 'Главная - акции',
+                title: 'Акции',
             },
             {
                 path: '**',

@@ -113,6 +113,7 @@ form {
             &:disabled {
                 background-color: #aedae6;
                 color: black;
+                cursor: not-allowed;
             }
 
             &:hover {

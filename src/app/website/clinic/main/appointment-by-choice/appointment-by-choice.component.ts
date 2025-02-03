@@ -1,18 +1,30 @@
-import { Component } from '@angular/core';
-import { DoctorService } from '../doctor.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SpecialistsService } from '../../modules/specialists/services/specialists.service';
+import { Router } from '@angular/router';
 import {
     IDoctor,
-    IGetDoctor,
-} from 'src/app/website/core/types/spacialict.interface';
+    ISpecialists,
+} from '../../modules/specialists/spacialict.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BidService } from '../bid.service';
 
 @Component({
-    selector: 'app-doctor',
-    templateUrl: './doctor.component.html',
-    styleUrls: ['./doctor.component.scss'],
+    selector: 'app-appointment-by-choice',
+    templateUrl: './appointment-by-choice.component.html',
+    styleUrls: ['./appointment-by-choice.component.scss'],
 })
-export class DoctorComponent {
+export class AppointmentByChoiceComponent {
+    appointmentTypes = ['Первичный', 'Вторичный'];
+    services = ['Консультация', 'Осмотр', 'Лечение'];
+
+    selectedTime: string = '';
+
+    specialists: ISpecialists | null = null; // Хранение данных врачей
+    displayDoctors: IDoctor[] = []; // Для хранения отображаемых врачей
+    categories: string[] = [];
+    appointmentForm: FormGroup;
+
     doctorData!: IDoctor;
-    isOpenAppointment: boolean = false;
 
     isOpenDayDoctor!: {
         currentIndex: number;
@@ -25,43 +37,69 @@ export class DoctorComponent {
             slot: boolean[];
         }[];
     };
-    constructor(private readonly doctorServ: DoctorService) {}
+
+    @Output() appointmentConfirmed = new EventEmitter<void>();
+
+    confirmAppointment() {
+        // Логика подтверждения записи на прием
+        this.appointmentConfirmed.emit(); // Уведомляем родительский компонент
+    }
+
+    constructor(
+        private readonly specServ: SpecialistsService,
+        private fb: FormBuilder,
+        private readonly bidServ: BidService
+    ) {
+        this.appointmentForm = this.fb.group({
+            surname: ['', Validators.required],
+            name: ['', Validators.required],
+            date: ['', [Validators.required]],
+            phone: ['', [Validators.required, this.phoneValidator]],
+            doctor: ['', Validators.required],
+            speciality: ['', Validators.required],
+            type: ['', Validators.required],
+            serviceName: ['', Validators.required],
+            consent: [false, Validators.requiredTrue],
+        });
+    }
 
     ngOnInit(): void {
         this.fetchSpecialists();
     }
 
-    fetchSpecialists() {
-        this.doctorServ.getDoctor().subscribe((answer: IGetDoctor) => {
-            //this.doctorData = answer;
-            this.doctorData = answer.data.doctor;
+    phoneValidator(control: any) {
+        const phonePattern = /^(\+7|7|8)?[0-9]{10}$/;
+        return phonePattern.test(control.value) ? null : { invalidPhone: true };
+    }
 
-            this.fillDoctorsTimeSlots();
+    fetchSpecialists() {
+        this.specServ.getSpecialists().subscribe((answer: ISpecialists) => {
+            this.specialists = answer;
+            this.displayDoctors = answer.data.doctors; // Инициализация отображаемых врачей
+            this.categories = answer.data.categories;
+
+            //this.fillDoctorsTimeSlots();
             console.log(answer);
-            console.log(this.doctorData);
         });
     }
 
-    getSlotDateKeys(slotDate: { [key: string]: string[] }): string[] {
-        const keys = Object.keys(slotDate);
-        return keys.slice(0, 7); // Возвращаем первые 7 элементов или меньше
+    // Метод для отправки данных
+    onSubmit() {
+        if (this.appointmentForm.valid) {
+            console.log(this.appointmentForm.value);
+        }
     }
 
-    getExperienceText(experience: number) {
-        const lastDigit = experience % 10;
-        const lastTwoDigits = experience % 100;
-
-        if (lastDigit === 1 && lastTwoDigits !== 11) {
-            return experience + ' год';
-        } else if (
-            lastDigit >= 2 &&
-            lastDigit <= 4 &&
-            (lastTwoDigits < 12 || lastTwoDigits > 14)
-        ) {
-            return experience + ' года';
-        } else {
-            return experience + ' лет';
-        }
+    onSelectDoctor(event: Event) {
+        const selectElement = event.target as HTMLSelectElement;
+        const value = selectElement.value;
+        this.specialists!.data.doctors.forEach((doctor: IDoctor) => {
+            if (doctor.doctor.fullname === value) {
+                this.doctorData = doctor;
+                console.log(doctor.doctor.fullname);
+                this.fillDoctorsTimeSlots();
+            }
+        });
     }
 
     //заполнить временные промежутки врачей
@@ -108,11 +146,6 @@ export class DoctorComponent {
         }
     }
 
-    // Метод для получения временных слотов врача по ID
-    private getDoctorSlotDates(): { [key: string]: any } {
-        return this.doctorData ? this.doctorData.slot_date : {};
-    }
-
     // Метод для обновления отображаемых слотов
     private updateDisplayedSlots() {
         const keys = Object.keys(this.getDoctorSlotDates()); // Получаем все доступные слоты для врача
@@ -124,6 +157,11 @@ export class DoctorComponent {
             this.isOpenDayDoctor.currentIndex,
             endIndex
         );
+    }
+
+    // Метод для получения временных слотов врача по ID
+    private getDoctorSlotDates(): { [key: string]: any } {
+        return this.doctorData ? this.doctorData.slot_date : {};
     }
 
     selectDay(dayIndex: number) {
@@ -157,9 +195,9 @@ export class DoctorComponent {
         return `${daysOfWeek[dayIndex]}, ${months[monthIndex]}`;
     }
 
-    //Метод для выбора временного слота
+    // Метод для выбора временного слота
     selectTimeSlot(time: string): void {
-        this.isOpenAppointment = true;
-        console.log(this.isOpenAppointment);
+        this.selectedTime = time;
+        console.log('Выбран временной слот:', time);
     }
 }

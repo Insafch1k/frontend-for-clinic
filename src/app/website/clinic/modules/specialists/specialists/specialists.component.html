@@ -39,96 +39,42 @@
     </div>
     <div class="main">
         <div
-            class="spisok"
+            class="specialist"
             *ngFor="let specialist of getDisplayDoctors; let j = index"
         >
-            <div class="one">
-                <div class="one-info">
-                    <div class="avatarka">
-                        <img src="{{ specialist.doctor.image }}" alt="" />
-                    </div>
+            <div class="spec-wrapp">
+                <div class="avatarka">
+                    <img src="{{ specialist.doctor.image }}" alt="" />
                 </div>
-            </div>
-            <div class="two">
-                <div class="two-info">
-                    <h2 (click)="goToDoctor(specialist.doctor.doctor_id)">
-                        {{ specialist.doctor.fullname }}
-                    </h2>
-                    <p>{{ specialist.qualification[0].education_name }}</p>
-                    <p>Стаж: {{ specialist.doctor.experience }}</p>
-                </div>
-            </div>
-            <div class="three">
-                <div class="three-info">
-                    <div class="date-picker">
-                        <button
-                            (click)="scrollLeft(specialist.doctor.doctor_id)"
-                            *ngIf="isOpenDayDoctor[j].currentIndex > 0"
-                        >
-                            ←
-                        </button>
-                        <div
-                            *ngFor="
-                                let date of isOpenDayDoctor[j].displayedSlots;
-                                let i = index
-                            "
-                            class="date"
-                            [class.selected]="
-                                isOpenDayDoctor[j].days[i].isSelect
-                            "
-                            (click)="selectDay(specialist.doctor.doctor_id, i)"
-                        >
-                            <p>{{ getDayOfWeekAndMonth(date) }}</p>
-                            <p>{{ date | date : "dd" }}</p>
-                        </div>
-                        <button
-                            (click)="scrollRight(specialist.doctor.doctor_id)"
-                            *ngIf="
-                                isOpenDayDoctor[j].currentIndex + 7 !==
-                                    isOpenDayDoctor[j].lenght &&
-                                isOpenDayDoctor[j].lenght > 7
-                            "
-                        >
-                            →
-                        </button>
-                    </div>
-                    <div class="time-wrapper">
-                        <div
-                            class="time-slots"
-                            *ngIf="
-                                isOpenDayDoctor[j].days[
-                                    isOpenDayDoctor[j].currentView
-                                ].isSelect
-                            "
-                        >
-                            <div
-                                *ngFor="
-                                    let time of specialist.slot_date[
-                                        isOpenDayDoctor[j].days[
-                                            isOpenDayDoctor[j].currentView
-                                        ].day
-                                    ];
-                                    let c = index
+                <div class="main-info">
+                    <div class="main-top">
+                        <div class="main-top-info">
+                            <h2
+                                (click)="
+                                    goToDoctor(specialist.doctor.doctor_id)
                                 "
-                                class="time-slot"
-                                [class.selected]="
-                                    isOpenDayDoctor[j].days[
-                                        isOpenDayDoctor[j].currentView
-                                    ].slot[c]
-                                "
-                                (click)="selectTimeSlot(time)"
                             >
-                                {{ time }}
-                            </div>
+                                {{ specialist.doctor.fullname }}
+                            </h2>
+                            <p>
+                                {{ specialist.qualification[0].education_name }}
+                            </p>
+                            <p>Стаж: {{ specialist.doctor.experience }}</p>
                         </div>
+                        <app-choose-time
+                            class="choose-time-desc"
+                            [doctorData]="specialist"
+                        ></app-choose-time>
+                    </div>
+                    <div class="main-desc">
+                        <p>{{ specialist.description }}</p>
                     </div>
                 </div>
             </div>
-            <div class="four">
-                <div class="four-info">
-                    <p>{{ specialist.description }}</p>
-                </div>
-            </div>
+            <app-choose-time
+                class="choose-time-mob"
+                [doctorData]="specialist"
+            ></app-choose-time>
         </div>
     </div>
 </div>
