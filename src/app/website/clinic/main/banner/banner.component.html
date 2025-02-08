@@ -13,8 +13,14 @@
         <div class="contact-whatsapp">
             <img src="assets/data/icon/network/whatsapp-base.svg" alt="" />
         </div>
-        <div class="online-appointment">
+        <div class="online-appointment" (click)="openAppointment()">
             <div>Онлайн-запись</div>
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="isOpenAppointment">
+    <app-appointment-by-choice
+        (appointmentConfirmed)="openAppointment()"
+    ></app-appointment-by-choice>
+</ng-container>

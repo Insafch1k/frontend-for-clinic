@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, SharedModule, FormsModule, HttpClientModule],
+    imports: [BrowserModule, AppRoutingModule],
     providers: [],
     bootstrap: [AppComponent],
 })

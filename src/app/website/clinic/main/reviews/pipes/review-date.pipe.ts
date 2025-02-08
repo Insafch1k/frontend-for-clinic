@@ -4,7 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'reviewDate',
 })
 export class ReviewDatePipe implements PipeTransform {
-    transform(value: Date): string {
+    transform(valuer: Date): string {
+        const value = new Date(valuer);
         if (!(value instanceof Date) || isNaN(value.getTime())) {
             return ''; // Возвращаем пустую строку, если значение не является корректной датой
         }

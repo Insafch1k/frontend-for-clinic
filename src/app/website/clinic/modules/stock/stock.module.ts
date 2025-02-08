@@ -2,21 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StockComponent } from './stock.component';
 import { StockRoutingModule } from './stock-routing.module';
-import { PromotionsComponent } from './promotions/promotions.component';
-import { TestsComponent } from './tests/tests.component';
 import { DiscountsComponent } from './discounts/discounts.component';
-import { OtherComponent } from './other/other.component';
 import { StockLoadingComponent } from './stock-loading/stock-loading.component';
+import { SharedModule } from 'src/app/website/shared/shared.module';
+import { StockService } from './stock.service';
 
 @NgModule({
-    declarations: [
-        StockComponent,
-        PromotionsComponent,
-        TestsComponent,
-        DiscountsComponent,
-        OtherComponent,
-        StockLoadingComponent,
-    ],
-    imports: [CommonModule, StockRoutingModule],
+    declarations: [StockComponent, DiscountsComponent, StockLoadingComponent],
+    imports: [CommonModule, StockRoutingModule, SharedModule],
+    providers: [StockService],
 })
 export class StockModule {}

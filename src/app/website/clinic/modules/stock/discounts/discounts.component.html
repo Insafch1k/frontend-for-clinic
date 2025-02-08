@@ -1,3 +1,5 @@
-<div>
-    <app-stock-loading></app-stock-loading>
+<div class="loading-wrapper">
+    <div *ngFor="let action of actionList.actions" class="loading-block">
+        <img src="{{ action.photo }}" alt="" />
+    </div>
 </div>

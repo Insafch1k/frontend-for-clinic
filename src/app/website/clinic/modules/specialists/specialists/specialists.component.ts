@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SpecialistsService } from 'src/app/website/core/services/specialists.service';
 import {
     IDoctor,
     ISpecialists,
-} from 'src/app/website/core/types/spacialict.interface';
+} from 'src/app/website/clinic/modules/specialists/spacialict.interface';
+import { SpecialistsService } from '../services/specialists.service';
 
 @Component({
     selector: 'app-specialists',
@@ -36,9 +36,8 @@ export class SpecialistsComponent implements OnInit {
         }[];
     }[] = [];
 
-    startDate: Date = new Date();
     // Массивы для дат и временных слотов
-    selectedCategory: string | null = null;
+    selectedCategory: string = 'all';
 
     constructor(
         private readonly specServ: SpecialistsService,
@@ -247,19 +246,19 @@ export class SpecialistsComponent implements OnInit {
                     doctor.specialties.some(
                         (specialty) =>
                             specialty.speciality_name === this.selectedCategory
-                    )
+                    ) ||
+                    this.selectedCategory === 'all'
                 ) {
                     doctors.push(doctor);
-                } else if (this.selectedCategory === 'all') {
-                    doctors.push(doctor);
                 }
+                console.log(doctors);
             }
         });
         this.displayDoctors = doctors;
-        console.log('ddd');
+        console.log(this.selectedCategory);
     }
 
     goToDoctor(doctorId: number) {
-        this.router.navigate(['/doctor/profile', doctorId]);
+        this.router.navigate(['/specialists/profile', doctorId]);
     }
 }

@@ -1,145 +1,80 @@
 <div class="page-background">
-    <div class="specialists">
-        <div class="title"><h2>Главная / Специалисты</h2></div>
-        <div class="categories">
+    <div class="route">Главная / Специалисты</div>
+    <div class="categories">
+        <select
+            id="doctorCategory"
+            class="custom-select-one"
+            (change)="onCategoryChange($event)"
+        >
+            <option [value]="'all'" selected>Все категории</option>
+            <option *ngFor="let category of categories" [value]="category">
+                {{ category }}
+            </option>
+        </select>
+        <div class="second-row">
             <select
-                id="doctorCategory"
-                class="custom-select-one"
-                (change)="onCategoryChange($event)"
+                id="experience"
+                class="custom-select-two"
+                (change)="filterDoctorsByExperience($event)"
             >
-                <option [value]="'all'" selected>Все категории</option>
-                <option *ngFor="let category of categories" [value]="category">
-                    {{ category }}
+                <option value="" selected>Любой стаж</option>
+                <option
+                    *ngFor="let experience of experiences"
+                    [value]="experience"
+                >
+                    {{ experience }}
                 </option>
             </select>
-            <div class="second-row">
-                <select
-                    id="experience"
-                    class="custom-select-two"
-                    (change)="filterDoctorsByExperience($event)"
-                >
-                    <option value="" selected>Любой стаж</option>
-                    <option
-                        *ngFor="let experience of experiences"
-                        [value]="experience"
-                    >
-                        {{ experience }}
-                    </option>
-                </select>
 
-                <div class="checkbox-container">
-                    <input
-                        type="checkbox"
-                        id="homeVisit"
-                        class="custom-checkbox"
-                        (click)="toggleHouseCallDoctors()"
-                    />
-                    <label for="homeVisit" class="custom-label"
-                        >Вызов на дом</label
-                    >
-                </div>
+            <div class="checkbox-container">
+                <input
+                    type="checkbox"
+                    id="homeVisit"
+                    class="custom-checkbox"
+                    (click)="toggleHouseCallDoctors()"
+                />
+                <label for="homeVisit" class="custom-label">Вызов на дом</label>
             </div>
         </div>
-        <div class="main">
-            <div
-                class="spisok"
-                *ngFor="let specialist of getDisplayDoctors; let j = index"
-            >
-                <div class="one">
-                    <div class="one-info">
-                        <div class="avatarka">
-                            <img src="{{ specialist.doctor.image }}" alt="" />
-                        </div>
-                    </div>
+    </div>
+    <div class="main">
+        <div
+            class="specialist"
+            *ngFor="let specialist of getDisplayDoctors; let j = index"
+        >
+            <div class="spec-wrapp">
+                <div class="avatarka">
+                    <img src="{{ specialist.doctor.image }}" alt="" />
                 </div>
-                <div class="two">
-                    <div class="two-info">
-                        <h2 (click)="goToDoctor(specialist.doctor.doctor_id)">
-                            {{ specialist.doctor.fullname }}
-                        </h2>
-                        <p>{{ specialist.qualification[0].education_name }}</p>
-                        <p>Стаж: {{ specialist.doctor.experience }}</p>
-                    </div>
-                </div>
-                <div class="three">
-                    <div class="three-info">
-                        <div class="date-picker">
-                            <button
+                <div class="main-info">
+                    <div class="main-top">
+                        <div class="main-top-info">
+                            <h2
                                 (click)="
-                                    scrollLeft(specialist.doctor.doctor_id)
-                                "
-                                *ngIf="isOpenDayDoctor[j].currentIndex > 0"
-                            >
-                                ←
-                            </button>
-                            <div
-                                *ngFor="
-                                    let date of isOpenDayDoctor[j]
-                                        .displayedSlots;
-                                    let i = index
-                                "
-                                class="date"
-                                [class.selected]="
-                                    isOpenDayDoctor[j].days[i].isSelect
-                                "
-                                (click)="
-                                    selectDay(specialist.doctor.doctor_id, i)
+                                    goToDoctor(specialist.doctor.doctor_id)
                                 "
                             >
-                                <p>{{ getDayOfWeekAndMonth(date) }}</p>
-                                {{ date | date : "dd" }}
-                            </div>
-                            <button
-                                (click)="
-                                    scrollRight(specialist.doctor.doctor_id)
-                                "
-                                *ngIf="
-                                    isOpenDayDoctor[j].currentIndex + 7 !==
-                                        isOpenDayDoctor[j].lenght &&
-                                    isOpenDayDoctor[j].lenght > 7
-                                "
-                            >
-                                →
-                            </button>
+                                {{ specialist.doctor.fullname }}
+                            </h2>
+                            <p>
+                                {{ specialist.qualification[0].education_name }}
+                            </p>
+                            <p>Стаж: {{ specialist.doctor.experience }}</p>
                         </div>
-                        <div class="time-wrapper">
-                            <div
-                                class="time-slots"
-                                *ngIf="
-                                    isOpenDayDoctor[j].days[
-                                        isOpenDayDoctor[j].currentView
-                                    ].isSelect
-                                "
-                            >
-                                <div
-                                    *ngFor="
-                                        let time of specialist.slot_date[
-                                            isOpenDayDoctor[j].days[
-                                                isOpenDayDoctor[j].currentView
-                                            ].day
-                                        ];
-                                        let c = index
-                                    "
-                                    class="time-slot"
-                                    [class.selected]="
-                                        isOpenDayDoctor[j].days[
-                                            isOpenDayDoctor[j].currentView
-                                        ].slot[c]
-                                    "
-                                    (click)="selectTimeSlot(time)"
-                                >
-                                    {{ time }}
-                                </div>
-                            </div>
-                        </div>
+                        <app-choose-time
+                            class="choose-time-desc"
+                            [doctorData]="specialist"
+                        ></app-choose-time>
                     </div>
-                </div>
-                <div class="four">
-                    <div class="four-info">
+                    <div class="main-desc">
                         <p>{{ specialist.description }}</p>
                     </div>
                 </div>
             </div>
+            <app-choose-time
+                class="choose-time-mob"
+                [doctorData]="specialist"
+            ></app-choose-time>
         </div>
     </div>
 </div>
