@@ -45,42 +45,27 @@
     }
 }
 
-.iteem {
+.experience {
+    margin-right: 35.7vw;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-right: 35.8vw;
     h2 {
+        margin-top: 5px;
         font-size: 18px;
-    }
-    .connector {
-        display: flex;
-        align-items: center;
-        img {
-            margin-left: -30px;
-            margin-top: 0px;
-            cursor: pointer;
-        }
-    }
-    select {
-        font-size: 16px;
-        width: 350px;
-        padding: 8px;
-        margin-left: 20px;
-        border: 1px solid rgba(153, 153, 153, 1);
-        border-radius: 0px;
-        -webkit-appearance: none; /* Для Chrome и Safari */
-        -moz-appearance: none; /* Для Firefox */
-        appearance: none; /* Для всех современных браузеров */
-        background-color: white; /* Это очень важно */ 
     }
 }
 
 .connector {
-    display: flex;
     align-items: center;
     cursor: pointer;
+    input {
+        width: 335px;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid rgba(153, 153, 153, 1);
+        color: black;
+    }
     select{
         cursor: pointer;
     }
@@ -91,29 +76,11 @@
     }
 }
 
-.experience {
-    width: 350px;
-    margin-left: 0px;
-    margin-bottom: 15px;
-    display: flex;
-    h2 {
-        font-size: 18px;
-    }
-    input {
-        width: 335px;
-        padding: 8px;
-        font-size: 16px;
-        margin-left: 230px;
-        border: 1px solid rgba(153, 153, 153, 1);
-        color: black;
-    }
-}
-
 .OpenList {
     position: absolute;
     background-color: #ffffff;
     width: 350px;
-    height: 265px;
+    height: 42vh;
     margin-left: 315px;
     border: 1px solid #264653BF;
     border-radius: 10px;
@@ -126,7 +93,11 @@
         margin-bottom: 5px;
     }
 }
-
+.listok{
+    height: 69%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 .candidat {
     display: flex;
     width: 350px;
@@ -137,12 +108,13 @@
     }
     p {
         color: #264653BF;
-        margin-left: -100px;
-        margin-top: 6px;
+        margin-left: -130px;
+        margin-top: 2px;
         text-align: left;
         width: 230px;
     }
 }
+
 
 .apply-button {
     background-color: rgba(112, 178, 226, 1);
@@ -156,11 +128,29 @@
 }
 
 .text-field {
-    width: 50%;
+    width: 350px;
     padding: 8px;
     margin-left: 20px;
     border: 1px solid rgba(153, 153, 153, 1);
     border-radius: 0px;
+}
+
+.item-opis{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 35vw;
+    align-items:start;
+    margin-bottom: 15px;
+    h2 {
+        font-size: 18px;
+    }
+}
+.text-area{
+    height: 200px;
+    width: 340px;
+    resize: none;
+    padding: 5px;
+    font-size: 14px;
 }
 
 .save {

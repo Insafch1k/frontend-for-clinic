@@ -1,12 +1,28 @@
 <div class="pg-background">
-    <h1 class="title">Врачи</h1>
-    <div class="functions">
-        <button>+ Добавить врача</button>
-    </div>
+    <h1 class="title">Все врачи</h1>
     <div class="main-window">
+        <div class="spisok">
+            <div class="headers">
+                <div class="header-item"></div>
+                <h2 class="doctor-inf">Врач</h2>
+                <h2 class="head-act">Действия</h2>
+            </div>
+            <div *ngFor="let doctor of doctors" class="service-item" [class.selected]="doctor.selected" (click)="toggleSelection(doctor, $event)">
+                <input type="checkbox" id="checkbox-{{doctor.name}}" [(ngModel)]="doctor.selected">
+                <img [src]="doctor.photo" alt="Аватарка" class="ava">
+                <div class="doc-info">
+                    <p class="name">{{ doctor.name }}</p>
+                    <p class="post">{{ doctor.specialties.join(', ') }}</p>
+                </div>
+                <div class="actions">
+                    <button [routerLink]="['/admin/doctors/change', doctor.id]" class="edit">Изменить</button> <!-- Обновляем routerLink, чтобы он передавал id -->
+                    <button class="delete">Удалить</button>
+                </div>
+            </div>
+        </div>
         <div class="main-button">
-            <button class="select-all">Выбрать все</button>
-            <button class="delete-selected">Удалить выбранные</button>
+            <button class="select-all" (click)="selectAll()">Выбрать все</button>
+            <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
         </div>
     </div>
 </div>

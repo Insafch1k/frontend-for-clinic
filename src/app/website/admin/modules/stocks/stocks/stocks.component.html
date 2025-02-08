@@ -13,7 +13,7 @@
             <div *ngFor="let request of directRecords" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
                 <input type="checkbox" id="checkbox-{{request.imageUrl}}" [(ngModel)]="request.selected" (click)="stopPropagation($event)">
                 <label for="checkbox-{{request.imageUrl}}"></label>
-                <img [src]="request.imageUrl" alt="Image" style="width: 176px; height: 99px;">
+                <img [src]="request.imageUrl" alt="Image" style="width: 150px; height: 165px;">
                 <p>{{ request.category }}</p>
                 <div class="actions">
                     <button class="delete" (click)="stopPropagation($event)">Удалить</button>

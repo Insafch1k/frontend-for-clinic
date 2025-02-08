@@ -1,0 +1,57 @@
+<div class="pg-background">
+    <h1 class="title">Изменить врача</h1>
+    <div class="main-window">
+        <div class="titlee">
+            <h2>Основная информация</h2>
+        </div>
+        <div class="spisok">
+            <div class="left-part">
+                <div class="item">
+                    <h2>ФИО</h2>
+                    <input type="text" class="text-field" [(ngModel)]="doctor.name">
+                </div>
+                <div class="item">
+                    <h2>Стаж работы</h2>
+                    <input type="number" class="text-field" [(ngModel)]="doctor.experiance">
+                </div>
+                <div class="item">
+                    <h2>Образование</h2>
+                    <div class="iteem" style="margin-bottom: 15px;">
+                        <div class="current" style="margin-bottom: 0px;">
+                            <div class="input-with-icon">
+                                <input style="width: 225px;" type="text" placeholder="образование" #educationInput>
+                                <img src="assets/admin-data/icons/krestik-admin-doctor.svg" alt="" (click)="addEducation(educationInput.value, yearInput.value)">
+                            </div>
+                            <input type="number" placeholder="год окончания" #yearInput>
+                        </div>
+                        <div class="all" *ngIf="doctor.educations.length > 0" style="margin-bottom: 0px;">
+                            <div *ngFor="let education of doctor.educations; let i = index" class="all-module">
+                                <input type="text" class="text-fieeld" [value]="education.name + ' (' + education.year + ')' " readonly>
+                                <img src="assets/admin-data/icons/musorka.svg" alt="" (click)="removeEducation(i)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <h2>Номер телефона</h2>
+                    <input type="number" class="text-field" [(ngModel)]="doctor.phone_number">
+                </div>
+            </div>
+            <div class="right-part">
+                <div class="photo-item">
+                    <h2>Фотография врача</h2>
+                    <div class="photo-block">
+                        <img [src]="photoUrl" alt="Фотография врача" *ngIf="photoUrl">
+                        <div class="download">
+                            <p class="one-p" (click)="triggerFileInput()">Загрузить фотографию</p>
+                            <p class="two-p">Размер не более 2 МБ <br>
+                                Формат изображения JPG</p>
+                            <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/jpeg" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="save" (click)="saveChanges()">Сохранить изменения</button>
+    </div>
+</div>

@@ -1,45 +1,76 @@
-import { Component } from '@angular/core';
+// new-category.component.ts
+import { Component, OnInit } from '@angular/core';
+import { AnalyzesService } from '../services/analuzes.service';
+import { Analysis } from 'src/app/website/core/types/admin-analyzes.interface';
 
 @Component({
   selector: 'app-new-category',
   templateUrl: './new-category.component.html',
   styleUrls: ['./new-category.component.scss']
 })
-export class NewCategoryComponent {
-  doctors = [
-    { id: 1, name: 'Васильева Елизавета Ильинична ' },
-    { id: 2, name: 'Тихомирова Елизавета Тимуровна ' },
-    { id: 3, name: 'Кудряшова Василиса Данииловна' }
-  ];
-
-  analyses = [
-    { id: 1, name: 'Инсулин' },
-    { id: 2, name: 'АЛТ' },
-    { id: 3, name: 'Глюкоза' },
-    { id: 4, name: 'АСТ' },
-    { id: 5, name: 'ГГТ' },
-    { id: 6, name: 'Холестерин' },
-    { id: 7, name: 'Забор' },
-  ];
-
-  selectedDoctor: string = '';
-  selectedAnalyses: string[] = [];
+export class NewCategoryComponent implements OnInit {
+  analyses: Analysis[] = [];
+  selectedAnalyses: number[] = [];
   isDropdownOpen: boolean = false;
+  categoryName: string = '';
+  categoryDescription: string = '';
 
-  onDoctorChange(event: any) {
-    this.selectedDoctor = event.target.value;
+  constructor(private analyzesService: AnalyzesService) {}
+
+  ngOnInit() {
+    this.loadAnalyses();
   }
 
-  onAnalysisChange(event: any, analysisName: string) {
+  loadAnalyses() {
+    this.analyzesService.getAnalyses().subscribe(
+      data => {
+        this.analyses = data;
+      },
+      error => {
+        console.error('Ошибка при загрузке анализов:', error);
+      }
+    );
+  }
+
+  onAnalysisChange(event: any, analysisId: number) {
     if (event.target.checked) {
-      this.selectedAnalyses.push(analysisName);
+      this.selectedAnalyses.push(analysisId);
     } else {
-      this.selectedAnalyses = this.selectedAnalyses.filter(analysis => analysis !== analysisName);
+      this.selectedAnalyses = this.selectedAnalyses.filter(id => id !== analysisId);
     }
-    console.log(this.selectedAnalyses); // Проверка выбранных анализов
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  applySelectedAnalyses() {
+    this.isDropdownOpen = false;
+  }
+
+  addCategory() {
+    const newCategory = {
+      name: this.categoryName,
+      description: this.categoryDescription,
+      analysis: this.selectedAnalyses
+    };
+
+    this.analyzesService.addCategory(newCategory).subscribe(
+      response => {
+        if (response.success) {
+          console.log('Категория успешно добавлена:', response);
+          // Очистка полей после успешного добавления
+          this.categoryName = '';
+          this.categoryDescription = '';
+          this.selectedAnalyses = [];
+          alert('Категория успешно добавлена!');
+        } else {
+          console.error('Ошибка при добавлении категории:', response);
+        }
+      },
+      error => {
+        console.error('Ошибка при добавлении категории:', error);
+      }
+    );
   }
 }

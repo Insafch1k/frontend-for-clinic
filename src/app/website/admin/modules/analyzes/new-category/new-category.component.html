@@ -9,15 +9,6 @@
                 <h2>Название</h2>
                 <input type="text" class="text-field">
             </div>
-            <div class="iteem">
-                <h2>Врач</h2>
-                <div class="connector" >
-                    <select (change)="onDoctorChange($event)" class="text-field">
-                        <option *ngFor="let doctor of doctors" [value]="doctor.name">{{ doctor.name }}</option>
-                    </select>
-                    <img src="assets/admin-data/icons/check.svg" alt="">
-                </div>
-            </div>
             <div class="experience">
                 <h2>Анализы</h2>
                 <div class="connector" (click)="toggleDropdown()">
@@ -26,16 +17,18 @@
                 </div>
                 <div *ngIf="isDropdownOpen" class="OpenList">
                     <p class="topP">Выберите анализы</p>
-                    <label class="candidat" *ngFor="let analysis of analyses">
-                        <input type="checkbox" class="checkbox" [value]="analysis.name" (change)="onAnalysisChange($event, analysis.name)">
-                        <p>{{ analysis.name }}</p>
-                    </label>
+                    <div class="listok">
+                        <label class="candidat" *ngFor="let analysis of analyses">
+                            <input type="checkbox" class="checkbox" [value]="analysis.analysis_id" (change)="onAnalysisChange($event, analysis.analysis_id)">
+                            <p>{{ analysis.analysis_name }} ({{ analysis.analysis_price }} руб.)</p>
+                        </label>
+                    </div>
                     <button class="apply-button">Применить</button>
                 </div>
             </div>
-            <div class="item">
-                <h2>Стоимость</h2>
-                <input type="text" class="text-field">
+            <div class="item-opis">
+                <h2>Описание</h2>
+                <textarea class="text-area" name="" id=""></textarea>
             </div>
         </div>
         <button class="save">Добавить категорию</button>

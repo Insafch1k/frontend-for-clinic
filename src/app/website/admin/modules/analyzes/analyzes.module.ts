@@ -7,6 +7,7 @@ import { ChangeComponent } from './change/change.component';
 import { NewAnalyzesComponent } from './new-analyzes/new-analyzes.component';
 import { NewCategoryComponent } from './new-category/new-category.component';
 import { ChangeCategoryComponent } from './change-category/change-category.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -19,9 +20,10 @@ import { ChangeCategoryComponent } from './change-category/change-category.compo
     NewAnalyzesComponent,
     NewCategoryComponent,
     ChangeCategoryComponent
+    
   ],
   imports: [
-    CommonModule, AnalyzesRoutingModule, FormsModule, ReactiveFormsModule
+    CommonModule, AnalyzesRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule
   ]
 })
 export class AnalyzesModule{ }

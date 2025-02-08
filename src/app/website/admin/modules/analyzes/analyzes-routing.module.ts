@@ -14,22 +14,22 @@ const routes: Routes = [
     {
         path:'new',
         component:NewAnalyzesComponent,
-        title: 'Новый анализ'
+        title: 'Админ - Анализы - Добавить анализ'
     },
     {
         path:'new-category',
         component:NewCategoryComponent,
-        title:'Новая категория'
+        title:'Админ - Анализы - Добавить категорию'
     },
     {
         path:'change',
         component:ChangeComponent,
-        title:'Изменить анализ'
+        title:'Админ - Анализы - Изменить анализ'
     },
     {
         path:'change-category',
         component:ChangeCategoryComponent,
-        title:'Изменить категорию'
+        title:'Админ - Анализы - Изменить категорию'
     }
 ];
 

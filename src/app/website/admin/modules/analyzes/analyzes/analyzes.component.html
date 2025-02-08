@@ -1,3 +1,4 @@
+<!-- analyzes.component.html -->
 <div class="pg-background">
     <h1 class="title">Анализы</h1>
     <div class="functions">
@@ -10,18 +11,16 @@
             <div class="headers">
                 <h2>Анализ</h2>
                 <h2>Категория</h2>
-                <h2>Врач</h2>
                 <h2>Действия</h2>
             </div>
             <div *ngFor="let request of appointmentRequests" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
-                <input type="checkbox" id="checkbox-{{request.analysis}}" [(ngModel)]="request.selected">
-                <label for="checkbox-{{request.analysis}}"></label>
-                <p>{{ request.analysis }}</p>
-                <p>{{ request.category }}</p>
-                <p>{{ request.doctorName }}</p>
+                <input type="checkbox" id="checkbox-{{request.analysis_id}}" [(ngModel)]="request.selected">
+                <label for="checkbox-{{request.analysis_id}}"></label>
+                <p>{{ request.analysis_name }}</p>
+                <p>{{ request.category_name }}</p>
                 <div class="actions">
                     <button routerLink="./change" class="edit">Изменить</button>
-                    <button class="delete">Удалить</button>
+                    <button (click)="deleteRequest(request.analysis_id)" class="delete">Удалить</button>
                 </div>
             </div>
         </div>
@@ -31,4 +30,3 @@
         </div>
     </div>
 </div>
-  

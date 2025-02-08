@@ -28,8 +28,8 @@ export class NewComponent {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           canvas.width = 300;
-          canvas.height = 169;
-          ctx?.drawImage(img, 0, 0, 300, 169);
+          canvas.height = 330;
+          ctx?.drawImage(img, 0, 0, 300, 330);
           this.imagePreview = canvas.toDataURL('image/jpeg');
           this.newRecord.imageUrl = this.imagePreview;
         };
