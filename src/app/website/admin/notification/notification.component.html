@@ -1,0 +1,5 @@
+<div *ngIf="message" class="notification" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
+    <span>{{ message }}</span>
+    <button (click)="close()">×</button>
+  </div>
+  

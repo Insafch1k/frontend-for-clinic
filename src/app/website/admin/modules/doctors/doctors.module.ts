@@ -5,6 +5,7 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { DoctorsRoutingModule } from './doctors-routing.module';
 import { ChangeComponent } from './change/change.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationComponent } from '../../notification/notification.component';
 
 
 
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     DoctorsComponent,
     ChangeComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule, DoctorsRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule

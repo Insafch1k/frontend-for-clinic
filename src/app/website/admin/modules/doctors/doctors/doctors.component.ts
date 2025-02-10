@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DoctorService } from '../services/doctors.service';
-import { Doctor } from 'src/app/website/core/types/admin-doctors.interface';
+import { Doctor } from 'src/app/website/admin/modules/doctors/admin-doctors.interface';
 
 @Component({
   selector: 'app-doctors',

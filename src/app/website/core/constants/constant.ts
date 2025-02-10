@@ -1,1 +1,1 @@
-export const API_URL = 'http://172.20.10.8:6001';
+export const API_URL = 'https://clear-camels-flash.loca.lt/';

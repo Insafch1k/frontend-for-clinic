@@ -1,5 +1,6 @@
 <div class="pg-background">
     <h1 class="title">Изменить врача</h1>
+    <app-notification [message]="notificationMessage" [isSuccess]="isSuccess"></app-notification>
     <div class="main-window">
         <div class="titlee">
             <h2>Основная информация</h2>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="item">
                     <h2>Номер телефона</h2>
-                    <input type="number" class="text-field" [(ngModel)]="doctor.phone_number">
+                    <input type="number" class="text-field" [(ngModel)]="doctor.phone">
                 </div>
             </div>
             <div class="right-part">

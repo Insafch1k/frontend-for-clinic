@@ -22,9 +22,9 @@ const routes: Routes = [
         title:'Админ - Анализы - Добавить категорию'
     },
     {
-        path:'change',
-        component:ChangeComponent,
-        title:'Админ - Анализы - Изменить анализ'
+        path: 'change/:id',
+        component: ChangeComponent,
+        title: 'Админ - Анализы - Изменить анализ'
     },
     {
         path:'change-category',

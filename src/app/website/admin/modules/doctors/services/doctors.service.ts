@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Doctor } from 'src/app/website/core/types/admin-doctors.interface';
+import { Doctor } from 'src/app/website/admin/modules/doctors/admin-doctors.interface';
 import { API_URL } from 'src/app/website/core/constants/constant';
 
 @Injectable({
@@ -28,21 +28,18 @@ export class DoctorService {
     return this.doctorsSubject.getValue().find(doctor => doctor.id === id);
   }
 
-  updateDoctor(id: number, doctor: Doctor): Observable<Doctor> {
-    return this.http.put<Doctor>(`${this.apiUrl}/${id}`, doctor).pipe(
+  updateDoctor(id: number, doctor: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, doctor).pipe(
       catchError(this.handleError)
     );
   }
-  
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Unknown error!';
+    let errorMessage = 'Неизвестная ошибка!';
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = `Ошибка: ${error.error.message}`;
     } else {
-      // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Код ошибки: ${error.status}\nСообщение: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(errorMessage);

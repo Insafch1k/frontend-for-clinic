@@ -1,55 +1,49 @@
-import { Component } from '@angular/core';
-
-// Определяем интерфейс для прямых записей
-interface DirectRecord {
-  imageUrl: string;
-  category: string;
-  selected?: boolean; // Добавляем свойство для отслеживания выбранных записей
-}
+import { Component, OnInit } from '@angular/core';
+import { ActionService } from '../services/stocks.service';
+import { Action } from '../stocks.interface';
 
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.scss']
 })
-export class StocksComponent {
-  // Массив прямых записей
-  directRecords: DirectRecord[] = [
-    {
-      imageUrl: 'https://avatars.mds.yandex.net/i?id=5ef8223cbc7f95e3d54adba6595b1a7c_l-5231983-images-thumbs&n=13',
-      category: 'скидка',
-      selected: false
-    },
-    {
-      imageUrl: 'https://gorod-zdorovja.ru/images/ginekilogymai.jpg',
-      category: 'тесты',
-      selected: false
-    },
-    {
-      imageUrl: 'https://gorod-zdorovja.ru/images/our_doctors/psihoterapevty/voskresene.jpg',
-      category: 'акции',
-      selected: false
-    },
-    {
-      imageUrl: 'https://p1.zoon.ru/preview/0ubzullluJyn09JhNDSzGg/1140x676x75/1/1/d/original_613eda9dd4bfc267cc30b874_6143f56b043e3.jpg',
-      category: 'другое',
-      selected: false
-    },
-  ];
+export class StocksComponent implements OnInit {
+  directRecords: Action[] = [];
 
-  // Метод для выбора всех записей
-  selectAll() {
-    this.directRecords.forEach(record => record.selected = true);
-    this.directRecords = [...this.directRecords]; // Создаем новый массив для обновления состояния
+  constructor(private actionService: ActionService) {}
+
+  ngOnInit(): void {
+    this.loadActions();
   }
 
-  // Метод для удаления выбранных записей
-  deleteSelected() {
-    this.directRecords = this.directRecords.filter(record => !record.selected);
+  loadActions(): void {
+    this.actionService.getActions().subscribe(
+      (data: Action[]) => {
+        this.directRecords = data.map(action => ({ ...action, selected: false }));
+      },
+      error => {
+        console.error('Error fetching actions', error);
+      }
+    );
   }
 
-  // Метод для переключения выбора элемента
-  toggleSelection(request: DirectRecord, event: Event) {
+  deleteSelected(): void {
+    const selectedRecords = this.directRecords.filter(record => record.selected);
+    selectedRecords.forEach(record => {
+      this.actionService.deleteAction(record.action_id).subscribe(
+        response => {
+          if (response.success) {
+            this.directRecords = this.directRecords.filter(r => r.action_id !== record.action_id);
+          }
+        },
+        error => {
+          console.error('Error deleting action', error);
+        }
+      );
+    });
+  }
+
+  toggleSelection(request: Action, event: Event): void {
     const target = event.target as HTMLElement;
     if (target.tagName === 'INPUT' || target.classList.contains('edit') || target.classList.contains('delete')) {
       return;
@@ -57,8 +51,25 @@ export class StocksComponent {
     request.selected = !request.selected;
   }
 
-  // Метод для остановки всплытия события
-  stopPropagation(event: Event) {
+  stopPropagation(event: Event): void {
     event.stopPropagation();
   }
+
+  selectAll(): void {
+    this.directRecords.forEach(record => record.selected = true);
+    this.directRecords = [...this.directRecords]; // Create a new array to update the state
+  }
+  deleteAction(action: Action): void {
+    this.actionService.deleteAction(action.action_id).subscribe(
+      response => {
+        if (response.success) {
+          this.directRecords = this.directRecords.filter(r => r.action_id !== action.action_id);
+        }
+      },
+      error => {
+        console.error('Error deleting action', error);
+      }
+    );
+  }
+  
 }

@@ -1,30 +1,33 @@
 <div class="pg-background">
     <h1 class="title">Все услуги</h1>
     <div class="functions">
-        <button routerLink="./new">+ Добавить услугу</button>
+      <button routerLink="./new">+ Добавить услугу</button>
     </div>
     <div class="main-window">
-        <div class="spisok">
-            <div class="headers">
-                <div class="header-item"></div>
-                <h2>Название</h2>
-                <h2>Стоимость</h2>
-                <h2>Действия</h2>
-            </div>
-            <div *ngFor="let service of services" class="service-item" [class.selected]="service.selected" (click)="toggleSelection(service, $event)">
-                <input type="checkbox" id="checkbox-{{service.name}}" [(ngModel)]="service.selected">
-                <label for="checkbox-{{service.name}}"></label>
-                <p>{{ service.name }}</p>
-                <p>{{ service.price }} руб.</p>
-                <div class="actions">
-                    <button routerLink="./change" class="edit">Изменить</button>
-                    <button class="delete">Удалить</button>
-                </div>
-            </div>
+      <div class="spisok">
+        <div class="headers">
+          <div class="header-item"></div>
+          <h2>Название</h2>
+          <h2>Специалист</h2>
+          <h2 style="margin-left: 10%">Стоимость</h2>
+          <h2>Действия</h2>
         </div>
-        <div class="main-button">
-            <button class="select-all" (click)="selectAll()">Выбрать все</button>
-            <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
+        <div *ngFor="let service of services" class="service-item" [class.selected]="service.selected" (click)="toggleSelection(service, $event)">
+          <input type="checkbox" id="checkbox-{{service.name}}" [(ngModel)]="service.selected">
+          <label for="checkbox-{{service.name}}"></label>
+          <p>{{ service.name }}</p>
+          <p>{{service.speciality}}</p>
+          <p>{{ service.price }} руб.</p>
+          <div class="actions">
+            <button [routerLink]="['./change', service.id]" class="edit" *ngIf="service.id">Изменить</button>
+            <button (click)="service.id ? deleteService(service.id) : null" class="delete">Удалить</button>
+          </div>
         </div>
+      </div>
+      <div class="main-button">
+        <button class="select-all" (click)="selectAll()">Выбрать все</button>
+        <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
+      </div>
     </div>
-</div>
+  </div>
+  

@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctors.service';
-import { Doctor, Education } from 'src/app/website/core/types/admin-doctors.interface';
+import { Doctor, Education } from 'src/app/website/admin/modules/doctors/admin-doctors.interface';
 
 @Component({
   selector: 'app-change',
@@ -9,9 +9,11 @@ import { Doctor, Education } from 'src/app/website/core/types/admin-doctors.inte
   styleUrls: ['./change.component.scss']
 })
 export class ChangeComponent implements OnInit {
-  doctorId: number = 0; // Инициализируем значением по умолчанию
+  doctorId: number = 0;
   doctor: Doctor;
   photoUrl: string | null = null;
+  notificationMessage: string = '';
+  isSuccess: boolean = true;
   @ViewChild('fileInput') fileInput?: ElementRef;
 
   constructor(
@@ -21,18 +23,14 @@ export class ChangeComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       this.doctorId = idParam ? parseInt(idParam, 10) : 0;
-      if (isNaN(this.doctorId)) {
-        console.error('Invalid doctor ID');
-        this.doctorId = 0; // Установите значение по умолчанию или обработайте ошибку
-      }
     });
     this.doctor = {
       id: 0,
       id_easyclinic: 0,
-      name: '', // Используем name для ФИО
+      name: '',
       photo: null,
       experiance: null,
-      phone_number: null,
+      phone: null,
       educations: [],
       specialties: [],
       selected: false
@@ -40,17 +38,14 @@ export class ChangeComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!isNaN(this.doctorId)) {
+    if (this.doctorId) {
       const doctor = this.doctorService.getDoctorById(this.doctorId);
       if (doctor) {
-        this.doctor = doctor;
+        this.doctor = { ...doctor };
         this.photoUrl = doctor.photo;
-        console.log('Doctor data:', this.doctor); // Добавляем консольный лог
       } else {
-        console.error('Doctor not found');
+        console.error('Врач не найден');
       }
-    } else {
-      console.error('Invalid doctor ID');
     }
   }
 
@@ -82,18 +77,37 @@ export class ChangeComponent implements OnInit {
   }
 
   saveChanges() {
-    const updatedDoctor: Doctor = {
-      ...this.doctor,
+    if (!this.doctor.name || !this.doctor.phone || !this.photoUrl) {
+      console.error('Не все обязательные поля заполнены');
+      return;
+    }
+
+    const updatedDoctor = {
+      full_name: this.doctor.name,
+      phone_number: this.doctor.phone,
       photo: this.photoUrl!,
+      experiance: this.doctor.experiance,
+      education: this.doctor.educations.map(edu => ({ name: edu.name, year: edu.year }))
     };
-    console.log('Updated doctor data:', updatedDoctor); // Добавляем консольный лог
+
     this.doctorService.updateDoctor(this.doctorId, updatedDoctor).subscribe(
       data => {
-        console.log('Doctor updated successfully', data);
+        this.showNotification('Данные врача успешно обновлены', true);
+        console.log('Данные врача успешно обновлены', data);
       },
       error => {
-        console.error('Error updating doctor', error);
+        this.showNotification('Ошибка при обновлении данных врача', false);
+        console.error('Ошибка при обновлении данных врача', error);
       }
     );
+  }
+
+  private showNotification(message: string, isSuccess: boolean) {
+    this.notificationMessage = message;
+    this.isSuccess = isSuccess;
+    // Сброс сообщения через 3 секунды
+    setTimeout(() => {
+      this.notificationMessage = '';
+    }, 3000);
   }
 }

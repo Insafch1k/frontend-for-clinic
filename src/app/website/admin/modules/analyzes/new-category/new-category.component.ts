@@ -1,7 +1,7 @@
-// new-category.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AnalyzesService } from '../services/analuzes.service';
-import { Analysis } from 'src/app/website/core/types/admin-analyzes.interface';
+import { Router } from '@angular/router';
+import { Analysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-new-category',
@@ -10,67 +10,48 @@ import { Analysis } from 'src/app/website/core/types/admin-analyzes.interface';
 })
 export class NewCategoryComponent implements OnInit {
   analyses: Analysis[] = [];
-  selectedAnalyses: number[] = [];
-  isDropdownOpen: boolean = false;
-  categoryName: string = '';
-  categoryDescription: string = '';
+  isDropdownOpen = false;
+  newCategory = {
+    name: '',
+    description: '',
+    analysis: [] as number[]
+  };
+  selectedAnalyses: { [key: number]: boolean } = {};
 
-  constructor(private analyzesService: AnalyzesService) {}
+  constructor(
+    private analyzesService: AnalyzesService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAnalyses();
   }
 
-  loadAnalyses() {
-    this.analyzesService.getAnalyses().subscribe(
-      data => {
-        this.analyses = data;
-      },
-      error => {
-        console.error('Ошибка при загрузке анализов:', error);
-      }
-    );
+  loadAnalyses(): void {
+    this.analyzesService.getAnalyses().subscribe(data => {
+      this.analyses = data;
+    });
   }
 
-  onAnalysisChange(event: any, analysisId: number) {
-    if (event.target.checked) {
-      this.selectedAnalyses.push(analysisId);
-    } else {
-      this.selectedAnalyses = this.selectedAnalyses.filter(id => id !== analysisId);
-    }
+  addCategory(): void {
+    this.newCategory.analysis = Object.entries(this.selectedAnalyses)
+      .filter(([key, value]) => value)
+      .map(([key]) => Number(key));
+
+    this.analyzesService.addCategory(this.newCategory).subscribe(() => {
+      this.router.navigate(['/admin/analyzes']);
+    });
   }
 
-  toggleDropdown() {
+  toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  applySelectedAnalyses() {
-    this.isDropdownOpen = false;
+  onAnalysisChange(event: any, analysisId: number): void {
+    this.selectedAnalyses[analysisId] = event.target.checked;
   }
 
-  addCategory() {
-    const newCategory = {
-      name: this.categoryName,
-      description: this.categoryDescription,
-      analysis: this.selectedAnalyses
-    };
-
-    this.analyzesService.addCategory(newCategory).subscribe(
-      response => {
-        if (response.success) {
-          console.log('Категория успешно добавлена:', response);
-          // Очистка полей после успешного добавления
-          this.categoryName = '';
-          this.categoryDescription = '';
-          this.selectedAnalyses = [];
-          alert('Категория успешно добавлена!');
-        } else {
-          console.error('Ошибка при добавлении категории:', response);
-        }
-      },
-      error => {
-        console.error('Ошибка при добавлении категории:', error);
-      }
-    );
+  applySelectedAnalyses(): void {
+    this.isDropdownOpen = false;
   }
 }

@@ -9,7 +9,7 @@ const routes: Routes = [
         component: AmenitiesComponent,
     },
     {
-        path:'change',
+        path: 'change/:id',
         component:ChangeComponent,
         title:'Изменить услугу'
     },
