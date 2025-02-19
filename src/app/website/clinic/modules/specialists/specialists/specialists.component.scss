@@ -13,7 +13,6 @@
 }
 
 .categories {
-    margin-top: 50px;
     margin-bottom: 50px;
     margin-left: 10.5%;
     margin-right: 10.5%;
@@ -120,7 +119,7 @@
     padding: 20px;
 
     &:hover {
-        transform: scale(1.01);
+        border: 3px solid #7eb3c1;
     }
 
     & .spec-wrapp {
@@ -152,6 +151,7 @@
 
                 & .main-top-info {
                     h2 {
+                        cursor: pointer;
                         font-size: 15px;
                         font-weight: 500;
                         padding: 10px 0;

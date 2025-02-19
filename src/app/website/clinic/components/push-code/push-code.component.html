@@ -1,0 +1,21 @@
+<div class="push-wrap">
+    <p>
+        На номер +7(917)999-99-99 было отправлено SMS с кодом подтверждения.
+        Введите полученный код, чтобы продолжить оформление записи.
+    </p>
+    <div class="custom-input-container">
+        <input
+            type="text"
+            class="custom-input"
+            [value]="inputValue"
+            (input)="onInput($event)"
+            maxlength="4"
+        />
+        <span class="custom-input-background"></span>
+        <span class="custom-input-background"></span>
+        <span class="custom-input-background"></span>
+        <span class="custom-input-background"></span>
+    </div>
+    <p class="repeate">Отправить повторно через 5 мин.</p>
+    <button class="submit">Подтвердить</button>
+</div>

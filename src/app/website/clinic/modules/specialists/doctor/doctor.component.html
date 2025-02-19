@@ -2,25 +2,23 @@
     <div class="doctor-wrapper">
         <div class="route">
             Главная / Специалисты / Гастроэнтеролог /
-            {{ doctorData.doctor.fullname }}
+            {{ doctorData.full_name }}
         </div>
         <div class="doctor">
             <div class="doctor-block">
                 <div class="doctor-block_info">
-                    <img src="{{ doctorData.doctor.image }}" alt="" />
+                    <img src="{{ doctorData.photo }}" alt="" />
                     <div class="doctor-block_info-desc">
                         <p class="doctor-block_info-name">
-                            {{ doctorData.doctor.fullname }}
+                            {{ doctorData.full_name }}
                         </p>
                         <p>Специальности: {{ doctorData.specialties }}</p>
                         <p class="doctor-block_info-experience">
                             Стаж:
-                            {{
-                                getExperienceText(doctorData.doctor.experience)
-                            }}
+                            {{ getExperienceText(doctorData.experiance!) }}
                         </p>
                         <p class="doctor-block_info-phone">
-                            + {{ doctorData.doctor.phone_number }}
+                            <!-- + {{ doctorData.phone_number }} -->
                         </p>
                     </div>
                 </div>
@@ -28,8 +26,8 @@
             </div>
             <div class="education">
                 <h2 class="name">Квалификация и образование</h2>
-                <div *ngFor="let ed of doctorData.qualification">
-                    {{ ed.year }} - {{ ed.education_name }}
+                <div *ngFor="let ed of doctorData.education">
+                    {{ ed.year }} - {{ ed.name }}
                 </div>
             </div>
             <div class="reviews">

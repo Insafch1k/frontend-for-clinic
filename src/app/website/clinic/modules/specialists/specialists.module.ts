@@ -9,6 +9,8 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { SharedModule } from 'src/app/website/shared/shared.module';
 import { DoctorService } from './services/doctor.service';
 import { ChooseTimeComponent } from './choose-time/choose-time.component';
+import { PushService } from 'src/app/website/core/services/push.service';
+import { PushCodeComponent } from '../../components/push-code/push-code.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +25,7 @@ import { ChooseTimeComponent } from './choose-time/choose-time.component';
         FormsModule,
         ReactiveFormsModule,
         SharedModule,
+        PushCodeComponent,
     ],
     providers: [SpecialistsService, DoctorService],
 })

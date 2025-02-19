@@ -1,29 +1,30 @@
 export interface IDoctor {
-    description: string;
-    slot_date: {
-        [key: string]: string[];
-    };
-    doctor: {
+    available_times: IAvailableTime[];
+    experiance: number | null;
+    full_name: string;
+    id: number;
+    id_easyclinic: number;
+    photo: string | null;
+    price: number | null;
+
+    specialties: {
         doctor_id: number;
-        fullname: string;
-        phone_number: string;
-        image: string;
-        experience: number;
-    };
-    qualification: {
-        education_name: string;
-        year: number;
+        speciality_name: string;
     }[];
+    education: {
+        name: string;
+        year: string;
+    }[];
+
+    house_call: boolean;
+}
+
+export interface IDoctorFull extends IDoctor {
     reviews: {
         phone: string;
         date: Date;
         description: string;
     }[];
-    specialties: {
-        speciality_id: number;
-        speciality_name: string;
-    }[];
-    house_call: boolean;
 }
 
 export interface ISpecialists {
@@ -35,10 +36,12 @@ export interface ISpecialists {
     success: number;
 }
 
-export interface IGetDoctor {
-    data: {
-        doctor: IDoctor;
+export interface IAvailableTime {
+    date: string;
+    day_id: number;
+    filial: string;
+    filial_id: number;
+    time: {
+        [key: string]: string;
     };
-    error_message: null | string;
-    success: number;
 }

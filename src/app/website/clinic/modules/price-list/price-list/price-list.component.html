@@ -1,5 +1,5 @@
 <div class="page-background">
-    <div class="title"><h2>Главная / Прайс-лист</h2></div>
+    <div class="route">Главная / Прайс-лист</div>
     <div class="main">
         <div class="choice-menu">
             <div class="dropdown" *ngIf="isMobile">
@@ -25,7 +25,7 @@
             </ul>
         </div>
         <div class="main-service">
-            <div class="services">
+            <!-- <div class="services">
                 <div
                     *ngFor="let service of selectedService.services"
                     class="service-item"
@@ -35,7 +35,7 @@
                     <div class="service-divider"></div>
                     <div class="service-price">{{ service.price }}</div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="dowload">
             <p class="dow-right" (click)="downloadFullPriceList()">

@@ -49,9 +49,9 @@
                                 <option value="" disabled selected>Врач</option>
                                 <option
                                     *ngFor="let doctor of displayDoctors"
-                                    [value]="doctor.doctor.fullname"
+                                    [value]="doctor.full_name"
                                 >
-                                    {{ doctor.doctor.fullname }}
+                                    {{ doctor.full_name }}
                                 </option>
                             </select>
                             <div
@@ -172,11 +172,9 @@
                             >
                                 <div
                                     *ngFor="
-                                        let time of doctorData.slot_date[
-                                            isOpenDayDoctor.days[
-                                                isOpenDayDoctor.currentView
-                                            ].day
-                                        ];
+                                        let time of isOpenDayDoctor.days[
+                                            isOpenDayDoctor.currentView
+                                        ].slot;
                                         let c = index
                                     "
                                     class="time-slot"
@@ -185,9 +183,9 @@
                                             isOpenDayDoctor.currentView
                                         ].slot[c]
                                     "
-                                    (click)="selectTimeSlot(time)"
+                                    (click)="selectTimeSlot(time.time)"
                                 >
-                                    {{ time }}
+                                    {{ time.time }}
                                 </div>
                             </div>
                         </div>
@@ -309,6 +307,9 @@
                         Отправить
                     </button>
                 </div>
+                <ng-container *ngIf="isSend">
+                    <app-push-code></app-push-code>
+                </ng-container>
             </div>
         </form>
     </div>
