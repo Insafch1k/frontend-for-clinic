@@ -1,43 +1,37 @@
 <div class="pg-background">
     <h1 class="title">Новая категория</h1>
     <div class="main-window">
-        <div class="titlee">
-            <h2>Основная информация</h2>
+      <div class="titlee">
+        <h2>Основная информация</h2>
+      </div>
+      <div class="spisok">
+        <div class="item">
+          <h2>Название</h2>
+          <input type="text" class="text-field" [(ngModel)]="newCategory.name">
         </div>
-        <div class="spisok">
-            <div class="item">
-                <h2>Название</h2>
-                <input type="text" class="text-field">
+        <div class="experience">
+          <h2>Анализы</h2>
+          <div class="connector" (click)="toggleDropdown()">
+            <input type="text" placeholder="Выберите анализы" readonly>
+            <img src="assets/admin-data/icons/check.svg" alt="">
+          </div>
+          <div *ngIf="isDropdownOpen" class="OpenList">
+            <p class="topP">Выберите анализы</p>
+            <div class="listok">
+              <label class="candidat" *ngFor="let analysis of analyses">
+                <input type="checkbox" class="checkbox" [value]="analysis.id" [(ngModel)]="selectedAnalyses[analysis.id]" (change)="onAnalysisChange($event, analysis.id)">
+                <p>{{ analysis.name }} ({{ analysis.price }} руб.)</p>
+              </label>
             </div>
-            <div class="iteem">
-                <h2>Врач</h2>
-                <div class="connector" >
-                    <select (change)="onDoctorChange($event)" class="text-field">
-                        <option *ngFor="let doctor of doctors" [value]="doctor.name">{{ doctor.name }}</option>
-                    </select>
-                    <img src="assets/admin-data/icons/check.svg" alt="">
-                </div>
-            </div>
-            <div class="experience">
-                <h2>Анализы</h2>
-                <div class="connector" (click)="toggleDropdown()">
-                    <input type="text" placeholder="Выберите анализы" readonly>
-                    <img src="assets/admin-data/icons/check.svg" alt="">
-                </div>
-                <div *ngIf="isDropdownOpen" class="OpenList">
-                    <p class="topP">Выберите анализы</p>
-                    <label class="candidat" *ngFor="let analysis of analyses">
-                        <input type="checkbox" class="checkbox" [value]="analysis.name" (change)="onAnalysisChange($event, analysis.name)">
-                        <p>{{ analysis.name }}</p>
-                    </label>
-                    <button class="apply-button">Применить</button>
-                </div>
-            </div>
-            <div class="item">
-                <h2>Стоимость</h2>
-                <input type="text" class="text-field">
-            </div>
+            <button class="apply-button" (click)="applySelectedAnalyses()">Применить</button>
+          </div>
         </div>
-        <button class="save">Добавить категорию</button>
+        <div class="item-opis">
+          <h2>Описание</h2>
+          <textarea class="text-area" [(ngModel)]="newCategory.description"></textarea>
+        </div>
+      </div>
+      <button class="save" (click)="addCategory()">Добавить категорию</button>
     </div>
-</div>
+  </div>
+  

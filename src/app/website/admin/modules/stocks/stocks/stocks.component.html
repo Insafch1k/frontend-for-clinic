@@ -1,28 +1,32 @@
 <div class="pg-background">
     <h1 class="title">Акции</h1>
     <div class="functions">
-        <button routerLink="./new">+ Добавить акцию</button>
+      <button routerLink="./new">+ Добавить акцию</button>
     </div>
     <div class="main-window">
-        <div class="spisok">
-            <div class="headers">
-                <h2>Фотография</h2>
-                <h2>Категория</h2>
-                <h2 class="actions-header">Действия</h2>
-            </div>
-            <div *ngFor="let request of directRecords" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
-                <input type="checkbox" id="checkbox-{{request.imageUrl}}" [(ngModel)]="request.selected" (click)="stopPropagation($event)">
-                <label for="checkbox-{{request.imageUrl}}"></label>
-                <img [src]="request.imageUrl" alt="Image" style="width: 176px; height: 99px;">
-                <p>{{ request.category }}</p>
-                <div class="actions">
-                    <button class="delete" (click)="stopPropagation($event)">Удалить</button>
-                </div>
-            </div>
+      <div class="spisok">
+        <div class="headers">
+          <h2 style="margin-left: 10px;">Фотография</h2>
+          <h2>Категория</h2>
+          <h2>Описание</h2>
+          <h2 class="actions-header">Действия</h2>
         </div>
-        <div class="main-button">
-            <button class="select-all" (click)="selectAll()">Выбрать все</button>
-            <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
+        <div *ngFor="let request of directRecords" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
+          <input type="checkbox" id="checkbox-{{request.photo}}" [(ngModel)]="request.selected" (click)="stopPropagation($event)">
+          <label for="checkbox-{{request.photo}}"></label>
+          <img [src]="request.photo" alt="Image" style="width: 150px; height: auto;">
+          <p>{{ request.category_name }}</p>
+          <textarea readonly 
+          disabled >{{ request.description }}</textarea>
+          <div class="actions">
+            <button class="delete" (click)="deleteAction(request); stopPropagation($event)">Удалить</button>
+          </div>
         </div>
+      </div>
+      <div class="main-button">
+        <button class="select-all" (click)="selectAll()">Выбрать все</button>
+        <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
+      </div>
     </div>
-</div>
+  </div>
+  

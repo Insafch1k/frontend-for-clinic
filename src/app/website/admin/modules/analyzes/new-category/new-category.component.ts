@@ -1,45 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AnalyzesService } from '../services/analuzes.service';
+import { Router } from '@angular/router';
+import { Analysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-new-category',
   templateUrl: './new-category.component.html',
   styleUrls: ['./new-category.component.scss']
 })
-export class NewCategoryComponent {
-  doctors = [
-    { id: 1, name: 'Васильева Елизавета Ильинична ' },
-    { id: 2, name: 'Тихомирова Елизавета Тимуровна ' },
-    { id: 3, name: 'Кудряшова Василиса Данииловна' }
-  ];
+export class NewCategoryComponent implements OnInit {
+  analyses: Analysis[] = [];
+  isDropdownOpen = false;
+  newCategory = {
+    name: '',
+    description: '',
+    analysis: [] as number[]
+  };
+  selectedAnalyses: { [key: number]: boolean } = {};
 
-  analyses = [
-    { id: 1, name: 'Инсулин' },
-    { id: 2, name: 'АЛТ' },
-    { id: 3, name: 'Глюкоза' },
-    { id: 4, name: 'АСТ' },
-    { id: 5, name: 'ГГТ' },
-    { id: 6, name: 'Холестерин' },
-    { id: 7, name: 'Забор' },
-  ];
+  constructor(
+    private analyzesService: AnalyzesService,
+    private router: Router
+  ) {}
 
-  selectedDoctor: string = '';
-  selectedAnalyses: string[] = [];
-  isDropdownOpen: boolean = false;
-
-  onDoctorChange(event: any) {
-    this.selectedDoctor = event.target.value;
+  ngOnInit(): void {
+    this.loadAnalyses();
   }
 
-  onAnalysisChange(event: any, analysisName: string) {
-    if (event.target.checked) {
-      this.selectedAnalyses.push(analysisName);
-    } else {
-      this.selectedAnalyses = this.selectedAnalyses.filter(analysis => analysis !== analysisName);
-    }
-    console.log(this.selectedAnalyses); // Проверка выбранных анализов
+  loadAnalyses(): void {
+    this.analyzesService.getAnalyses().subscribe(data => {
+      this.analyses = data;
+    });
   }
 
-  toggleDropdown() {
+  addCategory(): void {
+    this.newCategory.analysis = Object.entries(this.selectedAnalyses)
+      .filter(([key, value]) => value)
+      .map(([key]) => Number(key));
+
+    this.analyzesService.addCategory(this.newCategory).subscribe(() => {
+      this.router.navigate(['/admin/analyzes']);
+    });
+  }
+
+  toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  onAnalysisChange(event: any, analysisId: number): void {
+    this.selectedAnalyses[analysisId] = event.target.checked;
+  }
+
+  applySelectedAnalyses(): void {
+    this.isDropdownOpen = false;
   }
 }

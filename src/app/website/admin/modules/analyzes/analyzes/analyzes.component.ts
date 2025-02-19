@@ -1,50 +1,51 @@
-import { Component } from '@angular/core';
-
-interface AppointmentRequest {
-  analysis: string;
-  category: string;
-  doctorName: string;
-  selected?: boolean; // Добавляем свойство для отслеживания выбранных заявок
-}
+import { Component, OnInit } from '@angular/core';
+import { AnalyzesService } from '../services/analuzes.service';
+import { Analysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-analyzes',
   templateUrl: './analyzes.component.html',
   styleUrls: ['./analyzes.component.scss']
 })
-export class AnalyzesComponent {
-  // Массив заявок на запись
-  appointmentRequests: AppointmentRequest[] = [
-    {
-      analysis: 'Анализ крови',
-      category: 'Гематология',
-      doctorName: 'Петров Петр',
-      selected: false
-    },
-    {
-      analysis: 'Анализ мочи',
-      category: 'Урология',
-      doctorName: 'Сидоров Алексей',
-      selected: false
-    },
-  ];
+export class AnalyzesComponent implements OnInit {
+  appointmentRequests: Analysis[] = [];
 
-  // Метод для выбора всех заявок
-  selectAll() {
-    this.appointmentRequests.forEach(request => request.selected = true);
+  constructor(private analyzesService: AnalyzesService) {}
+
+  ngOnInit(): void {
+    this.loadAnalyses();
   }
 
-  // Метод для удаления выбранных заявок
-  deleteSelected() {
-    this.appointmentRequests = this.appointmentRequests.filter(request => !request.selected);
+  loadAnalyses(): void {
+    this.analyzesService.getAnalyses().subscribe(data => {
+      this.appointmentRequests = data;
+    });
   }
 
-  // Метод для переключения выделения заявки
-  toggleSelection(request: AppointmentRequest, event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (target.tagName === 'BUTTON') {
-      return; // Если кликнули на кнопку, не выделяем строку
-    }
+  deleteRequest(id: number): void {
+    this.analyzesService.deleteAnalysis(id).subscribe(() => {
+      this.loadAnalyses();
+    });
+  }
+
+  deleteSelected(): void {
+    const selectedIds = this.appointmentRequests
+      .filter(request => request.selected)
+      .map(request => request.id);
+
+    selectedIds.forEach(id => {
+      this.deleteRequest(id);
+    });
+  }
+
+  selectAll(): void {
+    this.appointmentRequests.forEach(request => {
+      request.selected = true;
+    });
+  }
+
+  toggleSelection(request: Analysis, event: Event): void {
+    event.stopPropagation();
     request.selected = !request.selected;
   }
 }

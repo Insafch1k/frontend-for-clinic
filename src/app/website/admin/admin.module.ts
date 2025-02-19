@@ -5,6 +5,8 @@ import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { HeaderLeftComponent } from './layout/header-left/header-left.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -12,10 +14,10 @@ import { HeaderLeftComponent } from './layout/header-left/header-left.component'
   declarations: [
     AdminComponent,
     HeaderComponent,
-    HeaderLeftComponent
+    HeaderLeftComponent,
   ],
   imports: [
-    CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule
+    CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule
   ]
 })
 export class AdminModule { }

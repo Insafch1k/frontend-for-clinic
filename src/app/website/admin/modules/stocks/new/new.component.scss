@@ -27,14 +27,28 @@
 
 .item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     margin-left: 30px;
+
     h2 {
         font-size: 18px;
     }
-    input, select {
+
+    input, select, textarea {
         font-size: 16px;
+        box-sizing: border-box; /* Учитывает padding и border в общей ширине */
+    }
+}
+
+.one-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    textarea{
+        resize: none;
+        height: 200px;
+        overflow-y: auto;
     }
 }
 
@@ -44,7 +58,10 @@
     margin-left: 20px;
     border: 1px solid rgba(153, 153, 153, 1);
     border-radius: 0px;
+    box-sizing: border-box; /* Учитывает padding и border в общей ширине */
 }
+
+
 
 .for-picture {
     margin-top: -50px;
@@ -73,7 +90,7 @@
 
 .picture {
     width: 300px;
-    height: 169px;
+    height: 330px;
     background-color: #ccc;
     margin-bottom: 10px;
 }
@@ -102,7 +119,7 @@
 }
 .preview-image {
     width: 300px;
-    height: 169px;
+    height: 330px;
 }
 
 .save {

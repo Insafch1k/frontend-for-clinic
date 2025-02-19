@@ -1,31 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AnalyzesService } from '../services/analuzes.service';
+import { Router } from '@angular/router';
+import { Category } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-new-analyzes',
   templateUrl: './new-analyzes.component.html',
   styleUrls: ['./new-analyzes.component.scss']
 })
-export class NewAnalyzesComponent {
-  doctors = [
-    { id: 1, name: 'Васильева Елизавета Ильинична ' },
-    { id: 2, name: 'Тихомирова Елизавета Тимуровна ' },
-    { id: 3, name: 'Кудряшова Василиса Данииловна' }
-  ];
+export class NewAnalyzesComponent implements OnInit {
+  categories: Category[] = [];
+  doctors: any[] = []; // Предполагается, что у вас есть список врачей
+  newAnalysis = {
+    name: '',
+    price: 0,
+    category_id: []
+  };
 
-  analyses = [
-    { id: 1, name: 'ГАСТРО ЧЕК-АП +1'},
-    { id: 2, name: 'ЧЕК-АП "ИЗБЫТОЧНЫЙ ВЕС"' },
-    { id: 3, name: 'ЧЕК-АП №1РЕСПИРАТОРНЫЕ АЛЛЕРГЕНЫ' }
-  ];
+  constructor(
+    private analyzesService: AnalyzesService,
+    private router: Router
+  ) {}
 
-  selectedDoctor: string = '';
-  selectedAnalysis: string = '';
-
-  onDoctorChange(event: any) {
-    this.selectedDoctor = event.target.value;
+  ngOnInit(): void {
+    this.loadCategories();
+    this.loadDoctors();
   }
 
-  onAnalysisChange(event: any) {
-    this.selectedAnalysis = event.target.value;
+  loadCategories(): void {
+    this.analyzesService.getCategories().subscribe(data => {
+      this.categories = data;
+    });
+  }
+
+  loadDoctors(): void {
+    // Загрузите список врачей
+  }
+
+  addAnalysis(): void {
+    this.analyzesService.addAnalysis(this.newAnalysis).subscribe(() => {
+      this.router.navigate(['/analyzes']);
+    });
+  }
+
+
+  onCategoryChange(event: any): void {
+    // Обработка изменения категории
   }
 }

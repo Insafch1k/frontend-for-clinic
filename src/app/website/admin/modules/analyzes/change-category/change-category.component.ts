@@ -1,45 +1,73 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AnalyzesService } from '../services/analuzes.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Category, Analysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-change-category',
   templateUrl: './change-category.component.html',
   styleUrls: ['./change-category.component.scss']
 })
-export class ChangeCategoryComponent {
-  doctors = [
-    { id: 1, name: 'Васильева Елизавета Ильинична ' },
-    { id: 2, name: 'Тихомирова Елизавета Тимуровна ' },
-    { id: 3, name: 'Кудряшова Василиса Данииловна' }
-  ];
+export class ChangeCategoryComponent implements OnInit {
+  category: Category = { id: 0, name: '', description: '', analysis: [] };
+  analyses: Analysis[] = [];
+  isDropdownOpen = false;
 
-  analyses = [
-    { id: 1, name: 'Инсулин' },
-    { id: 2, name: 'АЛТ' },
-    { id: 3, name: 'Глюкоза' },
-    { id: 4, name: 'АСТ' },
-    { id: 5, name: 'ГГТ' },
-    { id: 6, name: 'Холестерин' },
-    { id: 7, name: 'Забор' },
-  ];
+  constructor(
+    private analyzesService: AnalyzesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  selectedDoctor: string = '';
-  selectedAnalyses: string[] = [];
-  isDropdownOpen: boolean = false;
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      const id = +params['id'];
+      this.analyzesService.getCategories().subscribe(data => {
+        const foundCategory = data.find(c => c.id === id);
+        if (foundCategory) {
+          this.category = { ...foundCategory, analysis: foundCategory.analysis || [] };
+        }
+      });
+    });
 
-  onDoctorChange(event: any) {
-    this.selectedDoctor = event.target.value;
+    this.loadAnalyses();
   }
 
-  onAnalysisChange(event: any, analysisName: string) {
-    if (event.target.checked) {
-      this.selectedAnalyses.push(analysisName);
-    } else {
-      this.selectedAnalyses = this.selectedAnalyses.filter(analysis => analysis !== analysisName);
-    }
-    console.log(this.selectedAnalyses); // Проверка выбранных анализов
+  loadAnalyses(): void {
+    this.analyzesService.getAnalyses().subscribe(data => {
+      this.analyses = data;
+    });
   }
 
-  toggleDropdown() {
+  saveChanges(): void {
+    const updatedCategory = {
+      name: this.category.name,
+      description: this.category.description,
+      analysis: this.category.analysis || []
+    };
+
+    this.analyzesService.updateCategory(this.category.id, updatedCategory).subscribe(() => {
+      this.router.navigate(['/analyzes']);
+    });
+  }
+
+  toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  isAnalysisSelected(analysisId: number): boolean {
+    return this.category.analysis?.includes(analysisId) ?? false;
+  }
+
+  onAnalysisChange(event: any, analysisId: number): void {
+    if (event.target.checked) {
+      this.category.analysis?.push(analysisId);
+    } else {
+      this.category.analysis = this.category.analysis?.filter(id => id !== analysisId);
+    }
+  }
+
+  applySelectedAnalyses(): void {
+    this.isDropdownOpen = false;
   }
 }

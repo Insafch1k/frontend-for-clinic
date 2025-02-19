@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { DoctorsRoutingModule } from './doctors-routing.module';
+import { ChangeComponent } from './change/change.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NotificationComponent } from '../../notification/notification.component';
 
 
 
@@ -11,10 +14,12 @@ import { DoctorsRoutingModule } from './doctors-routing.module';
 
 @NgModule({
   declarations: [
-    DoctorsComponent
+    DoctorsComponent,
+    ChangeComponent,
+    NotificationComponent
   ],
   imports: [
-    CommonModule, DoctorsRoutingModule, FormsModule, ReactiveFormsModule
+    CommonModule, DoctorsRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule
   ]
 })
 export class DoctorsModule{ }
