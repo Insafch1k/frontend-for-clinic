@@ -30,6 +30,7 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private priceListService: PriceListService) {}
 
     ngOnInit(): void {
+        window.scrollTo(0, 0); // Прокручивает страницу к верхней части
         this.selectedSpecialist = this.specialists[0];
         this.checkScreenSize();
         window.addEventListener('resize', this.checkScreenSize.bind(this));
@@ -43,6 +44,7 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
             this.services.forEach((service: IService) => {
                 this.specialists.push(service.name);
             });
+            console.log(this.selectedService);
         });
     }
 
@@ -91,7 +93,7 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     downloadFullPriceList(): void {
-        this.priceListService.downloadFullPriceList().subscribe((blob) => {
+        this.priceListService.downloadFullPriceList().subscribe((blob: any) => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;

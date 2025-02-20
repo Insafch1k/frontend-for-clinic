@@ -76,10 +76,9 @@
             >
                 <div
                     *ngFor="
-                        let time of doctorData.slot_date[
-                            isOpenDayDoctor.days[isOpenDayDoctor.currentView]
-                                .day
-                        ];
+                        let time of isOpenDayDoctor.days[
+                            isOpenDayDoctor.currentView
+                        ].slot;
                         let c = index
                     "
                     class="time-slot"
@@ -88,9 +87,9 @@
                             c
                         ]
                     "
-                    (click)="selectTimeSlot(time)"
+                    (click)="selectTimeSlot(time.time)"
                 >
-                    {{ time }}
+                    {{ time.time }}
                 </div>
             </div>
         </div>

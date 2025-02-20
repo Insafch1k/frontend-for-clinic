@@ -44,22 +44,18 @@
         >
             <div class="spec-wrapp">
                 <div class="avatarka">
-                    <img src="{{ specialist.doctor.image }}" alt="" />
+                    <img src="{{ specialist.photo }}" alt="" />
                 </div>
                 <div class="main-info">
                     <div class="main-top">
                         <div class="main-top-info">
-                            <h2
-                                (click)="
-                                    goToDoctor(specialist.doctor.doctor_id)
-                                "
-                            >
-                                {{ specialist.doctor.fullname }}
+                            <h2 (click)="goToDoctor(specialist.id)">
+                                {{ specialist.full_name }}
                             </h2>
                             <p>
-                                {{ specialist.qualification[0].education_name }}
+                                {{ specialist.education[0].name }}
                             </p>
-                            <p>Стаж: {{ specialist.doctor.experience }}</p>
+                            <p>Стаж: {{ specialist.experiance }}</p>
                         </div>
                         <app-choose-time
                             class="choose-time-desc"
@@ -67,7 +63,7 @@
                         ></app-choose-time>
                     </div>
                     <div class="main-desc">
-                        <p>{{ specialist.description }}</p>
+                        <!-- <p>{{ specialist }}</p> -->
                     </div>
                 </div>
             </div>

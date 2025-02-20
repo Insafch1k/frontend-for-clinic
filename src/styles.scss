@@ -215,6 +215,8 @@ ul {
 }
 
 .route {
+    margin-left: 10.5%;
+    margin-right: 10.5%;
     padding-top: 2%;
     padding-bottom: 3%;
     font-size: 0.75rem;
@@ -223,4 +225,13 @@ ul {
     @media (max-width: 768px) {
         display: none;
     }
+}
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

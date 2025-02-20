@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SpecialistsService } from '../services/specialists.service';
-import { ISpecialists, IDoctor } from '../spacialict.interface';
+import { ISpecialists, IDoctor, IAvailableTime } from '../spacialict.interface';
 
 @Component({
     selector: 'app-appointment',
@@ -9,10 +9,12 @@ import { ISpecialists, IDoctor } from '../spacialict.interface';
     styleUrls: ['./appointment.component.scss'],
 })
 export class AppointmentComponent {
+    @Input() doctorFio!: string;
+    @Input() selectedTime!: string;
+    @Input() speciality!: string;
     appointmentTypes = ['Первичный', 'Вторичный'];
     services = ['Консультация', 'Осмотр', 'Лечение'];
-
-    selectedTime: string = '';
+    isSend: boolean = false;
 
     specialists: ISpecialists | null = null; // Хранение данных врачей
     displayDoctors: IDoctor[] = []; // Для хранения отображаемых врачей
@@ -29,9 +31,20 @@ export class AppointmentComponent {
         days: {
             day: string;
             isSelect: boolean;
-            slot: boolean[];
+            slot: {
+                isSelect: boolean;
+                state: string;
+                time: string;
+            }[];
         }[];
     };
+
+    @Output() appointmentConfirmed = new EventEmitter<void>();
+
+    confirmAppointment() {
+        // Логика подтверждения записи на прием
+        this.appointmentConfirmed.emit(); // Уведомляем родительский компонент
+    }
 
     constructor(
         private readonly specServ: SpecialistsService,
@@ -40,7 +53,7 @@ export class AppointmentComponent {
         this.appointmentForm = this.fb.group({
             surname: ['', Validators.required],
             name: ['', Validators.required],
-            date: ['', [Validators.required]],
+            dateTime: ['', [Validators.required]],
             phone: ['', [Validators.required, this.phoneValidator]],
             doctor: ['', Validators.required],
             speciality: ['', Validators.required],
@@ -52,13 +65,6 @@ export class AppointmentComponent {
 
     ngOnInit(): void {
         this.fetchSpecialists();
-    }
-
-    @Output() appointmentConfirmed = new EventEmitter<void>();
-
-    confirmAppointment() {
-        // Логика подтверждения записи на прием
-        this.appointmentConfirmed.emit(); // Уведомляем родительский компонент
     }
 
     phoneValidator(control: any) {
@@ -80,6 +86,7 @@ export class AppointmentComponent {
     // Метод для отправки данных
     onSubmit() {
         if (this.appointmentForm.valid) {
+            this.isSend = true;
             console.log(this.appointmentForm.value);
         }
     }
@@ -88,9 +95,9 @@ export class AppointmentComponent {
         const selectElement = event.target as HTMLSelectElement;
         const value = selectElement.value;
         this.specialists!.data.doctors.forEach((doctor: IDoctor) => {
-            if (doctor.doctor.fullname === value) {
+            if (doctor.full_name === value) {
                 this.doctorData = doctor;
-                console.log(doctor.doctor.fullname);
+                console.log(doctor.full_name);
                 this.fillDoctorsTimeSlots();
             }
         });
@@ -101,25 +108,45 @@ export class AppointmentComponent {
         const days: {
             day: string;
             isSelect: boolean;
-            slot: boolean[];
+            slot: {
+                isSelect: boolean;
+                state: string;
+                time: string;
+            }[];
         }[] = [];
-        for (let slot in this.doctorData.slot_date) {
-            days.push({
-                day: slot,
-                isSelect: false,
-                slot: this.doctorData.slot_date[slot].map(() => false),
-            });
-        }
         let currentIndex = 0;
-        const keys = Object.keys(this.doctorData.slot_date);
-        const endIndex = Math.min(currentIndex + 7, keys.length); // Убедимся, что не выйдем за пределы
-        const displayedSlots = keys.slice(currentIndex, endIndex);
+        const endIndex = Math.min(
+            currentIndex + 7,
+            this.doctorData.available_times.length
+        ); // Убедимся, что не выйдем за пределы
+        const slots: string[] = [];
+        for (let slot of this.doctorData.available_times) {
+            const times: {
+                isSelect: boolean;
+                state: string;
+                time: string;
+            }[] = [];
+            for (let timeq in slot.time) {
+                times.push({
+                    time: timeq,
+                    isSelect: false,
+                    state: slot.time[timeq],
+                });
+            }
+            days.push({
+                day: slot.date,
+                isSelect: false,
+                slot: times,
+            });
+            slots.push(slot.date);
+        }
+        const displayedSlots = slots.slice(currentIndex, endIndex);
         this.isOpenDayDoctor = {
             currentIndex,
             displayedSlots,
             days,
             currentView: 0,
-            lenght: Object.keys(this.doctorData.slot_date).length,
+            lenght: this.doctorData.available_times.length,
         };
     }
 
@@ -154,8 +181,8 @@ export class AppointmentComponent {
     }
 
     // Метод для получения временных слотов врача по ID
-    private getDoctorSlotDates(): { [key: string]: any } {
-        return this.doctorData ? this.doctorData.slot_date : {};
+    private getDoctorSlotDates(): IAvailableTime[] {
+        return this.doctorData ? this.doctorData.available_times : [];
     }
 
     selectDay(dayIndex: number) {
@@ -192,6 +219,7 @@ export class AppointmentComponent {
     // Метод для выбора временного слота
     selectTimeSlot(time: string): void {
         this.selectedTime = time;
-        console.log('Выбран временной слот:', time);
+        this.appointmentForm.get('dateType')?.setValue(time);
+        console.log(time, this.appointmentForm.value);
     }
 }

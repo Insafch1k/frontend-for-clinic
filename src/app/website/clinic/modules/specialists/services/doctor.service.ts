@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IGetDoctor } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
+import { IDoctorFull } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -9,7 +9,7 @@ export class DoctorService {
     constructor(private readonly http: HttpClient) {}
 
     getDoctor() {
-        return this.http.get<IGetDoctor>(`/assets/data/jsons/doctor.json`);
+        return this.http.get<IDoctorFull>(`/assets/data/jsons/doctor.json`);
     }
 
     // sendBid(sendData: IBid) {

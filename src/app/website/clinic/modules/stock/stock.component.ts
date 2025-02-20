@@ -18,6 +18,7 @@ export class StockComponent {
     constructor(private readonly stockServ: StockService) {}
 
     ngOnInit(): void {
+        window.scrollTo(0, 0); // Прокручивает страницу к верхней части
         this.fetchActions();
     }
 

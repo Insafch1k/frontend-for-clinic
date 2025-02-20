@@ -16,7 +16,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { BidService } from './bid.service';
 import { AppointmentByChoiceComponent } from './appointment-by-choice/appointment-by-choice.component';
 import { SpecialistsService } from '../modules/specialists/services/specialists.service';
-
+import { PushCodeComponent } from '../components/push-code/push-code.component';
 @NgModule({
     declarations: [
         MainComponent,
@@ -37,6 +37,7 @@ import { SpecialistsService } from '../modules/specialists/services/specialists.
         ReactiveFormsModule,
         SharedModule,
         FormsModule,
+        PushCodeComponent,
     ],
     providers: [BidService, SpecialistsService],
 })

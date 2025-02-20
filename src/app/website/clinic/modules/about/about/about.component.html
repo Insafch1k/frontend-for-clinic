@@ -1,61 +1,112 @@
 <div class="page-background">
     <div class="about">
-        <div class="title"><h2>Главная / О клинике</h2></div>
+        <div class="route">Главная / О клинике</div>
         <div class="main">
-            <div class="onePart">
-                <h2>Контактные данные </h2>
-                <p class="p-one">8(8552) 25-05-03</p>
-                <p class="p-two">г.Набережные Челны, ул.Ахметшина, д.116</p>
-            </div>
-            <div class="twoPart">
-                <div class="picture"></div>
-                <div class="infoOne">
-                    <h2>Клиника 03</h2>
-                    <p>это клиника, которая станет вашим другом и поддержкой в вопросах здоровья детей и взрослых. </p>
+            <div class="child-1">
+                <p class="title-name">Контактные данные</p>
+                <div class="child-1_1">
+                    <a href="tel:+88552250503">8(8552) 25-05-03</a>
+                    <a (click)="goToYandex()">
+                        г.Набережные Челны, ул.Ахметшина, д.116
+                    </a>
                 </div>
             </div>
-            <div class="thirdPart">
-                <div class="info-one">
-                    <h2>Основа нашего успеха – это профессионалы, преданные своему делу. </h2>
-                    <p>Мы оказываем широкий спектр лечебно-диагностических услуг, процедурный кабинет клиники выполняет все виды анализов. А услуга вызова педиатра на дом вообще не заменима в тех случаях когда нет возможности выйти из дома.</p>
-                </div>
-                <div class="picturetwo"></div>
+            <div class="welcome">
+                Добро пожаловать в «Клиника-03» – современное медицинское
+                учреждение, где забота о здоровье наших пациентов является
+                главным приоритетом. Мы рады предложить широкий спектр
+                медицинских услуг как для детей, так и для взрослых.
             </div>
-            <div class="fourthPart">
-                <div class="titlee">
-                    <h2>Юридическая информация</h2>
+            <div class="our-service">
+                <p class="title-name">Наши услуги</p>
+                <div class="service-desc">
+                    <div>
+                        <img src="assets/data/image/about/bar.png" alt="" />
+                    </div>
+                    <div class="services">
+                        <div>
+                            <img
+                                src="assets/data/image/about/doctor.png"
+                                alt=""
+                            />
+                            <p>
+                                Консультации опытных врачей разных
+                                специальностей
+                            </p>
+                        </div>
+                        <div>
+                            <img
+                                src="assets/data/image/about/chad.png"
+                                alt=""
+                            />
+                            <p>Диагностика и лечение заболеваний</p>
+                        </div>
+                        <div>
+                            <img
+                                src="assets/data/image/about/labo.png"
+                                alt=""
+                            />
+                            <p>Прием анализов</p>
+                        </div>
+                        <div>
+                            <img
+                                src="assets/data/image/about/igla.png"
+                                alt=""
+                            />
+                            <p>Работа процедурного кабинета</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="littletit" style="border-top: 1px solid black;margin-top: 35px;">
-                    <div class="topbox" (click)="LookOrNo()">
-                        <p>Сведения о медицинской лиццензии</p>
-                        <img [src]="lookMore ? 'assets/data/icon/close.svg' : 'assets/data/icon/add.svg'" alt="">
-                    </div>
-                    <div class="inLittle" *ngIf="lookMore">
-                        <p>Финальное заключение СОУТ</p>
-                        <p>Медицинская лицензия, выписка из реестра лицензий</p>
-                        <p>Что-нибудь еще</p>
-                        <p>Список контролирующих организаций</p>
-                    </div>
+            </div>
+            <div class="our-we">
+                <p class="title-name">Почему выбирают “Клиника-03”</p>
+                <div class="sabablar">
+                    <div>Квалифицированные врачи</div>
+                    <div>Работаем каждый день</div>
                 </div>
-                <div class="littletit" >
-                    <div class="topbox">
-                        <p>Правила, положения, образцы договоров</p>
-                        <img src="assets/data/icon/add.svg" alt="">
-                    </div>
+            </div>
+            <div class="aspiration">
+                Мы стремимся создать комфортную и дружелюбную атмосферу для
+                наших пациентов, чтобы каждый визит к нам был максимально
+                приятным и эффективным
+            </div>
+            <div class="appointment">
+                <div class="app-text">
+                    Запишитесь на прием уже сегодня и позаботьтесь о своем
+                    здоровье вместе с «Клиника-03»!
                 </div>
-                <div class="littletit">
-                    <div class="topbox">
-                        <p>Законадательство</p>
-                        <img src="assets/data/icon/add.svg" alt="">
-                    </div>
+                <div class="app-block">
+                    <svg
+                        width="170"
+                        height="8"
+                        viewBox="0 0 170 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M169.354 4.35355C169.549 4.15829 169.549 3.84171 169.354 3.64645L166.172 0.464466C165.976 0.269204 165.66 0.269204 165.464 0.464466C165.269 0.659728 165.269 0.976311 165.464 1.17157L168.293 4L165.464 6.82843C165.269 7.02369 165.269 7.34027 165.464 7.53553C165.66 7.7308 165.976 7.7308 166.172 7.53553L169.354 4.35355ZM0 4.5H169V3.5H0V4.5Z"
+                            fill="black"
+                        />
+                    </svg>
+                    <button type="button" class="btn-app">
+                        Записаться на прием
+                    </button>
                 </div>
             </div>
             <div class="fifthPart">
                 <h2>ЛИЦЕНЗИЯ И СВИДЕТЕЛЬСТВО</h2>
                 <div class="dyploms">
-                    <img src="assets/data/image/dyplom 1.svg">
-                    <img style="padding-left: 5px;" src="assets/data/image/dyplom 2.svg">
-                    <img style="padding-left: 7px;" src="assets/data/image/dyplom 3.svg">
+                    <img src="assets/data/image/dyplom 1.svg" alt="" />
+                    <img
+                        style="padding-left: 5px"
+                        src="assets/data/image/dyplom 2.svg"
+                        alt=""
+                    />
+                    <img
+                        style="padding-left: 7px"
+                        src="assets/data/image/dyplom 3.svg"
+                        alt=""
+                    />
                 </div>
             </div>
         </div>

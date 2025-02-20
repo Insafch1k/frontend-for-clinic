@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { ISpecialists } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
+import { API_URL } from 'src/app/website/core/constants/constant';
 
 @Injectable({
     providedIn: 'root',
@@ -12,12 +13,10 @@ export class SpecialistsService {
     constructor(private readonly http: HttpClient) {}
 
     getSpecialists() {
-        return this.http.get<ISpecialists>(
-            `/assets/data/jsons/specialists.json`
-        );
-        // return this.http.get<{data: ISpecialists}>(
-        //     `${API_URL}/map/data_scheme`
-        // )
+        // return this.http.get<ISpecialists>(
+        //     `/assets/data/jsons/specialists.json`
+        // );
+        return this.http.get<ISpecialists>(`${API_URL}/doctors `);
     }
 
     // removeObject(

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IDoctor } from '../spacialict.interface';
+import { IAvailableTime, IDoctor } from '../spacialict.interface';
 
 @Component({
     selector: 'app-choose-time',
@@ -18,7 +18,11 @@ export class ChooseTimeComponent {
         days: {
             day: string;
             isSelect: boolean;
-            slot: boolean[];
+            slot: {
+                isSelect: boolean;
+                state: string;
+                time: string;
+            }[];
         }[];
     };
 
@@ -32,25 +36,45 @@ export class ChooseTimeComponent {
         const days: {
             day: string;
             isSelect: boolean;
-            slot: boolean[];
+            slot: {
+                isSelect: boolean;
+                state: string;
+                time: string;
+            }[];
         }[] = [];
-        for (let slot in this.doctorData.slot_date) {
-            days.push({
-                day: slot,
-                isSelect: false,
-                slot: this.doctorData.slot_date[slot].map(() => false),
-            });
-        }
         let currentIndex = 0;
-        const keys = Object.keys(this.doctorData.slot_date);
-        const endIndex = Math.min(currentIndex + 7, keys.length); // Убедимся, что не выйдем за пределы
-        const displayedSlots = keys.slice(currentIndex, endIndex);
+        const endIndex = Math.min(
+            currentIndex + 7,
+            this.doctorData.available_times.length
+        ); // Убедимся, что не выйдем за пределы
+        const slots: string[] = [];
+        for (let slot of this.doctorData.available_times) {
+            const times: {
+                isSelect: boolean;
+                state: string;
+                time: string;
+            }[] = [];
+            for (let timeq in slot.time) {
+                times.push({
+                    time: timeq,
+                    isSelect: false,
+                    state: slot.time[timeq],
+                });
+            }
+            days.push({
+                day: slot.date,
+                isSelect: false,
+                slot: times,
+            });
+            slots.push(slot.date);
+        }
+        const displayedSlots = slots.slice(currentIndex, endIndex);
         this.isOpenDayDoctor = {
             currentIndex,
             displayedSlots,
             days,
             currentView: 0,
-            lenght: Object.keys(this.doctorData.slot_date).length,
+            lenght: this.doctorData.available_times.length,
         };
     }
 
@@ -85,8 +109,8 @@ export class ChooseTimeComponent {
     }
 
     // Метод для получения временных слотов врача по ID
-    private getDoctorSlotDates(): { [key: string]: any } {
-        return this.doctorData ? this.doctorData.slot_date : {};
+    private getDoctorSlotDates(): IAvailableTime[] {
+        return this.doctorData ? this.doctorData.available_times : [];
     }
 
     selectDay(dayIndex: number) {
