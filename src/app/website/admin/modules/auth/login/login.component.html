@@ -1,0 +1,10 @@
+<div class="auth-container">
+    <div class="auth-card">
+      <h2 class="auth-title">Авторизация</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <input class="auth-input" type="text" formControlName="login" placeholder="Логин">
+        <input class="auth-input" type="password" formControlName="password" placeholder="Пароль">
+        <button class="auth-button" type="submit">Войти</button>
+      </form>
+    </div>
+  </div>

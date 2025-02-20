@@ -7,6 +7,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { HeaderLeftComponent } from './layout/header-left/header-left.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './notification/notification.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -17,7 +18,7 @@ import { NotificationComponent } from './notification/notification.component';
     HeaderLeftComponent,
   ],
   imports: [
-    CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule
+    CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule
   ]
 })
 export class AdminModule { }

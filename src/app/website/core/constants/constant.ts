@@ -1,1 +1,1 @@
-export const API_URL = 'https://clear-camels-flash.loca.lt/';
+export const API_URL = 'https://crazy-humans-make.loca.lt';
