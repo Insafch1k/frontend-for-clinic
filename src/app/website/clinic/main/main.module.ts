@@ -17,6 +17,10 @@ import { BidService } from './bid.service';
 import { AppointmentByChoiceComponent } from './appointment-by-choice/appointment-by-choice.component';
 import { SpecialistsService } from '../modules/specialists/services/specialists.service';
 import { PushCodeComponent } from '../components/push-code/push-code.component';
+import { DateFormatDirective } from './req-record/date.directive';
+import { ChooseTimeComponent } from '../modules/specialists/choose-time/choose-time.component';
+import { SpecialistsModule } from '../modules/specialists/specialists.module';
+
 @NgModule({
     declarations: [
         MainComponent,
@@ -30,6 +34,7 @@ import { PushCodeComponent } from '../components/push-code/push-code.component';
         EmergencyServiceComponent,
         MapComponent,
         AppointmentByChoiceComponent,
+        DateFormatDirective
     ],
     imports: [
         CommonModule,
@@ -38,7 +43,9 @@ import { PushCodeComponent } from '../components/push-code/push-code.component';
         SharedModule,
         FormsModule,
         PushCodeComponent,
+        SpecialistsModule
     ],
+
     providers: [BidService, SpecialistsService],
 })
 export class MainModule {}

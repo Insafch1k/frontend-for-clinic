@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { IAvailableTime, IDoctor } from '../spacialict.interface';
 
 @Component({
@@ -6,15 +6,15 @@ import { IAvailableTime, IDoctor } from '../spacialict.interface';
     templateUrl: './choose-time.component.html',
     styleUrls: ['./choose-time.component.scss'],
 })
-export class ChooseTimeComponent {
+export class ChooseTimeComponent implements OnInit, OnChanges {
     @Input() doctorData!: IDoctor;
-    isOpenAppointment: boolean = false;
 
+    isOpenAppointment: boolean = false;
     isOpenDayDoctor!: {
         currentIndex: number;
         currentView: number;
         displayedSlots: string[];
-        lenght: number;
+        length: number;
         days: {
             day: string;
             isSelect: boolean;
@@ -27,131 +27,86 @@ export class ChooseTimeComponent {
     };
 
     ngOnInit() {
-        this.fillDoctorsTimeSlots();
-        console.log(this.doctorData, this.isOpenDayDoctor);
+        if (this.doctorData && this.doctorData.available_times) {
+            this.fillDoctorsTimeSlots();
+        } else {
+            console.error("doctorData или available_times пусты");
+        }
     }
 
-    //заполнить временные промежутки врачей
-    fillDoctorsTimeSlots() {
-        const days: {
-            day: string;
-            isSelect: boolean;
-            slot: {
-                isSelect: boolean;
-                state: string;
-                time: string;
-            }[];
-        }[] = [];
-        let currentIndex = 0;
-        const endIndex = Math.min(
-            currentIndex + 7,
-            this.doctorData.available_times.length
-        ); // Убедимся, что не выйдем за пределы
-        const slots: string[] = [];
-        for (let slot of this.doctorData.available_times) {
-            const times: {
-                isSelect: boolean;
-                state: string;
-                time: string;
-            }[] = [];
-            for (let timeq in slot.time) {
-                times.push({
-                    time: timeq,
-                    isSelect: false,
-                    state: slot.time[timeq],
-                });
-            }
-            days.push({
-                day: slot.date,
-                isSelect: false,
-                slot: times,
-            });
-            slots.push(slot.date);
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['doctorData']) {
+            console.log('Обновлены данные врача:', this.doctorData);
+            this.fillDoctorsTimeSlots();
         }
-        const displayedSlots = slots.slice(currentIndex, endIndex);
+    }
+
+    fillDoctorsTimeSlots() {
+        if (!this.doctorData?.available_times) return;
+
+        const days = this.doctorData.available_times.map(slot => ({
+            day: slot.date,
+            isSelect: false,
+            slot: Object.entries(slot.time).map(([time, state]) => ({
+                time,
+                isSelect: false,
+                state
+            }))
+        }));
+
         this.isOpenDayDoctor = {
-            currentIndex,
-            displayedSlots,
-            days,
+            currentIndex: 0,
             currentView: 0,
-            lenght: this.doctorData.available_times.length,
+            displayedSlots: days.slice(0, 7).map(day => day.day),
+            days,
+            length: days.length
         };
     }
 
-    // Метод для прокрутки влево
     scrollLeft() {
-        if (this.isOpenDayDoctor.currentIndex > 0) {
+        if (this.isOpenDayDoctor?.currentIndex > 0) {
             this.isOpenDayDoctor.currentIndex--;
             this.updateDisplayedSlots();
         }
     }
 
-    // Метод для прокрутки вправо
     scrollRight() {
-        const keys = Object.keys(this.getDoctorSlotDates());
-        if (this.isOpenDayDoctor.currentIndex + 7 < keys.length) {
+        if (this.isOpenDayDoctor?.currentIndex + 7 < this.isOpenDayDoctor.length) {
             this.isOpenDayDoctor.currentIndex++;
             this.updateDisplayedSlots();
         }
     }
 
-    // Метод для обновления отображаемых слотов
     private updateDisplayedSlots() {
-        const keys = Object.keys(this.getDoctorSlotDates()); // Получаем все доступные слоты для врача
-        const endIndex = Math.min(
-            this.isOpenDayDoctor.currentIndex + 7,
-            keys.length
-        );
-        this.isOpenDayDoctor.displayedSlots = keys.slice(
-            this.isOpenDayDoctor.currentIndex,
-            endIndex
-        );
-    }
-
-    // Метод для получения временных слотов врача по ID
-    private getDoctorSlotDates(): IAvailableTime[] {
-        return this.doctorData ? this.doctorData.available_times : [];
+        if (!this.isOpenDayDoctor) return;
+        const endIndex = Math.min(this.isOpenDayDoctor.currentIndex + 7, this.isOpenDayDoctor.length);
+        this.isOpenDayDoctor.displayedSlots = this.isOpenDayDoctor.days
+            .slice(this.isOpenDayDoctor.currentIndex, endIndex)
+            .map(day => day.day);
     }
 
     selectDay(dayIndex: number) {
-        this.isOpenDayDoctor.days.forEach((day: any) => {
-            day.isSelect = false;
-        });
+        if (!this.isOpenDayDoctor || dayIndex < 0 || dayIndex >= this.isOpenDayDoctor.days.length) return;
+
+        this.isOpenDayDoctor.days.forEach(day => day.isSelect = false);
         this.isOpenDayDoctor.currentView = dayIndex;
-        this.isOpenDayDoctor.days[dayIndex].isSelect =
-            !this.isOpenDayDoctor.days[dayIndex].isSelect;
+        this.isOpenDayDoctor.days[dayIndex].isSelect = true;
     }
 
-    // Метод для получения дня недели и месяца
     getDayOfWeekAndMonth(date: string): string {
         const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-        const months = [
-            'Янв',
-            'Фев',
-            'Мар',
-            'Апр',
-            'Май',
-            'Июн',
-            'Июл',
-            'Авг',
-            'Сен',
-            'Окт',
-            'Ноя',
-            'Дек',
-        ];
-        const dayIndex = new Date(date).getDay();
-        const monthIndex = new Date(date).getMonth();
-        return `${daysOfWeek[dayIndex]}, ${months[monthIndex]}`;
+        const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+
+        const dateObj = new Date(date);
+        return `${daysOfWeek[dateObj.getDay()]}, ${months[dateObj.getMonth()]}`;
     }
 
-    //Метод для выбора временного слота
     openAppointment(): void {
         this.isOpenAppointment = !this.isOpenAppointment;
     }
 
-    //Метод для выбора временного слота
     selectTimeSlot(time: string): void {
         this.isOpenAppointment = true;
-        console.log(this.isOpenAppointment);
+        console.log('Выбранное время:', time);
     }
 }

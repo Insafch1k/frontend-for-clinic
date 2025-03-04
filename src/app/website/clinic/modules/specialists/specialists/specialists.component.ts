@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-    IDoctor,
-    ISpecialists,
-} from 'src/app/website/clinic/modules/specialists/spacialict.interface';
+import { IDoctor } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
 import { SpecialistsService } from '../services/specialists.service';
 
 @Component({
@@ -14,35 +11,47 @@ import { SpecialistsService } from '../services/specialists.service';
 export class SpecialistsComponent implements OnInit {
     experiences: string[] = ['0-3 года', '3-5 лет', '5-10 лет', '10+ лет'];
 
-    specialists: ISpecialists | null = null; // Хранение данных врачей
-    displayDoctors: IDoctor[] = []; // Для хранения отображаемых врачей
-    categories: string[] = [];
+    specialists: IDoctor[] | null = null;
+    displayDoctors: IDoctor[] = [];
+    categories: { id: number; name: string }[] = [];
+    
 
-    showHouseCallOnly: boolean = false; // Флаг для фильтрации
-    selectedDoctorCategory!: string;
-    selectedExperience!: string;
-    experienceRange: [number, number] = [0, Infinity];
-
+    showHouseCallOnly: boolean = false;
     selectedCategory: string = 'all';
-
+    experienceRange: [number, number] = [0, Infinity];
+    isOpenDayDoctor: { [key: number]: { currentIndex: number, currentView: number, displayedSlots: string[], days: any[] } } = {};
     constructor(
         private readonly specServ: SpecialistsService,
         private router: Router
     ) {}
 
     ngOnInit(): void {
-        window.scrollTo(0, 0); // Прокручивает страницу к верхней части
+        
+        window.scrollTo(0, 0);
         this.fetchSpecialists();
+        this.fetchCategories();
+            console.log(this.displayDoctors); // Проверьте, что данные содержат specialty_name
     }
 
     fetchSpecialists() {
-        this.specServ.getSpecialists().subscribe((answer: ISpecialists) => {
-            this.specialists = answer;
-            this.displayDoctors = answer.data.doctors; // Инициализация отображаемых врачей
-            this.categories = answer.data.categories;
+        this.specServ.getSpecialists(this.selectedCategory).subscribe((answer: IDoctor[]) => {
+            if (Array.isArray(answer) && answer.length > 0) {
+                this.displayDoctors = answer.map(doctor => ({
+                    ...doctor,
+                    specialties: doctor.specialties || [] // Гарантируем, что specialties — это массив
+                }));
+            } else {
+                this.displayDoctors = [];
+            }
+        }, error => {
+            console.error('Ошибка при загрузке врачей:', error);
+        });
+    }
+    
 
-            // this.fillDoctorsTimeSlots();
-            console.log(answer);
+    fetchCategories() {
+        this.specServ.getCategories().subscribe((categories) => {
+            this.categories = categories;
         });
     }
 
@@ -50,18 +59,14 @@ export class SpecialistsComponent implements OnInit {
         return this.displayDoctors;
     }
 
-    // Метод для фильтрации докторов по категории
     onCategoryChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement;
         this.selectedCategory = selectElement.value;
-        this.allFliter();
+        this.fetchSpecialists();
     }
 
-    // Метод для фильтрации докторов по стажу
     filterDoctorsByExperience(event: Event): void {
         const selectedExperience = (event.target as HTMLSelectElement).value;
-        // Здесь вы можете фильтровать докторов на основе selectedExperience
-        // Например, преобразуем строку в нужный диапазон лет стажа
         switch (selectedExperience) {
             case '0-3 года':
                 this.experienceRange = [0, 3];
@@ -79,52 +84,29 @@ export class SpecialistsComponent implements OnInit {
                 this.experienceRange = [0, Infinity];
                 break;
         }
-        this.allFliter();
+        this.applyFilters();
     }
 
-    // Метод для фильтрации докторов по вызову на дом
     toggleHouseCallDoctors() {
-        console.log(this.showHouseCallOnly);
-        this.showHouseCallOnly = !this.showHouseCallOnly; // Переключение флага
-        this.allFliter();
+        this.showHouseCallOnly = !this.showHouseCallOnly;
+        this.applyFilters();
     }
 
-    // Общая фильтрация
-    allFliter() {
+    applyFilters() {
         let doctors: IDoctor[] = [];
-        this.specialists?.data.doctors.forEach((doctor: IDoctor) => {
-            console.log(
-                doctor.experiance! >= this.experienceRange[0],
-                doctor.experiance! < this.experienceRange[1],
-                !this.showHouseCallOnly ||
-                    (this.showHouseCallOnly &&
-                        this.showHouseCallOnly === doctor.house_call),
-                doctor.specialties.some(
-                    (specialty) =>
-                        specialty.speciality_name === this.selectedCategory
-                )
-            );
-            if (
-                doctor.experiance! >= this.experienceRange[0] &&
-                doctor.experiance! < this.experienceRange[1] &&
-                (!this.showHouseCallOnly ||
-                    (this.showHouseCallOnly &&
-                        this.showHouseCallOnly === doctor.house_call))
-            ) {
-                if (
-                    doctor.specialties.some(
-                        (specialty) =>
-                            specialty.speciality_name === this.selectedCategory
-                    ) ||
-                    this.selectedCategory === 'all'
-                ) {
-                    doctors.push(doctor);
-                }
-                console.log(doctors);
-            }
-        });
-        this.displayDoctors = doctors;
-        console.log(this.selectedCategory);
+        if (this.specialists) { // Проверка на null
+            this.specialists.forEach((doctor: IDoctor) => {
+                    if (
+                        this.selectedCategory === 'all' ||
+                        doctor.specialties.some(specialty => specialty.specialty_name === this.selectedCategory)
+                    ) {
+                        doctors.push(doctor);
+                    }
+            });
+        }
+        console.log('Отфильтрованные специалисты:', doctors); // Логирование
+        this.displayDoctors = [...doctors]; // Создаем новый массив
+        console.log('Финальный список специалистов:', this.displayDoctors); // Логирование
     }
 
     goToDoctor(doctorId: number) {

@@ -39,12 +39,12 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     fetchActions() {
         this.priceListService.getServices().subscribe((answer: IService[]) => {
-            this.services = answer; // Обновляем данные
-            this.selectedService = this.services[0];
+            this.services = answer;
             this.services.forEach((service: IService) => {
                 this.specialists.push(service.name);
             });
-            console.log(this.selectedService);
+            this.selectedSpecialist = this.specialists[0];
+            this.selectedService = this.services[0];
         });
     }
 
@@ -89,19 +89,20 @@ export class PriceListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     changeSelectedServices() {
-        this.selectedService = this.services[this.currentIndex];
+        const index = this.specialists.indexOf(this.selectedSpecialist!);
+        if (index !== -1) {
+            this.selectedService = this.services[index];
+        }
     }
 
-    downloadFullPriceList(): void {
-        this.priceListService.downloadFullPriceList().subscribe((blob: any) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Полный_прайс-лист.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        });
+    downloadPriceListFromAssets(): void {
+        const fileName = 'Прайс лист Клиника-03.pdf'; // Замените на имя вашего файла
+        const filePath = `assets/data/pdfs/${fileName}`;
+        const link = document.createElement('a');
+        link.href = filePath;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 }

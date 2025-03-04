@@ -4,44 +4,33 @@ export interface IDoctor {
     full_name: string;
     id: number;
     id_easyclinic: number;
+    phone_number: string;
     photo: string | null;
-    price: number | null;
-
+    price?: number | null;
     specialties: {
         doctor_id: number;
-        speciality_name: string;
+        specialty_name: string;
     }[];
-    education: {
+    filials: {
+        doctor_id: number;
+        filial_name: string;
+    }[];
+    education?: {
         name: string;
         year: string;
-    }[];
-
-    house_call: boolean;
+    }[]; // Добавьте это свойство, если оно необходимо
 }
-
-export interface IDoctorFull extends IDoctor {
-    reviews: {
-        phone: string;
-        date: Date;
-        description: string;
-    }[];
-}
-
-export interface ISpecialists {
-    data: {
-        doctors: IDoctor[];
-        categories: string[];
-    };
-    error_message: null | string;
-    success: number;
-}
-
 export interface IAvailableTime {
     date: string;
     day_id: number;
     filial: string;
     filial_id: number;
-    time: {
-        [key: string]: string;
-    };
+    time: { [key: string]: string }; // Слоты времени
+  }
+  export interface IDoctorFull extends IDoctor {
+    reviews: {
+        content: string; // Текст отзыва
+        patient_info: string; // Информация о пациенте
+        time: string; // Время отзыва
+    }[];
 }

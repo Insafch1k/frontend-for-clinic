@@ -8,7 +8,6 @@ import { API_URL } from 'src/app/website/core/constants/constant';
     providedIn: 'root',
 })
 export class PriceListService {
-    private API = 'https://your-api-url.com';
 
     constructor(private http: HttpClient) {}
 
@@ -17,13 +16,13 @@ export class PriceListService {
     }
 
     downloadPriceList(specialist: string): Observable<Blob> {
-        return this.http.get(`${this.API}/price-list/${specialist}/download`, {
+        return this.http.get(`${API_URL}/price-list/${specialist}/download`, {
             responseType: 'blob',
         });
     }
 
     downloadFullPriceList(): Observable<Blob> {
-        return this.http.get(`${this.API}/price-list/full/download`, {
+        return this.http.get(`${API_URL}/price-list/full/download`, {
             responseType: 'blob',
         });
     }

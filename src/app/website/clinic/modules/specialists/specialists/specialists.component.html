@@ -7,44 +7,16 @@
             (change)="onCategoryChange($event)"
         >
             <option [value]="'all'" selected>Все категории</option>
-            <option *ngFor="let category of categories" [value]="category">
-                {{ category }}
+            <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
             </option>
         </select>
-        <div class="second-row">
-            <select
-                id="experience"
-                class="custom-select-two"
-                (change)="filterDoctorsByExperience($event)"
-            >
-                <option value="" selected>Любой стаж</option>
-                <option
-                    *ngFor="let experience of experiences"
-                    [value]="experience"
-                >
-                    {{ experience }}
-                </option>
-            </select>
-
-            <div class="checkbox-container">
-                <input
-                    type="checkbox"
-                    id="homeVisit"
-                    class="custom-checkbox"
-                    (click)="toggleHouseCallDoctors()"
-                />
-                <label for="homeVisit" class="custom-label">Вызов на дом</label>
-            </div>
-        </div>
     </div>
-    <div class="main">
-        <div
-            class="specialist"
-            *ngFor="let specialist of getDisplayDoctors; let j = index"
-        >
-            <div class="spec-wrapp">
+    <div class="main" >
+        <div class="specialist" *ngFor="let specialist of displayDoctors">
+            <div class="spec-wrapp" (click)="goToDoctor(specialist.id)">
                 <div class="avatarka">
-                    <img src="{{ specialist.photo }}" alt="" />
+                    <img [src]="specialist.photo || 'assets/default-avatar.png'" alt="Фото специалиста" />
                 </div>
                 <div class="main-info">
                     <div class="main-top">
@@ -52,25 +24,23 @@
                             <h2 (click)="goToDoctor(specialist.id)">
                                 {{ specialist.full_name }}
                             </h2>
-                            <p>
-                                {{ specialist.education[0].name }}
-                            </p>
-                            <p>Стаж: {{ specialist.experiance }}</p>
+                            <p>Должность: {{specialist.specialties[0].specialty_name || 'Не указан'}} </p>
+                            <p>Стаж: {{ specialist.experiance || 'Не указан' }} лет</p>
+                            <p>{{specialist.price}}</p>
                         </div>
-                        <app-choose-time
+                        <p class="main-desc">текст с одним отзывом текст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывом</p>
+                        <!-- <app-choose-time
                             class="choose-time-desc"
+                            *ngIf="specialist"
                             [doctorData]="specialist"
-                        ></app-choose-time>
-                    </div>
-                    <div class="main-desc">
-                        <!-- <p>{{ specialist }}</p> -->
+                        ></app-choose-time> -->
                     </div>
                 </div>
             </div>
-            <app-choose-time
+            <!-- <app-choose-time
                 class="choose-time-mob"
                 [doctorData]="specialist"
-            ></app-choose-time>
+            ></app-choose-time> -->
         </div>
-    </div>
+    </div>    
 </div>

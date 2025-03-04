@@ -12,19 +12,7 @@
                 (click)="selectSection(1)"
                 [ngClass]="{ active: currentIndex === 1 }"
             >
-                Тесты
-            </div>
-            <div
-                (click)="selectSection(2)"
-                [ngClass]="{ active: currentIndex === 2 }"
-            >
                 Скидки
-            </div>
-            <div
-                (click)="selectSection(3)"
-                [ngClass]="{ active: currentIndex === 3 }"
-            >
-                Другое
             </div>
         </nav>
 
@@ -32,10 +20,8 @@
             <app-stock-loading
                 *ngIf="showStockLoading || isLoading"
             ></app-stock-loading>
-            <app-discounts
-                *ngIf="!showStockLoading || !isLoading"
-                [actionList]="currentList"
-            ></app-discounts>
+            <app-discounts *ngIf="!showStockLoading && !isLoading" [actionList]="currentList"></app-discounts>
+
         </div>
     </div>
 </div>

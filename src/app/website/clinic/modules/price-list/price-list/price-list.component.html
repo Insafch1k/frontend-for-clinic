@@ -25,20 +25,16 @@
             </ul>
         </div>
         <div class="main-service">
-            <!-- <div class="services">
-                <div
-                    *ngFor="let service of selectedService.services"
-                    class="service-item"
-                    #serviceItem
-                >
+            <div class="services">
+                <div *ngFor="let service of selectedService?.services" class="service-item">
                     <div class="service-name">{{ service.name }}</div>
                     <div class="service-divider"></div>
-                    <div class="service-price">{{ service.price }}</div>
+                    <div class="service-price">{{ service.price }}р.</div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="dowload">
-            <p class="dow-right" (click)="downloadFullPriceList()">
+            <p class="dow-right" (click)="downloadPriceListFromAssets()">
                 Скачать полный прайс-лист
             </p>
         </div>

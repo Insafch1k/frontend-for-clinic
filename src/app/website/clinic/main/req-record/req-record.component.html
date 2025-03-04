@@ -80,7 +80,8 @@
                     <input
                         id="birthDate"
                         formControlName="birthDate"
-                        placeholder="Дата Рождения"
+                        placeholder="ДД.ММ.ГГГГ"
+                        appDateFormat
                         required
                     />
                     <div
@@ -113,22 +114,19 @@
                 </div>
 
                 <div class="select-doc">
-                    <select id="doctor" formControlName="doctor" required>
-                        <option value="">Все врачи</option>
-                        <option *ngFor="let doctor of doctors" [value]="doctor">
-                            {{ doctor }}
+                    <select id="speciality" formControlName="speciality" required>
+                        <option value="">Выберите специальность</option>
+                        <option *ngFor="let specialty of specialties" [value]="specialty.name">
+                            {{ specialty.name }}
                         </option>
                     </select>
                     <div
-                        *ngIf="
-                            appointmentForm.get('doctor')?.invalid &&
-                            appointmentForm.get('doctor')?.touched
-                        "
+                        *ngIf="appointmentForm.get('speciality')?.invalid && appointmentForm.get('speciality')?.touched"
                         class="error-l"
                     >
-                        <small>Выберите врача из списка.</small>
+                        <small>Выберите специальность из списка.</small>
                     </div>
-                </div>
+                </div>                
             </div>
             <div>
                 <h1 class="title titles-m">

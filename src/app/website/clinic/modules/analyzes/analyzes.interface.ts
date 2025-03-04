@@ -9,11 +9,16 @@ export interface IAnalysisDesc {
 export interface ICheckUp {
     name: string;
     description: string;
-    complex?: string;
-    listAnal: {
+    complex?: string; // Добавьте это свойство
+    analyses: {
+        id: number;
         name: string;
         price: number;
     }[];
-    sum: number;
-    discounted: number;
+    listAnal?: {
+        name: string;
+        price: number;
+    }[]; // Добавьте это свойство
+    sum?: number;
+    discounted?: number;
 }

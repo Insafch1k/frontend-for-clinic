@@ -71,14 +71,13 @@
     & .time-slots {
         display: flex;
         flex-wrap: wrap;
-
         background-color: #fff;
         box-shadow: 0px 2px 4.8px 0px rgba(0, 0, 0, 0.15);
         border-radius: 3px;
         padding: 10px 20px;
         gap: 10px;
         & .time-slot {
-            background-color: #7eb3c1;
+            flex: 1 1 1 calc(33.333%); 
             color: white;
             font-weight: 600;
             font-size: 0.7rem;
@@ -86,6 +85,17 @@
             border-radius: 3px;
             user-select: none;
             cursor: pointer;
+        }
+        .time-slot.full-block {
+            background-color: rgb(109, 109, 109);
+            cursor: not-allowed;
+            color: white;
+        }
+        .time-slot.accepts-all {
+            background-color: #7eb3c1;
+        }
+        .time-slot.selected{
+            background-color: #46a9c5;
         }
     }
 }

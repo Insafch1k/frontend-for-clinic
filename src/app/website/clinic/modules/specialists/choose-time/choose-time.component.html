@@ -1,93 +1,33 @@
 <div class="doctor-block_record">
-    <div class="date-wrapp">
+    <div *ngIf="isOpenDayDoctor && isOpenDayDoctor.days" class="date-wrapp">
         <p class="select-time">Выберите время:</p>
         <div class="date-block" #dateBlock>
-            <div
-                class="empty-arrow"
-                *ngIf="isOpenDayDoctor.currentIndex <= 0"
-            ></div>
-            <div
-                class="arrow"
-                (click)="scrollLeft()"
-                *ngIf="isOpenDayDoctor.currentIndex > 0"
-            >
-                <svg
-                    width="6"
-                    height="8"
-                    viewBox="0 0 6 8"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z"
-                        fill="#0081EC"
-                    />
+            <div class="empty-arrow" *ngIf="isOpenDayDoctor.currentIndex <= 0"></div>
+            <div class="arrow" (click)="scrollLeft()" *ngIf="isOpenDayDoctor.currentIndex > 0">
+                <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z" fill="#0081EC"/>
                 </svg>
             </div>
-            <div
-                *ngFor="
-                    let day of isOpenDayDoctor.displayedSlots;
-                    let i = index
-                "
-                class="date"
-                (click)="selectDay(i)"
-                [class.selected]="isOpenDayDoctor.days[i].isSelect"
-            >
+            <div *ngFor="let day of isOpenDayDoctor.displayedSlots; let i = index" class="date" (click)="selectDay(i)" [class.selected]="isOpenDayDoctor.days[i].isSelect">
                 <p>{{ getDayOfWeekAndMonth(day) }}</p>
                 <p>{{ day | date : "dd" }}</p>
             </div>
-            <div
-                class="empty-arrow"
-                *ngIf="
-                    isOpenDayDoctor.currentIndex + 7 ===
-                        isOpenDayDoctor.lenght || isOpenDayDoctor.lenght <= 7
-                "
-            ></div>
-            <div
-                class="arrow"
-                (click)="scrollRight()"
-                *ngIf="
-                    isOpenDayDoctor.currentIndex + 7 !==
-                        isOpenDayDoctor.lenght && isOpenDayDoctor.lenght > 7
-                "
-                style="transform: rotate(180deg)"
-            >
-                <svg
-                    width="6"
-                    height="8"
-                    viewBox="0 0 6 8"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z"
-                        fill="#0081EC"
-                    />
+            <div class="empty-arrow" *ngIf="isOpenDayDoctor.currentIndex + 7 === isOpenDayDoctor.length || isOpenDayDoctor.length <= 7"></div>
+            <div class="arrow" (click)="scrollRight()" *ngIf="isOpenDayDoctor.currentIndex + 7 !== isOpenDayDoctor.length && isOpenDayDoctor.length > 7" style="transform: rotate(180deg)">
+                <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z" fill="#0081EC"/>
                 </svg>
             </div>
         </div>
-
         <div class="time-wrapper" [style.width.px]="dateBlock.offsetWidth">
-            <div
-                class="time-slots"
-                *ngIf="
-                    isOpenDayDoctor.days[isOpenDayDoctor.currentView].isSelect
-                "
-            >
+            <div *ngIf="isOpenDayDoctor.days[isOpenDayDoctor.currentView].isSelect" class="time-slots">
                 <div
-                    *ngFor="
-                        let time of isOpenDayDoctor.days[
-                            isOpenDayDoctor.currentView
-                        ].slot;
-                        let c = index
-                    "
+                    *ngFor="let time of isOpenDayDoctor.days[isOpenDayDoctor.currentView].slot; let c = index"
                     class="time-slot"
-                    [class.selected]="
-                        isOpenDayDoctor.days[isOpenDayDoctor.currentView].slot[
-                            c
-                        ]
-                    "
-                    (click)="selectTimeSlot(time.time)"
+                    [class.selected]="time.isSelect"
+                    [class.full-block]="time.state === 'full_block'"
+                    [class.accepts-all]="time.state === 'accepts_all'"
+                    (click)="time.state !== 'full_block' ? selectTimeSlot(time.time) : null"
                 >
                     {{ time.time }}
                 </div>
@@ -96,8 +36,9 @@
     </div>
 </div>
 
-<ng-container *ngIf="isOpenAppointment">
+
+<!-- <ng-container *ngIf="isOpenAppointment">
     <app-appointment
         (appointmentConfirmed)="openAppointment()"
     ></app-appointment>
-</ng-container>
+</ng-container> -->

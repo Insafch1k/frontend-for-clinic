@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-about',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent {
+    constructor(private router: Router) {}
+    
     lookMore: boolean = false;
 
     LookOrNo() {
@@ -25,5 +28,16 @@ export class AboutComponent {
         if (confirmation) {
             window.open(link, '_blank'); // Открытие ссылки в новой вкладке
         }
+    }
+
+    navigateToMain(): void {
+        // Навигация к main компоненту
+        this.router.navigate(['/main']).then(() => {
+          // Прокрутка до элемента с id="req-record" после навигации
+          const element = document.getElementById('req-record');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
     }
 }

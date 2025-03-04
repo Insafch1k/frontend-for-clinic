@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SpecialistsService } from '../services/specialists.service';
-import { ISpecialists, IDoctor, IAvailableTime } from '../spacialict.interface';
+import {IDoctor, IAvailableTime } from '../spacialict.interface';
 
 @Component({
     selector: 'app-appointment',
@@ -16,7 +16,8 @@ export class AppointmentComponent {
     services = ['Консультация', 'Осмотр', 'Лечение'];
     isSend: boolean = false;
 
-    specialists: ISpecialists | null = null; // Хранение данных врачей
+    specialists: IDoctor[] = [];
+
     displayDoctors: IDoctor[] = []; // Для хранения отображаемых врачей
     categories: string[] = [];
     appointmentForm: FormGroup;
@@ -73,13 +74,15 @@ export class AppointmentComponent {
     }
 
     fetchSpecialists() {
-        this.specServ.getSpecialists().subscribe((answer: ISpecialists) => {
-            this.specialists = answer;
-            this.displayDoctors = answer.data.doctors; // Инициализация отображаемых врачей
-            this.categories = answer.data.categories;
-
-            //this.fillDoctorsTimeSlots();
-            console.log(answer);
+        this.specServ.getSpecialists('all').subscribe((answer: IDoctor[]) => {
+            if (Array.isArray(answer)) {
+                this.displayDoctors = answer;
+                console.log(this.displayDoctors); // Проверьте, что данные действительно приходят
+            } else {
+                console.error('Unexpected data structure:', answer);
+            }
+        }, error => {
+            console.error('Error fetching specialists:', error);
         });
     }
 
@@ -94,15 +97,16 @@ export class AppointmentComponent {
     onSelectDoctor(event: Event) {
         const selectElement = event.target as HTMLSelectElement;
         const value = selectElement.value;
-        this.specialists!.data.doctors.forEach((doctor: IDoctor) => {
-            if (doctor.full_name === value) {
-                this.doctorData = doctor;
-                console.log(doctor.full_name);
-                this.fillDoctorsTimeSlots();
-            }
-        });
+        if (this.specialists) { // Проверка на null
+            this.specialists.forEach((doctor: IDoctor) => {
+                if (doctor.full_name === value) {
+                    this.doctorData = doctor;
+                    console.log(doctor.full_name);
+                    this.fillDoctorsTimeSlots();
+                }
+            });
+        }
     }
-
     //заполнить временные промежутки врачей
     fillDoctorsTimeSlots() {
         const days: {

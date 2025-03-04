@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IDoctorFull } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
+import { catchError, Observable, throwError } from 'rxjs';
+import { IDoctorFull } from '../spacialict.interface';
+import { API_URL } from 'src/app/website/core/constants/constant';
 
 @Injectable({
     providedIn: 'root',
@@ -8,32 +10,12 @@ import { IDoctorFull } from 'src/app/website/clinic/modules/specialists/spaciali
 export class DoctorService {
     constructor(private readonly http: HttpClient) {}
 
-    getDoctor() {
-        return this.http.get<IDoctorFull>(`/assets/data/jsons/doctor.json`);
+    getDoctor(doctorId: number): Observable<IDoctorFull> {
+        return this.http.get<IDoctorFull>(`${API_URL}/doctors/${doctorId}`).pipe(
+            catchError((error) => {
+                console.error('Ошибка при запросе данных о враче:', error);
+                return throwError(() => new Error('Не удалось загрузить данные о враче'));
+            })
+        );
     }
-
-    // sendBid(sendData: IBid) {
-    //         console.log(sendData);
-    //         return this.http
-    //             .post<{ bid_id: number; success: number }>(
-    //                 `${API_URL}/bids`,
-    //                 sendData
-    //             )
-    //             .pipe(
-    //                 tap((res: any) => {}),
-    //                 catchError((err: any) => {
-    //                     this.handeError(err);
-    //                     throw new Error(err.message);
-    //                 })
-    //             )
-    //             .subscribe((data: { bid_id: number; success: number }) => {
-    //                 if (data.success === 1) {
-    //                     console.log('Данные отправились');
-    //                 }
-    //             });
-    //     }
-
-    //     private handeError(err: HttpErrorResponse): void {
-    //         console.error('Ошибка отправки');
-    //     }
 }

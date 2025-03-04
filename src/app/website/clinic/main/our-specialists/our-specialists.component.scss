@@ -29,12 +29,22 @@
             &:nth-last-child(n + 1) {
                 & .person-img {
                     height: 332px;
-                    background-color: #ececec;
+                    // background-color: #ececec;
                     border-radius: 10px 10px 0 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid #7eb3c1;
+                    border-bottom: none;
+                    img{
+                        border-radius: 10px 10px 0 0;
+                        height: 99.5%;
+                        width: 99%;
+                    }
                 }
                 & .person-info {
                     border: 1px solid #7eb3c1;
-                    border-top: none;
+                    
                     height: 75px;
                     border-radius: 0 0 10px 10px;
 
@@ -42,6 +52,7 @@
                     flex-direction: column;
                     justify-content: space-around;
                     align-items: center;
+                    text-align: center;
                     @media (max-width: 480px) {
                         align-items: center;
                     }
@@ -53,6 +64,10 @@
                     }
                 }
             }
+            .person-img{
+                
+            }
+            
         }
     }
 }

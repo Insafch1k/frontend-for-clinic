@@ -27,7 +27,7 @@ export class LoginComponent {
   
     console.log('Отправка данных:', credentials); // Логируем, что уходит
   
-    this.authService.login(credentials)
+    this.authService.login(credentials.login, credentials.password)
       .subscribe({
         next: (response) => {
           console.log('Успешный вход:', response);

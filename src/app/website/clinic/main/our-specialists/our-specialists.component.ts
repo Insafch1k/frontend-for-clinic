@@ -1,4 +1,6 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, OnInit } from '@angular/core';
+import { DoctorsService } from './doctors.service';
+import { IDoctor } from './doctor.interface';
 
 interface ISpecialist {
     fio: string;
@@ -11,59 +13,29 @@ interface ISpecialist {
     templateUrl: './our-specialists.component.html',
     styleUrls: ['./our-specialists.component.scss'],
 })
-export class OurSpecialistsComponent {
-    specialists: ISpecialist[] = [
-        {
-            fio: 'Имя Отчество Фамилия 1',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 2',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 3',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 4',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 5',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 6',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 7',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-        {
-            fio: 'Имя Отчество Фамилия 8',
-            speciality: 'Должность сотрудника',
-            url: '',
-        },
-    ];
-
+export class OurSpecialistsComponent implements OnInit {
+    specialists: ISpecialist[] = [];
     visibleSpecialists: ISpecialist[] = [];
     currentStartIndex = 0;
-    itemsToShow = 6; // количество элементов, которые нужно показывать
+    itemsToShow = 6;
 
     @ViewChild('specList') specList!: ElementRef;
 
+    constructor(private doctorsService: DoctorsService) {}
+
     ngOnInit() {
-        // Инициализация данных, но не вызовем updateItemsToShow здесь
-        this.updateVisibleSpecialists();
+        this.fetchDoctors();
+    }
+
+    fetchDoctors() {
+        this.doctorsService.getDoctors().subscribe((response) => {
+            this.specialists = response.doctors.map(doctor => ({
+                fio: doctor.full_name,
+                speciality: doctor.specialties.join(', '),
+                url: doctor.photo || ''
+            }));
+            this.updateVisibleSpecialists();
+        });
     }
 
     ngAfterViewInit() {
@@ -73,13 +45,11 @@ export class OurSpecialistsComponent {
         });
     }
 
-    // Метод для обновления количества элементов для показа
     updateItemsToShow() {
         const element = this.specList.nativeElement;
         if (element) {
             const width = element.offsetWidth;
             this.itemsToShow = Math.floor(width / 244);
-            // При необходимости обновляем массив видимых специалистов
             this.updateVisibleSpecialists();
         }
     }
@@ -90,35 +60,25 @@ export class OurSpecialistsComponent {
     }
 
     updateVisibleSpecialists() {
-        // Получаем видимые специалисты
         this.visibleSpecialists = this.specialists.slice(
             this.currentStartIndex,
             this.currentStartIndex + this.itemsToShow
         );
 
-        // Если текущее количество специалистов меньше, чем itemsToShow, добавляем циклический переход
         if (this.visibleSpecialists.length < this.itemsToShow) {
             const remaining = this.itemsToShow - this.visibleSpecialists.length;
             const wrapAround = this.specialists.slice(0, remaining);
-            this.visibleSpecialists =
-                this.visibleSpecialists.concat(wrapAround);
+            this.visibleSpecialists = this.visibleSpecialists.concat(wrapAround);
         }
     }
 
     next() {
-        // Циклический переход вправо по одному специалисту
-        this.currentStartIndex =
-            (this.currentStartIndex + 1) % this.specialists.length;
+        this.currentStartIndex = (this.currentStartIndex + 1) % this.specialists.length;
         this.updateVisibleSpecialists();
-        console.log(this.currentStartIndex, this.visibleSpecialists);
     }
 
     prev() {
-        // Циклический переход влево по одному специалисту
-        this.currentStartIndex =
-            (this.currentStartIndex - 1 + this.specialists.length) %
-            this.specialists.length;
+        this.currentStartIndex = (this.currentStartIndex - 1 + this.specialists.length) % this.specialists.length;
         this.updateVisibleSpecialists();
-        console.log(this.currentStartIndex, this.visibleSpecialists);
     }
 }

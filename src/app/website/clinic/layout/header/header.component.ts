@@ -26,4 +26,7 @@ export class HeaderComponent {
   onWindowScroll() {
     this.isScrolled = window.scrollY > 50; // порог прокрутки 50 пикселей
   }
+  goToVk(): void {
+    window.location.href = 'https://vk.com/clinika03';
+  }
 }

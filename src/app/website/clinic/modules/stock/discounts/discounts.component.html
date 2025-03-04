@@ -1,5 +1,5 @@
 <div class="loading-wrapper">
-    <div *ngFor="let action of actionList.actions" class="loading-block">
-        <img src="{{ action.photo }}" alt="" />
+    <div *ngFor="let action of actionList?.actions" class="loading-block">
+      <img [src]="action.photo" alt="{{ action.description }}" />
     </div>
-</div>
+  </div>

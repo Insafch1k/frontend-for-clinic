@@ -10,12 +10,7 @@ import { IBid } from '../main-bid.interface';
 })
 export class ReqRecordComponent implements OnInit {
     appointmentForm: FormGroup;
-    doctors: string[] = [
-        'Гастроэнтеролог',
-        'Кардиолог',
-        'Терапевт',
-        'Офтальмолог',
-    ];
+    specialties: { id: number; name: string }[] = [];
 
     constructor(private fb: FormBuilder, private readonly bidServ: BidService) {
         this.appointmentForm = this.fb.group({
@@ -23,12 +18,21 @@ export class ReqRecordComponent implements OnInit {
             name: ['', Validators.required],
             birthDate: ['', [Validators.required, this.dateValidator]],
             phone: ['', [Validators.required, this.phoneValidator]],
-            doctor: ['', Validators.required],
+            speciality: ['', Validators.required],
             consent: [false, Validators.requiredTrue],
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.bidServ.getSpecialties().subscribe(
+            (data) => {
+                this.specialties = data;
+            },
+            (error) => {
+                console.error('Ошибка при загрузке специальностей', error);
+            }
+        );
+    }
 
     dateValidator(control: any) {
         const date = new Date(control.value);
@@ -44,14 +48,12 @@ export class ReqRecordComponent implements OnInit {
 
     onSubmit() {
         if (this.appointmentForm.valid) {
-            console.log(this.appointmentForm.value);
             const sendData: IBid = {
-                patient_surname: this.appointmentForm.value.surname,
-                patient_name: this.appointmentForm.value.name,
-                patient_date_of_birth: this.appointmentForm.value.birthDate,
-                patient_phone: this.appointmentForm.value.phone,
-                speciality_id: 1,
-                personal_data: this.appointmentForm.value.consent,
+                last_name: this.appointmentForm.value.surname,
+                first_name: this.appointmentForm.value.name,
+                birth_date: this.appointmentForm.value.birthDate,
+                phone_number: this.appointmentForm.value.phone,
+                speciality: this.appointmentForm.value.speciality,
             };
             this.bidServ.sendBid(sendData);
             this.appointmentForm.reset();

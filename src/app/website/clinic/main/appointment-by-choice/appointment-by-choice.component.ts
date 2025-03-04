@@ -1,14 +1,30 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SpecialistsService } from '../../modules/specialists/services/specialists.service';
-import { Router } from '@angular/router';
-import {
-    IAvailableTime,
-    IDoctor,
-    ISpecialists,
-} from '../../modules/specialists/spacialict.interface';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BidService } from '../bid.service';
-import { PushCodeComponent } from '../../components/push-code/push-code.component';
+import { AppointmentService } from '../appointment.service';
+
+interface IDoctor {
+    id: number;
+    full_name: string;
+    id_easyclinic: number;
+    available_times: any[];
+}
+
+interface IService {
+    id: number;
+    name: string;
+    price: number;
+}
+
+interface IDay {
+    day: string;
+    isSelect: boolean;
+    slot: {
+        isSelect: boolean;
+        state: string;
+        time: string;
+    }[];
+    day_id: number; // Добавляем day_id в интерфейс
+}
 
 @Component({
     selector: 'app-appointment-by-choice',
@@ -16,17 +32,12 @@ import { PushCodeComponent } from '../../components/push-code/push-code.componen
     styleUrls: ['./appointment-by-choice.component.scss'],
 })
 export class AppointmentByChoiceComponent {
-    appointmentTypes = ['Первичный', 'Вторичный'];
-    services = ['Консультация', 'Осмотр', 'Лечение'];
+    categories: any[] = [];
+    displayDoctors: IDoctor[] = [];
+    services: IService[] = [];
+    selectedServicePrice: number = 0;
     isSend: boolean = false;
-
     selectedTime: string = '';
-
-    specialists: ISpecialists | null = null; // Хранение данных врачей
-    displayDoctors: IDoctor[] = []; // Для хранения отображаемых врачей
-    categories: string[] = [];
-    appointmentForm: FormGroup;
-
     doctorData!: IDoctor;
 
     isOpenDayDoctor!: {
@@ -34,44 +45,30 @@ export class AppointmentByChoiceComponent {
         currentView: number;
         displayedSlots: string[];
         lenght: number;
-        days: {
-            day: string;
-            isSelect: boolean;
-            slot: {
-                isSelect: boolean;
-                state: string;
-                time: string;
-            }[];
-        }[];
+        days: IDay[]; // Используем интерфейс IDay
     };
+
+    appointmentForm: FormGroup;
 
     @Output() appointmentConfirmed = new EventEmitter<void>();
 
-    confirmAppointment() {
-        // Логика подтверждения записи на прием
-        this.appointmentConfirmed.emit(); // Уведомляем родительский компонент
-    }
-
     constructor(
-        private readonly specServ: SpecialistsService,
-        private fb: FormBuilder,
-        private readonly bidServ: BidService
+        private readonly appointmentService: AppointmentService,
+        private fb: FormBuilder
     ) {
         this.appointmentForm = this.fb.group({
             surname: ['', Validators.required],
             name: ['', Validators.required],
-            dateTime: ['', [Validators.required]],
             phone: ['', [Validators.required, this.phoneValidator]],
             doctor: ['', Validators.required],
             speciality: ['', Validators.required],
-            type: ['', Validators.required],
             serviceName: ['', Validators.required],
             consent: [false, Validators.requiredTrue],
         });
     }
 
     ngOnInit(): void {
-        this.fetchSpecialists();
+        this.fetchSpecialties();
     }
 
     phoneValidator(control: any) {
@@ -79,85 +76,126 @@ export class AppointmentByChoiceComponent {
         return phonePattern.test(control.value) ? null : { invalidPhone: true };
     }
 
-    fetchSpecialists() {
-        this.specServ.getSpecialists().subscribe((answer: ISpecialists) => {
-            this.specialists = answer;
-            this.displayDoctors = answer.data.doctors; // Инициализация отображаемых врачей
-            this.categories = answer.data.categories;
-
-            //this.fillDoctorsTimeSlots();
-            console.log(answer);
+    fetchSpecialties() {
+        this.appointmentService.getSpecialties().subscribe((specialties) => {
+            this.categories = specialties;
         });
     }
 
-    // Метод для отправки данных
-    onSubmit() {
-        if (this.appointmentForm.valid) {
-            this.isSend = true;
-            console.log(this.appointmentForm.value);
-        }
-    }
-
-    onSelectDoctor(event: Event) {
+    onSpecialityChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement;
-        const value = selectElement.value;
-        this.specialists!.data.doctors.forEach((doctor: IDoctor) => {
-            if (doctor.full_name === value) {
-                this.doctorData = doctor;
-                console.log(doctor.full_name);
-                this.fillDoctorsTimeSlots();
+        const specialtyId = selectElement.value;
+        console.log('Selected specialty ID:', specialtyId); // Проверка выбранного specialty_id
+    
+        this.appointmentService.getServices(Number(specialtyId)).subscribe({
+            next: (services) => {
+                console.log('Services received:', services);
+                this.services = services[0].services;
+                this.appointmentService.getDoctors(Number(specialtyId)).subscribe({
+                    next: (doctors) => {
+                        console.log('Doctors received:', doctors);
+                        this.displayDoctors = doctors;
+                        if (doctors.length === 1) {
+                            this.onDoctorChange({ target: { value: doctors[0].id } } as any);
+                        }
+                    },
+                    error: (err) => {
+                        console.error('Error fetching doctors:', err);
+                    }
+                });
+            },
+            error: (err) => {
+                console.error('Error fetching services:', err);
             }
         });
     }
+    
 
-    //заполнить временные промежутки врачей
+    onDoctorChange(event: Event) {
+        const selectElement = event.target as HTMLSelectElement;
+        const doctorId = selectElement.value;
+        const selectedDoctor = this.displayDoctors.find(doctor => doctor.id === Number(doctorId));
+        if (selectedDoctor) {
+            this.doctorData = selectedDoctor;
+            this.appointmentService.getAvailableTimes(selectedDoctor.id_easyclinic).subscribe((times) => {
+                this.doctorData.available_times = times.available_times;
+                this.fillDoctorsTimeSlots();
+            });
+        }
+    }
+
+    onServiceChange(event: Event) {
+        const selectElement = event.target as HTMLSelectElement;
+        const serviceId = selectElement.value;
+        const selectedService = this.services.find(service => service.id === Number(serviceId));
+        if (selectedService) {
+            this.selectedServicePrice = selectedService.price;
+        }
+    }
+
+    onSubmit() {
+        if (this.appointmentForm.valid) {
+            this.isSend = true;
+            const appointmentData = {
+                fio: `${this.appointmentForm.value.surname} ${this.appointmentForm.value.name}`,
+                day_id: this.isOpenDayDoctor.days[this.isOpenDayDoctor.currentView].day_id.toString(),
+                time: this.selectedTime,
+                mobile: this.appointmentForm.value.phone,
+            };
+            console.log('Отправляемые данные:', appointmentData); // Вывод данных в консоль
+            this.appointmentService.createAppointment(appointmentData).subscribe(() => {
+                // Обработка успеха
+            });
+        }
+    }
+    
+
     fillDoctorsTimeSlots() {
-        const days: {
-            day: string;
-            isSelect: boolean;
-            slot: {
-                isSelect: boolean;
-                state: string;
-                time: string;
-            }[];
-        }[] = [];
+        const days: IDay[] = [];
         let currentIndex = 0;
         const endIndex = Math.min(
             currentIndex + 7,
             this.doctorData.available_times.length
-        ); // Убедимся, что не выйдем за пределы
+        );
         const slots: string[] = [];
+    
         for (let slot of this.doctorData.available_times) {
             const times: {
                 isSelect: boolean;
                 state: string;
                 time: string;
             }[] = [];
+    
             for (let timeq in slot.time) {
+                const state = slot.time[timeq];
                 times.push({
                     time: timeq,
                     isSelect: false,
-                    state: slot.time[timeq],
+                    state: state,
                 });
             }
-            days.push({
-                day: slot.date,
-                isSelect: false,
-                slot: times,
-            });
-            slots.push(slot.date);
+    
+            if (times.length > 0) {
+                days.push({
+                    day: slot.date,
+                    isSelect: false,
+                    slot: times,
+                    day_id: slot.day_id,
+                });
+                slots.push(slot.date);
+            }
         }
+    
         const displayedSlots = slots.slice(currentIndex, endIndex);
         this.isOpenDayDoctor = {
             currentIndex,
             displayedSlots,
             days,
             currentView: 0,
-            lenght: this.doctorData.available_times.length,
+            lenght: days.length,
         };
     }
-
-    // Метод для прокрутки влево
+    
     scrollLeft() {
         if (this.isOpenDayDoctor.currentIndex > 0) {
             this.isOpenDayDoctor.currentIndex--;
@@ -165,7 +203,6 @@ export class AppointmentByChoiceComponent {
         }
     }
 
-    // Метод для прокрутки вправо
     scrollRight() {
         const keys = Object.keys(this.getDoctorSlotDates());
         if (this.isOpenDayDoctor.currentIndex + 7 < keys.length) {
@@ -174,9 +211,8 @@ export class AppointmentByChoiceComponent {
         }
     }
 
-    // Метод для обновления отображаемых слотов
     private updateDisplayedSlots() {
-        const keys = Object.keys(this.getDoctorSlotDates()); // Получаем все доступные слоты для врача
+        const keys = Object.keys(this.getDoctorSlotDates());
         const endIndex = Math.min(
             this.isOpenDayDoctor.currentIndex + 7,
             keys.length
@@ -187,8 +223,7 @@ export class AppointmentByChoiceComponent {
         );
     }
 
-    // Метод для получения временных слотов врача по ID
-    private getDoctorSlotDates(): IAvailableTime[] {
+    private getDoctorSlotDates(): any[] {
         return this.doctorData ? this.doctorData.available_times : [];
     }
 
@@ -201,7 +236,6 @@ export class AppointmentByChoiceComponent {
             !this.isOpenDayDoctor.days[dayIndex].isSelect;
     }
 
-    // Метод для получения дня недели и месяца
     getDayOfWeekAndMonth(date: string): string {
         const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
         const months = [
@@ -223,10 +257,16 @@ export class AppointmentByChoiceComponent {
         return `${daysOfWeek[dayIndex]}, ${months[monthIndex]}`;
     }
 
-    // Метод для выбора временного слота
     selectTimeSlot(time: string): void {
-        this.selectedTime = time;
-        this.appointmentForm.get('dateType')?.setValue(time);
-        console.log(time, this.appointmentForm.value);
+        const selectedDay = this.isOpenDayDoctor.days[this.isOpenDayDoctor.currentView];
+        const selectedSlot = selectedDay.slot.find(slot => slot.time === time);
+        
+        if (selectedSlot && selectedSlot.state === 'accepts_all') {
+            this.selectedTime = time;
+            selectedSlot.isSelect = true;
+        }
+    }
+    confirmAppointment() {
+        this.appointmentConfirmed.emit();
     }
 }

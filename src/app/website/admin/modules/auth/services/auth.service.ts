@@ -1,45 +1,58 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { API_URL } from 'src/app/website/core/constants/constant';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${API_URL}/admin/login`;
-  private authToken = new BehaviorSubject<string | null>(this.getToken());
+  private apiUrl = `${API_URL}/admin`;
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { login: string; password: string }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(this.apiUrl, credentials).pipe(
-      tap(response => {
-        this.setToken(response.token);
+  login(login: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { login, password }).pipe(
+      tap((response: any) => {
+        if (response.access_token && response.refresh_token) {
+          localStorage.setItem('access_token', response.access_token);
+          localStorage.setItem('refresh_token', response.refresh_token);
+        }
+      }),
+      catchError((error) => {
+        console.error('Ошибка авторизации:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (!refreshToken) return throwError('Отсутствует refresh_token');
+
+    return this.http.post(`${this.apiUrl}/refresh-token`, { refresh_token: refreshToken }).pipe(
+      tap((response: any) => {
+        if (response.access_token) {
+          localStorage.setItem('access_token', response.access_token);
+        }
+      }),
+      catchError((error) => {
+        console.error('Ошибка обновления токена:', error);
+        return throwError(error);
       })
     );
   }
 
   logout(): void {
-    sessionStorage.removeItem('token');
-    this.authToken.next(null);
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.getToken();
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    return localStorage.getItem('access_token');
   }
-
-  private setToken(token: string): void {
-    sessionStorage.setItem('token', token);
-    this.authToken.next(token);
-  }
-
-  getAuthToken(): BehaviorSubject<string | null> {
-    return this.authToken;
+  isAuthenticated(): boolean {
+    return !!this.getToken();
   }
 }

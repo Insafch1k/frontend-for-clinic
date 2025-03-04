@@ -1,65 +1,64 @@
-<div class="page-background">
+<div *ngIf="doctorData" class="page-background">
     <div class="doctor-wrapper">
+        <!-- Шапка с навигацией -->
         <div class="route">
-            Главная / Специалисты / Гастроэнтеролог /
-            {{ doctorData.full_name }}
+            Главная / Специалисты / 
+            {{ doctorData.specialties?.join(', ') || 'Специальность не указана' }} /
+            {{ doctorData.full_name || 'Имя врача не указано' }}
         </div>
+
+        <!-- Основная информация о враче -->
         <div class="doctor">
             <div class="doctor-block">
+                <!-- Блок с фото и основными данными -->
                 <div class="doctor-block_info">
-                    <img src="{{ doctorData.photo }}" alt="" />
+                    <img 
+                        [src]="doctorData.photo || 'assets/default-avatar.png'" 
+                        alt="Фото врача" 
+                        class="doctor-avatar"
+                    />
                     <div class="doctor-block_info-desc">
-                        <p class="doctor-block_info-name">
-                            {{ doctorData.full_name }}
-                        </p>
-                        <p>Специальности: {{ doctorData.specialties }}</p>
+                        <p class="doctor-block_info-name">{{ doctorData.full_name || 'Имя врача не указано' }}</p>
+                        <p>Специальности: {{ doctorData.specialties?.join(', ') || 'Не указаны' }}</p>
                         <p class="doctor-block_info-experience">
-                            Стаж:
-                            {{ getExperienceText(doctorData.experiance!) }}
-                        </p>
-                        <p class="doctor-block_info-phone">
-                            <!-- + {{ doctorData.phone_number }} -->
+                            Стаж: {{ getExperienceText(doctorData.experiance!) || 'Не указан' }}
                         </p>
                     </div>
                 </div>
-                <app-choose-time [doctorData]="doctorData"></app-choose-time>
+
+                <!-- Блок выбора времени -->
+                <app-choose-time class="time" [doctorData]="doctorData"></app-choose-time>
             </div>
+
+            <!-- Образование врача -->
             <div class="education">
                 <h2 class="name">Квалификация и образование</h2>
-                <div *ngFor="let ed of doctorData.education">
-                    {{ ed.year }} - {{ ed.name }}
+                <div *ngIf="doctorData.education && doctorData.education.length > 0">
+                    <div *ngFor="let ed of doctorData.education">
+                        {{ ed.year }} - {{ ed.name }}
+                    </div>
+                </div>
+                <div *ngIf="!doctorData.education || doctorData.education.length === 0">
+                    Информация об образовании отсутствует.
                 </div>
             </div>
+
+            <!-- Отзывы о враче -->
             <div class="reviews">
                 <h2 class="name">Отзывы</h2>
-                <div *ngFor="let review of doctorData.reviews" class="review">
-                    <div class="review-left-side">
-                        <p class="pacient">
-                            Пациент <br class="pacient-br" />{{
-                                review.phone | phoneFormat
-                            }}
-                        </p>
-                        <p class="date">{{ review.date | reviewDate }}</p>
-                    </div>
-                    <div class="review-rigth-side">
-                        <p class="history">История пациента</p>
-                        <p>{{ review.description }}</p>
-                        <div class="was-reception">
-                            <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 12 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6 6H8.5V8.5H6V6ZM9.5 1.5H9V0.5H8V1.5H4V0.5H3V1.5H2.5C1.95 1.5 1.5 1.95 1.5 2.5V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9.5C10.05 10.5 10.5 10.05 10.5 9.5V2.5C10.5 1.95 10.05 1.5 9.5 1.5ZM9.5 2.5V3.5H2.5V2.5H9.5ZM2.5 9.5V4.5H9.5V9.5H2.5Z"
-                                    fill="#5C5C5C"
-                                />
-                            </svg>
-                            <p>Прием был в ноябре 2024</p>
+                <div *ngIf="doctorData.reviews && doctorData.reviews.length > 0">
+                    <div *ngFor="let review of doctorData.reviews" class="review">
+                        <div class="review-left-side">
+                            <p class="pacient">Пациент: {{ review.patient_info }}</p>
+                            <p class="date">{{ review.time }}</p>
+                        </div>
+                        <div class="review-right-side">
+                            <p>{{ review.content }}</p>
                         </div>
                     </div>
+                </div>
+                <div *ngIf="!doctorData.reviews || doctorData.reviews.length === 0">
+                    Отзывы отсутствуют.
                 </div>
             </div>
         </div>

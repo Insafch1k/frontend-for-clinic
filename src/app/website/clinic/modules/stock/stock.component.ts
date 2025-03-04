@@ -1,53 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StockService } from './stock.service';
 import { IStock } from './stock.interface';
 import { timer } from 'rxjs';
 
 @Component({
-    selector: 'app-stock',
-    templateUrl: './stock.component.html',
-    styleUrls: ['./stock.component.scss'],
+  selector: 'app-stock',
+  templateUrl: './stock.component.html',
+  styleUrls: ['./stock.component.scss'],
 })
-export class StockComponent {
-    actions: IStock[] = [];
-    isLoading: boolean = true;
-    showStockLoading: boolean = false;
-    currentList!: IStock;
-    currentIndex: number = 0;
+export class StockComponent implements OnInit {
+  actions: IStock[] = [];
+  isLoading: boolean = true;
+  showStockLoading: boolean = false;
+  currentList!: IStock;
+  currentIndex: number = 0;
 
-    constructor(private readonly stockServ: StockService) {}
+  constructor(private readonly stockServ: StockService) {}
 
-    ngOnInit(): void {
-        window.scrollTo(0, 0); // Прокручивает страницу к верхней части
-        this.fetchActions();
-    }
+  ngOnInit(): void {
+    window.scrollTo(0, 0); // Прокручивает страницу к верхней части
+    this.fetchActions();
+  }
 
-    fetchActions() {
-        // Запускаем таймер на 1 секунду
-        const loadingTimer = timer(1000).subscribe(() => {
-            this.showStockLoading = true; // Если прошла 1 секунда, показываем загрузку
-        });
+  fetchActions() {
+    const loadingTimer = timer(1000).subscribe(() => {
+      this.showStockLoading = true; // Если прошла 1 секунда, показываем загрузку
+    });
 
-        this.stockServ.getActions().subscribe((answer: IStock[]) => {
-            // Отменяем таймер, если ответ пришел раньше
-            loadingTimer.unsubscribe();
-            this.showStockLoading = false; // Прячем компонент загрузки
-            this.actions = answer; // Обновляем данные
-            this.isLoading = false; // Завершаем загрузку
-        });
-    }
+    this.stockServ.getActions().subscribe((answer: IStock[]) => {
+      loadingTimer.unsubscribe();
+      this.showStockLoading = false; // Прячем компонент загрузки
+      this.actions = answer; // Обновляем данные
+      this.isLoading = false; // Завершаем загрузку
+      if (this.actions.length > 0) {
+        this.currentList = this.actions[this.currentIndex];
+      }
+    }, (error) => {
+      console.error('Ошибка при получении данных акций', error);
+      this.isLoading = false;
+      this.showStockLoading = false;
+    });
+  }
 
-    selectSection(index: number) {
-        const loadingTimer1 = timer(300).subscribe(() => {
-            this.isLoading = true; // Если прошла 0.3 секунда, показываем загрузку
-        });
-        loadingTimer1.unsubscribe();
-        const loadingTimer2 = timer(1000).subscribe(() => {
-            this.showStockLoading = true; // Если прошла 1 секунда, показываем загрузку
-        });
-        loadingTimer2.unsubscribe();
+  selectSection(index: number) {
+    if (this.actions.length === 0) return;
 
-        this.currentIndex = index;
-        this.currentList = this.actions[index];
-    }
+    this.isLoading = true;
+    this.showStockLoading = true;
+
+    setTimeout(() => {
+      this.isLoading = false;
+      this.showStockLoading = false;
+      this.currentIndex = index;
+      this.currentList = this.actions[index];
+    }, 1000);
+  }
 }

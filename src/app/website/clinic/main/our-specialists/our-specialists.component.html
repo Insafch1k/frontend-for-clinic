@@ -1,10 +1,12 @@
 <div class="specialists">
     <div (click)="prev()" class="arrow">
-        <img src="assets/data/icon/other/arrow-left.svg" alt="" />
+        <img src="assets/data/icon/other/arrow-left.svg" alt="Previous" />
     </div>
     <ul #specList>
         <li *ngFor="let person of visibleSpecialists; let i = index">
-            <div class="person-img"></div>
+            <div class="person-img">
+                <img *ngIf="person.url" [src]="person.url" alt="{{ person.fio }}">
+            </div>
             <div class="person-info">
                 <p class="person-fio">{{ person.fio }}</p>
                 <p class="person-speciality">{{ person.speciality }}</p>
