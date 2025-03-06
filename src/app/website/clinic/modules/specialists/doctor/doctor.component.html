@@ -1,36 +1,69 @@
 <div *ngIf="doctorData" class="page-background">
     <div class="doctor-wrapper">
-        <!-- Шапка с навигацией -->
         <div class="route">
-            Главная / Специалисты / 
-            {{ doctorData.specialties?.join(', ') || 'Специальность не указана' }} /
+            Главная / Специалисты /
+            {{ getSpecialtiesString(doctorData.specialties) }} /
             {{ doctorData.full_name || 'Имя врача не указано' }}
         </div>
 
-        <!-- Основная информация о враче -->
         <div class="doctor">
             <div class="doctor-block">
-                <!-- Блок с фото и основными данными -->
                 <div class="doctor-block_info">
-                    <img 
-                        [src]="doctorData.photo || 'assets/default-avatar.png'" 
-                        alt="Фото врача" 
+                    <img
+                        [src]="doctorData.photo || 'assets/default-avatar.png'"
+                        alt="Фото врача"
                         class="doctor-avatar"
                     />
                     <div class="doctor-block_info-desc">
                         <p class="doctor-block_info-name">{{ doctorData.full_name || 'Имя врача не указано' }}</p>
-                        <p>Специальности: {{ doctorData.specialties?.join(', ') || 'Не указаны' }}</p>
+                        <p>Специальности: {{ getSpecialtiesString(doctorData.specialties) }}</p>
                         <p class="doctor-block_info-experience">
                             Стаж: {{ getExperienceText(doctorData.experiance!) || 'Не указан' }}
                         </p>
                     </div>
                 </div>
 
-                <!-- Блок выбора времени -->
-                <app-choose-time class="time" [doctorData]="doctorData"></app-choose-time>
+                <div class="time">
+                    <div class="date-scroll">
+                        <button *ngIf="doctorData.available_times.length > 7" (click)="scrollDates('left')" class="scroll-button left">
+                            <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z" fill="#0081EC" />
+                            </svg>
+                        </button>
+                        <div class="date-slots">
+                            <div
+                                *ngFor="let availableTime of doctorData.available_times; let i = index"
+                                class="date-slot"
+                                [ngClass]="{'selected-date': selectedDate === availableTime.date}"
+                                (click)="selectDate(availableTime.date)"
+                            >
+                                <div class="date-info">
+                                    <div class="day-name">{{ getDayName(availableTime.date) }}</div>
+                                    <div class="month-day">{{ getMonthName(availableTime.date) }}, {{ getDayNumber(availableTime.date) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button *ngIf="doctorData.available_times.length > 7" (click)="scrollDates('right')" class="scroll-button right">
+                            <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.1297 7.93594C1.06251 7.93594 1.00625 7.90937 0.954688 7.85781C0.851563 7.75469 0.851563 7.58594 0.954688 7.48281L4.48437 3.95312L0.954688 0.474998C0.851563 0.371873 0.851563 0.203124 0.954688 0.0999985C1.05781 -0.00312662 1.22656 -0.00312662 1.32969 0.0999985L5.00625 3.76562C5.10938 3.86875 5.10938 4.0375 5.00625 4.14062L1.32969 7.85781C1.27656 7.91094 1.20938 7.93594 1.1297 7.93594Z" fill="#0081EC" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="time-slots">
+                        <div
+                            *ngFor="let timeSlot of getTimeSlotsForSelectedDate() | keyvalue"
+                            [ngClass]="{'full-block': timeSlot.value === 'full_block', 'accepts-all': timeSlot.value === 'accepts_all'}"
+                            (click)="selectedDate ? toggleTimeSlot(timeSlot.key, selectedDate) : null"
+                        >
+                            {{ timeSlot.key }}
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
             </div>
 
-            <!-- Образование врача -->
             <div class="education">
                 <h2 class="name">Квалификация и образование</h2>
                 <div *ngIf="doctorData.education && doctorData.education.length > 0">
@@ -43,13 +76,12 @@
                 </div>
             </div>
 
-            <!-- Отзывы о враче -->
             <div class="reviews">
                 <h2 class="name">Отзывы</h2>
                 <div *ngIf="doctorData.reviews && doctorData.reviews.length > 0">
                     <div *ngFor="let review of doctorData.reviews" class="review">
                         <div class="review-left-side">
-                            <p class="pacient">Пациент: {{ review.patient_info }}</p>
+                            <p class="pacient" [innerHTML]="review.patient_name_and_phone"></p>
                             <p class="date">{{ review.time }}</p>
                         </div>
                         <div class="review-right-side">

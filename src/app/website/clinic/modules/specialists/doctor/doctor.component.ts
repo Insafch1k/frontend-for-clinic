@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IDoctorFull } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
+import { IDoctorProfileFull, IDoctor } from 'src/app/website/clinic/modules/specialists/spacialict.interface';
 import { DoctorService } from '../services/doctor.service';
 
 @Component({
@@ -9,8 +9,21 @@ import { DoctorService } from '../services/doctor.service';
   styleUrls: ['./doctor.component.scss'],
 })
 export class DoctorComponent implements OnInit {
-  doctorData: IDoctorFull = {} as IDoctorFull;
+  doctorData: IDoctorProfileFull = {
+    available_times: [],
+    experiance: null,
+    full_name: '',
+    id: 0,
+    id_easyclinic: 0,
+    phone_number: '',
+    photo: null,
+    specialties: [],
+    filials: [],
+    reviews: [],
+    education: []
+  };
   isOpenAppointment: boolean = false;
+  selectedDate: string | null = null;
 
   constructor(
     private readonly doctorServ: DoctorService,
@@ -20,7 +33,6 @@ export class DoctorComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('Полученный ID врача:', id); // Проверка
 
     if (!id || isNaN(+id)) {
         console.error('ID врача не найден или некорректен');
@@ -29,21 +41,30 @@ export class DoctorComponent implements OnInit {
 
     this.fetchDoctorById(+id);
 }
+
   fetchDoctorById(doctorId: number) {
-    console.log(`Вызов API для врача с ID:`, doctorId);
     this.doctorServ.getDoctor(doctorId).subscribe(
-        (answer: IDoctorFull) => {
-            console.log('Ответ от API:', answer);
+        (answer: IDoctorProfileFull) => {
             if (!answer || Object.keys(answer).length === 0) {
                 console.error('Пустой ответ от сервера');
                 return;
             }
-            this.doctorData = answer;
+            this.doctorData = this.formatPatientNameAndPhone(answer);
         },
         (error) => {
             console.error('Ошибка при получении данных о враче:', error);
         }
     );
+  }
+
+  formatPatientNameAndPhone(doctorData: IDoctorProfileFull): IDoctorProfileFull {
+    return {
+      ...doctorData,
+      reviews: doctorData.reviews.map(review => ({
+        ...review,
+        patient_name_and_phone: review.patient_name_and_phone.replace('Пациент ', 'Пациент <br>')
+      }))
+    };
   }
 
   getExperienceText(experience: number): string {
@@ -60,5 +81,56 @@ export class DoctorComponent implements OnInit {
     } else {
       return `${experience} лет`;
     }
+  }
+
+  getSpecialtiesString(specialties: { id: number; name: string }[]): string {
+    return specialties.map(s => s.name).join(', ') || 'Специальность не указана';
+  }
+
+  toggleTimeSlot(time: string, date: string) {
+    const timeSlot = this.doctorData.available_times
+      .find(at => at.date === date)?.time[time];
+
+    if (timeSlot === 'accepts_all') {
+      // Логика для обработки выбора времени
+      console.log(`Выбран слот времени: ${time} на дату ${date}`);
+      // Здесь можно добавить логику для изменения состояния выбранного слота
+    }
+  }
+
+
+  selectDate(date: string) {
+    this.selectedDate = date;
+    // Дополнительная логика при выборе даты
+  }
+
+  getTimeSlotsForSelectedDate() {
+    const selectedTime = this.doctorData.available_times.find(at => at.date === this.selectedDate);
+    return selectedTime ? selectedTime.time : {};
+  }
+
+  scrollDates(direction: 'left' | 'right') {
+    const dateSlots = document.querySelector('.date-slots');
+    if (dateSlots) {
+      const scrollAmount = direction === 'left' ? -300 : 300; // Настройте значение прокрутки
+      dateSlots.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }
+
+  getDayName(date: string): string {
+    const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+    const dateObj = new Date(date);
+    return days[dateObj.getDay()];
+  }
+
+  getMonthName(date: string): string {
+    const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+    const dateObj = new Date(date);
+    return months[dateObj.getMonth()];
+  }
+
+  getDayNumber(date: string): string {
+    const dateObj = new Date(date);
+    return dateObj.getDate().toString();
   }
 }

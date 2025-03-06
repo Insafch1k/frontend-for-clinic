@@ -20,6 +20,7 @@ export interface IDoctor {
         year: string;
     }[]; // Добавьте это свойство, если оно необходимо
 }
+
 export interface IAvailableTime {
     date: string;
     day_id: number;
@@ -30,7 +31,39 @@ export interface IAvailableTime {
   export interface IDoctorFull extends IDoctor {
     reviews: {
         content: string; // Текст отзыва
-        patient_info: string; // Информация о пациенте
+        patient_name_and_phone: string; // Информация о пациенте
         time: string; // Время отзыва
+    }[];
+}
+
+
+export interface IDoctorProfile {
+    available_times: IAvailableTime[];
+    experiance: number | null;
+    full_name: string;
+    id: number;
+    id_easyclinic: number;
+    phone_number: string;
+    photo: string | null;
+    price?: number | null;
+    specialties: {
+        id: number;
+        name: string;
+    }[];
+    filials: {
+        doctor_id: number;
+        filial_name: string;
+    }[];
+    education?: {
+        name: string;
+        year: string;
+    }[];
+}
+
+export interface IDoctorProfileFull extends IDoctorProfile {
+    reviews: {
+        content: string;
+        patient_name_and_phone: string;
+        time: string;
     }[];
 }
