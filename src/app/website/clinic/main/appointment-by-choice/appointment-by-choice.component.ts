@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, } from '@angular/forms';
 import { AppointmentService } from '../appointment.service';
 
 interface IDoctor {
@@ -39,6 +39,7 @@ export class AppointmentByChoiceComponent {
     isSend: boolean = false;
     selectedTime: string = '';
     doctorData!: IDoctor;
+    showSuccessMessage: boolean = false;
 
     isOpenDayDoctor!: {
         currentIndex: number;
@@ -266,7 +267,36 @@ export class AppointmentByChoiceComponent {
             selectedSlot.isSelect = true;
         }
     }
+    
     confirmAppointment() {
         this.appointmentConfirmed.emit();
     }
+
+    inputValue: string = '';
+
+    onInput(event: Event) {
+        const input = event.target as HTMLInputElement;
+        this.inputValue = input.value;
+    }
+
+    confirmCode() {
+        const code = this.inputValue; // Получаем введенный код
+        const mobile = this.appointmentForm.value.phone; // Получаем номер телефона из формы
+    
+        this.appointmentService.confirmAppointment(code, mobile).subscribe({
+            next: () => {
+                // Установите переменную в true для отображения сообщения
+                this.showSuccessMessage = true;
+                // Скрыть сообщение через 3 секунды
+                setTimeout(() => {
+                    this.showSuccessMessage = false;
+                }, 3000);
+            },
+            error: (err) => {
+                console.error('Ошибка при подтверждении записи:', err);
+            }
+        });
+    }
+    
+        
 }

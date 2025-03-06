@@ -117,9 +117,34 @@
                 <div class="btn-wrapper">
                     <button type="submit" [disabled]="!appointmentForm.valid">Отправить</button>
                 </div>
-                <ng-container *ngIf="isSend">
-                    <app-push-code></app-push-code>
-                </ng-container>
+                <div *ngIf="isSend">
+                    <div class="push-wrap">
+                        <p>
+                            На номер +7(917)999-99-99z было отправлено SMS с кодом подтверждения.
+                            Введите полученный код, чтобы продолжить оформление записи.
+                        </p>
+                        <div class="custom-input-container">
+                            <input
+                                type="text"
+                                class="custom-input"
+                                [value]="inputValue"
+                                (input)="onInput($event)"
+                                maxlength="6"
+                            />
+                            <span class="custom-input-background"></span>
+                            <span class="custom-input-background"></span>
+                            <span class="custom-input-background"></span>
+                            <span class="custom-input-background"></span>
+                            <span class="custom-input-background"></span>
+                            <span class="custom-input-background"></span>
+                        </div>
+                        <p class="repeate">Отправить повторно через 5 мин.</p>
+                        <button type="button" class="podverdit" (click)="confirmCode()">Подтвердить</button>
+                        <div *ngIf="showSuccessMessage" class="success-message">
+                            Запись успешно подтверждена!
+                        </div>                        
+                    </div>
+                </div>
             </div>
         </form>
     </div>
