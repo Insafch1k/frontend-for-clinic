@@ -1,5 +1,8 @@
 <div class="pg-background">
-    <h1 class="title">Все врачи</h1>
+    <div class="functions">
+        <h1 class="title">Все врачи</h1>
+        <button (click)="refreshData()">Обновить информацию</button>
+    </div>
     <div class="main-window">
         <div class="spisok">
             <div class="headers">
@@ -16,13 +19,8 @@
                 </div>
                 <div class="actions">
                     <button [routerLink]="['/admin/doctors/change', doctor.id]" class="edit">Изменить</button> <!-- Обновляем routerLink, чтобы он передавал id -->
-                    <button class="delete">Удалить</button>
                 </div>
             </div>
-        </div>
-        <div class="main-button">
-            <button class="select-all" (click)="selectAll()">Выбрать все</button>
-            <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
         </div>
     </div>
 </div>

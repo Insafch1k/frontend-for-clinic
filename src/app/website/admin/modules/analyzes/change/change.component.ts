@@ -11,6 +11,7 @@ import { Analysis, Category } from 'src/app/website/admin/modules/analyzes/admin
 export class ChangeComponent implements OnInit {
   analysis: Analysis = { id: 0, name: '', category: '', price: 0 };
   categories: Category[] = [];
+  selectedCategoryId: number | undefined;
 
   constructor(
     private analyzesService: AnalyzesService,
@@ -25,6 +26,7 @@ export class ChangeComponent implements OnInit {
         const foundAnalysis = data.find(a => a.id === id);
         if (foundAnalysis) {
           this.analysis = foundAnalysis;
+          this.selectedCategoryId = this.categories.find(c => c.name === foundAnalysis.category)?.id;
         }
       });
     });
@@ -39,8 +41,7 @@ export class ChangeComponent implements OnInit {
   }
 
   saveChanges(): void {
-    const categoryId = this.categories.find(c => c.name === this.analysis.category)?.id;
-    if (categoryId === undefined) {
+    if (this.selectedCategoryId === undefined) {
       console.error('Category ID is undefined');
       return;
     }
@@ -48,7 +49,7 @@ export class ChangeComponent implements OnInit {
     const updatedAnalysis = {
       name: this.analysis.name,
       price: this.analysis.price,
-      category_id: [categoryId]
+      category_id: [this.selectedCategoryId]
     };
 
     this.analyzesService.updateAnalysis(this.analysis.id, updatedAnalysis).subscribe(() => {
@@ -57,7 +58,7 @@ export class ChangeComponent implements OnInit {
   }
 
   onCategoryChange(event: any): void {
-    // Обработка изменения категории
-    this.analysis.category = event.target.value;
+    this.selectedCategoryId = event.target.value;
   }
 }
+

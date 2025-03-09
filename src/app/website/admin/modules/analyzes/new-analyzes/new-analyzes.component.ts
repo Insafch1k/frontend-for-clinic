@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalyzesService } from '../services/analuzes.service';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
+import { Category, NewAnalysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-new-analyzes',
@@ -10,8 +10,7 @@ import { Category } from 'src/app/website/admin/modules/analyzes/admin-analyzes.
 })
 export class NewAnalyzesComponent implements OnInit {
   categories: Category[] = [];
-  doctors: any[] = []; // Предполагается, что у вас есть список врачей
-  newAnalysis = {
+  newAnalysis: NewAnalysis = {
     name: '',
     price: 0,
     category_id: []
@@ -24,7 +23,6 @@ export class NewAnalyzesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
-    this.loadDoctors();
   }
 
   loadCategories(): void {
@@ -33,18 +31,26 @@ export class NewAnalyzesComponent implements OnInit {
     });
   }
 
-  loadDoctors(): void {
-    // Загрузите список врачей
-  }
-
   addAnalysis(): void {
-    this.analyzesService.addAnalysis(this.newAnalysis).subscribe(() => {
-      this.router.navigate(['/analyzes']);
-    });
-  }
+    if (this.newAnalysis.category_id.length === 0) {
+      alert('Пожалуйста, выберите категорию.');
+      return;
+    }
 
+    console.log('Отправляемые данные:', this.newAnalysis);
+    this.analyzesService.addAnalysis(this.newAnalysis).subscribe(
+      response => {
+        console.log('Анализ успешно добавлен:', response);
+        this.router.navigate(['/admin/analyzes']);
+      },
+      error => {
+        console.error('Ошибка при добавлении анализа:', error);
+      }
+    );
+  }
 
   onCategoryChange(event: any): void {
-    // Обработка изменения категории
+    const selectedCategoryId = event.target.value;
+    this.newAnalysis.category_id = [selectedCategoryId];
   }
 }

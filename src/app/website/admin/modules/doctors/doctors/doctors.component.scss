@@ -16,6 +16,16 @@
     height: calc(96vh - 150px - 100px);
     overflow-y: auto;
 }
+.functions{
+    display: flex;
+    align-items: center;
+    h1{
+        margin-right: 20px;
+    }
+    button{
+        font-weight: 500;
+    }
+}
 
 .headers {
     display: flex;

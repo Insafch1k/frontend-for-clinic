@@ -35,6 +35,18 @@ export class DoctorService {
     return this.http.put<any>(`${this.apiUrl}/${id}`, doctor, { headers: this.getHeaders() }).pipe(catchError(this.handleError));
   }
 
+  refreshBranches(): Observable<any> {
+    return this.http.post(`${API_URL}/admin/branches`, {}, { headers: this.getHeaders() }).pipe(catchError(this.handleError));
+  }
+
+  refreshSpecialties(): Observable<any> {
+    return this.http.post(`${API_URL}/admin/specialties`, {}, { headers: this.getHeaders() }).pipe(catchError(this.handleError));
+  }
+
+  refreshDoctors(): Observable<any> {
+    return this.http.post(this.apiUrl, {}, { headers: this.getHeaders() }).pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Неизвестная ошибка!';
     if (error.error instanceof ErrorEvent) {

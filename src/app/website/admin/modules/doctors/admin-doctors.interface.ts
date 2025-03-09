@@ -13,4 +13,5 @@ export interface Doctor {
   educations: Education[];
   specialties: string[];
   selected?: boolean;
+  in_clinic:boolean;
 }

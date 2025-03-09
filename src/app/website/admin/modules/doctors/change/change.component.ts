@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DoctorService } from '../services/doctors.service';
 import { Doctor, Education } from 'src/app/website/admin/modules/doctors/admin-doctors.interface';
 
@@ -18,12 +18,9 @@ export class ChangeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router, // Добавляем Router
     private doctorService: DoctorService
   ) {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      this.doctorId = idParam ? parseInt(idParam, 10) : 0;
-    });
     this.doctor = {
       id: 0,
       id_easyclinic: 0,
@@ -33,19 +30,28 @@ export class ChangeComponent implements OnInit {
       phone: null,
       educations: [],
       specialties: [],
-      selected: false
+      selected: false,
+      in_clinic: true // Устанавливаем значение по умолчанию
     };
   }
 
   ngOnInit() {
-    if (this.doctorId) {
-      const doctor = this.doctorService.getDoctorById(this.doctorId);
-      if (doctor) {
-        this.doctor = { ...doctor };
-        this.photoUrl = doctor.photo;
-      } else {
-        console.error('Врач не найден');
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      this.doctorId = idParam ? parseInt(idParam, 10) : 0;
+      if (this.doctorId) {
+        this.loadDoctorData(this.doctorId);
       }
+    });
+  }
+
+  loadDoctorData(id: number) {
+    const doctor = this.doctorService.getDoctorById(id);
+    if (doctor) {
+      this.doctor = { ...doctor };
+      this.photoUrl = doctor.photo;
+    } else {
+      console.error('Врач не найден');
     }
   }
 
@@ -87,13 +93,15 @@ export class ChangeComponent implements OnInit {
       phone_number: this.doctor.phone,
       photo: this.photoUrl!,
       experiance: this.doctor.experiance,
-      education: this.doctor.educations.map(edu => ({ name: edu.name, year: edu.year }))
+      education: this.doctor.educations.map(edu => ({ name: edu.name, year: edu.year })),
+      in_clinic: this.doctor.in_clinic // Добавляем поле in_clinic
     };
 
     this.doctorService.updateDoctor(this.doctorId, updatedDoctor).subscribe(
       data => {
         this.showNotification('Данные врача успешно обновлены', true);
         console.log('Данные врача успешно обновлены', data);
+        this.router.navigate(['/admin/doctors']); // Перенаправляем на страницу со списком врачей
       },
       error => {
         this.showNotification('Ошибка при обновлении данных врача', false);

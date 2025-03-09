@@ -1,26 +1,26 @@
 <div class="pg-background">
-    <h1 class="title">Новый анализ</h1>
-    <div class="main-window">
+  <h1 class="title">Новый анализ</h1>
+  <div class="main-window">
       <div class="titlee">
-        <h2>Основная информация</h2>
+          <h2>Основная информация</h2>
       </div>
       <div class="spisok">
-        <div class="item">
-          <h2>Название</h2>
-          <input type="text" class="text-field" [(ngModel)]="newAnalysis.name">
-        </div>
-        <div class="item">
-          <h2>Категория</h2>
-          <select (change)="onCategoryChange($event)" class="text-field">
-            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-          </select>
-        </div>
-        <div class="item">
-          <h2>Стоимость</h2>
-          <input type="text" class="text-field" [(ngModel)]="newAnalysis.price">
-        </div>
+          <div class="item">
+              <h2>Название</h2>
+              <input type="text" class="text-field" [(ngModel)]="newAnalysis.name">
+          </div>
+          <div class="item">
+              <h2>Категория</h2>
+              <select (change)="onCategoryChange($event)" class="text-field">
+                  <option value="" disabled selected>Выберите категорию</option>
+                  <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+          </div>
+          <div class="item">
+              <h2>Стоимость</h2>
+              <input type="number" class="text-field" [(ngModel)]="newAnalysis.price">
+          </div>
       </div>
       <button class="save" (click)="addAnalysis()">Добавить анализ</button>
-    </div>
   </div>
-  
+</div>

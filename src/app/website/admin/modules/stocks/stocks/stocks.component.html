@@ -14,7 +14,7 @@
         <div *ngFor="let request of directRecords" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
           <input type="checkbox" id="checkbox-{{request.photo}}" [(ngModel)]="request.selected" (click)="stopPropagation($event)">
           <label for="checkbox-{{request.photo}}"></label>
-          <img [src]="request.photo" alt="Image" style="width: 150px; height: auto;">
+          <img [src]="request.photo" class="image-stocks">
           <p>{{ request.category_name }}</p>
           <textarea readonly 
           disabled >{{ request.description }}</textarea>
@@ -28,5 +28,5 @@
         <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
       </div>
     </div>
-  </div>
+</div>
   

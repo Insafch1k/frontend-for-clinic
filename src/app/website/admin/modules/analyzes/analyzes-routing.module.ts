@@ -27,9 +27,9 @@ const routes: Routes = [
         title: 'Админ - Анализы - Изменить анализ'
     },
     {
-        path:'change-category',
-        component:ChangeCategoryComponent,
-        title:'Админ - Анализы - Изменить категорию'
+        path: 'change-category/:id',
+        component: ChangeCategoryComponent,
+        title: 'Админ - Анализы - Изменить категорию'
     }
 ];
 

@@ -30,13 +30,17 @@ export class NewCategoryComponent implements OnInit {
   loadAnalyses(): void {
     this.analyzesService.getAnalyses().subscribe(data => {
       this.analyses = data;
+      // Инициализируем selectedAnalyses для каждого анализа
+      this.analyses.forEach(analysis => {
+        this.selectedAnalyses[analysis.id] = false;
+      });
     });
   }
 
   addCategory(): void {
-    this.newCategory.analysis = Object.entries(this.selectedAnalyses)
-      .filter(([key, value]) => value)
-      .map(([key]) => Number(key));
+    this.newCategory.analysis = Object.keys(this.selectedAnalyses)
+      .filter(key => this.selectedAnalyses[Number(key)])
+      .map(Number);
 
     this.analyzesService.addCategory(this.newCategory).subscribe(() => {
       this.router.navigate(['/admin/analyzes']);
@@ -45,10 +49,6 @@ export class NewCategoryComponent implements OnInit {
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  onAnalysisChange(event: any, analysisId: number): void {
-    this.selectedAnalyses[analysisId] = event.target.checked;
   }
 
   applySelectedAnalyses(): void {

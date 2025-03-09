@@ -22,15 +22,25 @@ export class ChangeCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = +params['id'];
-      this.analyzesService.getCategories().subscribe(data => {
-        const foundCategory = data.find(c => c.id === id);
-        if (foundCategory) {
-          this.category = { ...foundCategory, analysis: foundCategory.analysis || [] };
-        }
-      });
+      if (id) {
+        this.loadCategory(id);
+      } else {
+        console.error('Category ID is undefined');
+      }
     });
 
     this.loadAnalyses();
+  }
+
+  loadCategory(id: number): void {
+    this.analyzesService.getCategories().subscribe(data => {
+      const foundCategory = data.find(c => c.id === id);
+      if (foundCategory) {
+        this.category = { ...foundCategory, analysis: foundCategory.analysis || [] };
+      } else {
+        console.error('Category not found');
+      }
+    });
   }
 
   loadAnalyses(): void {
@@ -40,6 +50,11 @@ export class ChangeCategoryComponent implements OnInit {
   }
 
   saveChanges(): void {
+    if (!this.category.id) {
+      console.error('Category ID is undefined');
+      return;
+    }
+
     const updatedCategory = {
       name: this.category.name,
       description: this.category.description,

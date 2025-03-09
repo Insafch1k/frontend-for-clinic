@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DoctorService } from '../services/doctors.service';
 import { Doctor } from 'src/app/website/admin/modules/doctors/admin-doctors.interface';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-doctors',
@@ -38,5 +39,19 @@ export class DoctorsComponent implements OnInit {
       return; // Если кликнули на кнопку, не выделяем строку
     }
     doctor.selected = !doctor.selected;
+  }
+
+  refreshData() {
+    forkJoin({
+      branches: this.doctorService.refreshBranches(),
+      specialties: this.doctorService.refreshSpecialties(),
+      doctors: this.doctorService.refreshDoctors()
+    }).subscribe(results => {
+      console.log('Branches refreshed');
+      console.log('Specialties refreshed');
+      console.log('Doctors refreshed');
+      // Обновляем страницу
+      window.location.reload();
+    });
   }
 }

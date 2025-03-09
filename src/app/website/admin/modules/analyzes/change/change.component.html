@@ -11,7 +11,7 @@
         </div>
         <div class="item">
           <h2>Категория</h2>
-          <select (change)="onCategoryChange($event)" class="text-field">
+          <select [(ngModel)]="selectedCategoryId" (change)="onCategoryChange($event)" class="text-field">
             <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
           </select>
         </div>
