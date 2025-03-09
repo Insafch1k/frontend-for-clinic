@@ -1,8 +1,10 @@
 import { Component, ElementRef, HostListener, ViewChild, OnInit } from '@angular/core';
 import { DoctorsService } from './doctors.service';
-import { IDoctor } from './doctor.interface';
+import { IDoctor,  } from './doctor.interface';
+import { Router } from '@angular/router';
 
 interface ISpecialist {
+    id: number;
     fio: string;
     speciality: string;
     url: string;
@@ -21,7 +23,7 @@ export class OurSpecialistsComponent implements OnInit {
 
     @ViewChild('specList') specList!: ElementRef;
 
-    constructor(private doctorsService: DoctorsService) {}
+    constructor(private doctorsService: DoctorsService,private router: Router) {}
 
     ngOnInit() {
         this.fetchDoctors();
@@ -30,6 +32,7 @@ export class OurSpecialistsComponent implements OnInit {
     fetchDoctors() {
         this.doctorsService.getDoctors().subscribe((response) => {
             this.specialists = response.doctors.map(doctor => ({
+                id: doctor.id,
                 fio: doctor.full_name,
                 speciality: doctor.specialties.join(', '),
                 url: doctor.photo || ''
@@ -80,5 +83,9 @@ export class OurSpecialistsComponent implements OnInit {
     prev() {
         this.currentStartIndex = (this.currentStartIndex - 1 + this.specialists.length) % this.specialists.length;
         this.updateVisibleSpecialists();
+    }
+
+    navigateToDoctor(doctorId: number) {
+        this.router.navigate(['/specialists/profile', doctorId]);
     }
 }

@@ -40,7 +40,6 @@ export class AppointmentByChoiceComponent {
     selectedTime: string = '';
     doctorData!: IDoctor;
     showSuccessMessage: boolean = false;
-
     isOpenDayDoctor!: {
         currentIndex: number;
         currentView: number;

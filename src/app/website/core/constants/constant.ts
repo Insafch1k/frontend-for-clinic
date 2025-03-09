@@ -1,1 +1,1 @@
-export const API_URL = 'https://stale-heads-sleep.loca.lt/';
+export const API_URL = 'http://192.168.0.104:3000';

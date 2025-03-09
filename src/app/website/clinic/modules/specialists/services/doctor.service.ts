@@ -18,4 +18,18 @@ export class DoctorService {
             })
         );
     }
+      // Получение услуг по специальности
+    getServices(specialtyId: number): Observable<any[]> {
+        return this.http.get<any[]>(`${API_URL}/services?specialty_id=${specialtyId}`);
+    }
+
+    // Создание записи
+    createAppointment(appointmentData: any): Observable<any> {
+        return this.http.post<any>(`${API_URL}/appointments`, appointmentData);
+    }
+
+    // Подтверждение записи
+    confirmAppointment(code: string, mobile: string): Observable<any> {
+        return this.http.post<any>(`${API_URL}/appointments/confirm`, { code, mobile });
+    }
 }

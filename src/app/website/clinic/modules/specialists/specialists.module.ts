@@ -11,6 +11,7 @@ import { DoctorService } from './services/doctor.service';
 import { ChooseTimeComponent } from './choose-time/choose-time.component';
 import { PushService } from 'src/app/website/core/services/push.service';
 import { PushCodeComponent } from '../../components/push-code/push-code.component';
+import { CustomDatePipe } from './custom-date.pipe';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { PushCodeComponent } from '../../components/push-code/push-code.componen
         DoctorComponent,
         AppointmentComponent,
         ChooseTimeComponent,
+        CustomDatePipe
     ],
     imports: [
         CommonModule,

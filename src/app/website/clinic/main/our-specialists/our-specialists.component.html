@@ -3,7 +3,7 @@
         <img src="assets/data/icon/other/arrow-left.svg" alt="Previous" />
     </div>
     <ul #specList>
-        <li *ngFor="let person of visibleSpecialists; let i = index">
+        <li *ngFor="let person of visibleSpecialists; let i = index" (click)="navigateToDoctor(person.id)">
             <div class="person-img">
                 <img *ngIf="person.url" [src]="person.url" alt="{{ person.fio }}">
             </div>

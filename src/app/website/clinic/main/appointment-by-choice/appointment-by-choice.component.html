@@ -120,7 +120,7 @@
                 <div *ngIf="isSend">
                     <div class="push-wrap">
                         <p>
-                            На номер +7(917)999-99-99z было отправлено SMS с кодом подтверждения.
+                            На номер было отправлено SMS с кодом подтверждения.
                             Введите полученный код, чтобы продолжить оформление записи.
                         </p>
                         <div class="custom-input-container">
@@ -138,11 +138,11 @@
                             <span class="custom-input-background"></span>
                             <span class="custom-input-background"></span>
                         </div>
-                        <p class="repeate">Отправить повторно через 5 мин.</p>
-                        <button type="button" class="podverdit" (click)="confirmCode()">Подтвердить</button>
                         <div *ngIf="showSuccessMessage" class="success-message">
                             Запись успешно подтверждена!
-                        </div>                        
+                        </div>          
+                        <p class="repeate">Отправить повторно через 5 мин.</p>
+                        <button type="button" class="podverdit" (click)="confirmCode()">Подтвердить</button>           
                     </div>
                 </div>
             </div>
