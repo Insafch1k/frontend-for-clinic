@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class BannerComponent {
     isOpenAppointment: boolean = false;
+    whatsappNumber: string = '+79625790503';
+
 
     scrollToSection(sectionId: string) {
         const element = document.getElementById(sectionId);
@@ -18,5 +20,11 @@ export class BannerComponent {
     //Метод для выбора временного слота
     openAppointment(): void {
         this.isOpenAppointment = !this.isOpenAppointment;
+    }
+
+    // Метод для открытия WhatsApp
+    openWhatsApp(): void {
+        const url = `https://wa.me/${this.whatsappNumber}`;
+        window.open(url, '_blank');
     }
 }

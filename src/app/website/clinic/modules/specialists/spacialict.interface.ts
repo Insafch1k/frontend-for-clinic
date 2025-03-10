@@ -18,6 +18,11 @@ export interface IDoctor {
     education?: {
         name: string;
         year: string;
+    }[];
+    reviews?: {
+        content: string;
+        patient_name_and_phone: string;
+        time: string;
     }[]; // Добавьте это свойство, если оно необходимо
 }
 
@@ -29,10 +34,10 @@ export interface IAvailableTime {
     time: { [key: string]: string }; // Слоты времени
   }
   export interface IDoctorFull extends IDoctor {
-    reviews: {
-        content: string; // Текст отзыва
-        patient_name_and_phone: string; // Информация о пациенте
-        time: string; // Время отзыва
+    reviews?: {
+        content: string;
+        patient_name_and_phone: string;
+        time: string;
     }[];
 }
 

@@ -1,31 +1,39 @@
 <div class="pg-background">
-    <h1 class="title">Анализы</h1>
-    <div class="functions">
-      <button routerLink="/admin/analyzes/new">+ Добавить анализ</button>
-      <button routerLink="/admin/analyzes/new-category">+ Добавить категорию</button>
-    </div>
-    <div class="main-window">
-      <div class="spisok">
-        <div class="headers">
-          <h2>Анализ</h2>
-          <h2>Категория</h2>
-          <h2>Действия</h2>
+  <h1 class="title">Анализы</h1>
+  <div class="functions">
+    <button routerLink="/admin/analyzes/new">+ Добавить анализ</button>
+    <button routerLink="/admin/analyzes/new-category">+ Добавить категорию</button>
+    <div class="dropdown">
+      <button class="dropdown-toggle">Категории</button>
+      <div class="dropdown-content">
+        <div *ngFor="let category of categories" class="category-item">
+          <span>{{ category.name }}</span>
+          <button class="delete-icon" (click)="deleteCategory(category.id)"><img src="assets/admin-data/icons/icon-delete.png" alt=""></button>
         </div>
-        <div *ngFor="let request of appointmentRequests" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
-          <input type="checkbox" id="checkbox-{{request.id}}" [(ngModel)]="request.selected">
-          <label for="checkbox-{{request.id}}"></label>
-          <p>{{ request.name }}</p>
-          <p>{{ request.category }}</p>
-          <div class="actions">
-            <button [routerLink]="['/admin/analyzes/change', request.id]" class="edit">Изменить</button>
-            <button (click)="deleteRequest(request.id)" class="delete">Удалить</button>
-          </div>
-        </div>
-      </div>
-      <div class="main-button">
-        <button class="select-all" (click)="selectAll()">Выбрать все</button>
-        <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
       </div>
     </div>
   </div>
-  
+  <div class="main-window">
+    <div class="spisok">
+      <div class="headers">
+        <h2>Анализ</h2>
+        <h2>Категория</h2>
+        <h2>Действия</h2>
+      </div>
+      <div *ngFor="let request of appointmentRequests" class="request-item" [class.selected]="request.selected" (click)="toggleSelection(request, $event)">
+        <input type="checkbox" id="checkbox-{{request.id}}" [(ngModel)]="request.selected">
+        <label for="checkbox-{{request.id}}"></label>
+        <p>{{ request.name }}</p>
+        <p>{{ request.category }}</p>
+        <div class="actions">
+          <button [routerLink]="['/admin/analyzes/change', request.id]" class="edit">Изменить</button>
+          <button (click)="deleteRequest(request.id)" class="delete">Удалить</button>
+        </div>
+      </div>
+    </div>
+    <div class="main-button">
+      <button class="select-all" (click)="selectAll()">Выбрать все</button>
+      <button class="delete-selected" (click)="deleteSelected()">Удалить выбранные</button>
+    </div>
+  </div>
+</div>

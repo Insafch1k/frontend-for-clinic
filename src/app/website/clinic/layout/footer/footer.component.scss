@@ -41,6 +41,9 @@
                 align-items: center;
                 width: 100%;
             }
+            li{
+                cursor: pointer;
+            }
             & .flex-wrap {
                 display: flex;
                 flex-direction: column;
@@ -56,6 +59,7 @@
                     width: calc(50% - 10px);
                     box-sizing: border-box; /* Учет отступов и границ */
                     margin-bottom: 2px;
+                    cursor: pointer;
                 }
             }
             & .contact-wrap {

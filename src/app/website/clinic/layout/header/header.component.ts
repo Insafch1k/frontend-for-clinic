@@ -26,7 +26,14 @@ export class HeaderComponent {
   onWindowScroll() {
     this.isScrolled = window.scrollY > 50; // порог прокрутки 50 пикселей
   }
+
   goToVk(): void {
-    window.location.href = 'https://vk.com/clinika03';
+    window.open('https://vk.com/clinika03', '_blank');
+  }
+
+  goToWhatsApp(): void {
+    const phoneNumber = '+79625790503';
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+    window.open(whatsappUrl, '_blank');
   }
 }

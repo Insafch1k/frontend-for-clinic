@@ -38,7 +38,8 @@ export class SpecialistsComponent implements OnInit {
             if (Array.isArray(answer) && answer.length > 0) {
                 this.displayDoctors = answer.map(doctor => ({
                     ...doctor,
-                    specialties: doctor.specialties || [] // Гарантируем, что specialties — это массив
+                    specialties: doctor.specialties || [],
+                    reviews: doctor.reviews || [] // Ensure reviews are mapped
                 }));
             } else {
                 this.displayDoctors = [];

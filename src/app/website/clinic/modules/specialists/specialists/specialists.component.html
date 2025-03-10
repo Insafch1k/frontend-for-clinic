@@ -28,19 +28,10 @@
                             <p>Стаж: {{ specialist.experiance || 'Не указан' }} лет</p>
                             <p>{{specialist.price}}</p>
                         </div>
-                        <p class="main-desc">текст с одним отзывом текст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывомтекст с одним отзывом</p>
-                        <!-- <app-choose-time
-                            class="choose-time-desc"
-                            *ngIf="specialist"
-                            [doctorData]="specialist"
-                        ></app-choose-time> -->
+                        <p class="main-desc">{{ specialist.reviews?.[0]?.content || 'Нет отзывов' }}</p>
                     </div>
                 </div>
             </div>
-            <!-- <app-choose-time
-                class="choose-time-mob"
-                [doctorData]="specialist"
-            ></app-choose-time> -->
         </div>
     </div>    
 </div>

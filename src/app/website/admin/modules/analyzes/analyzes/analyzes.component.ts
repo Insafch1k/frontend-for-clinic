@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalyzesService } from '../services/analuzes.service';
-import { Analysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
+import { Analysis, Category } from 'src/app/website/admin/modules/analyzes/admin-analyzes.interface';
 
 @Component({
   selector: 'app-analyzes',
@@ -9,11 +9,13 @@ import { Analysis } from 'src/app/website/admin/modules/analyzes/admin-analyzes.
 })
 export class AnalyzesComponent implements OnInit {
   appointmentRequests: Analysis[] = [];
+  categories: Category[] = [];
 
   constructor(private analyzesService: AnalyzesService) {}
 
   ngOnInit(): void {
     this.loadAnalyses();
+    this.loadCategories();
   }
 
   loadAnalyses(): void {
@@ -22,9 +24,21 @@ export class AnalyzesComponent implements OnInit {
     });
   }
 
+  loadCategories(): void {
+    this.analyzesService.getCategories().subscribe(data => {
+      this.categories = data;
+    });
+  }
+
   deleteRequest(id: number): void {
     this.analyzesService.deleteAnalysis(id).subscribe(() => {
       this.loadAnalyses();
+    });
+  }
+
+  deleteCategory(id: number): void {
+    this.analyzesService.deleteCategory(id).subscribe(() => {
+      this.loadCategories();
     });
   }
 
