@@ -71,4 +71,8 @@ export class BurgerMenuComponent {
       goToInstagram(): void {
         window.open('https://www.instagram.com/clinika03?igsh=MWpuN252cGkyZ2trdg==', '_blank');
       }
+      callPhoneNumber(phoneNumber: string): void {
+        window.location.href = `tel:${phoneNumber}`;
+      }
+      
 }
