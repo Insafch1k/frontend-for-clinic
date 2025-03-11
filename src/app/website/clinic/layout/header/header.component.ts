@@ -36,4 +36,8 @@ export class HeaderComponent {
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, '_blank');
   }
+
+  goToInstagram(): void {
+    window.open('https://www.instagram.com/clinika03?igsh=MWpuN252cGkyZ2trdg==', '_blank');
+  }
 }

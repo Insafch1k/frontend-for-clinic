@@ -63,6 +63,11 @@
                 }
             }
             & .contact-wrap {
+                .picstr{
+                    img{
+                        cursor: pointer;
+                    }
+                }
                 ul li a {
                     text-decoration: none;
                     color: black;
@@ -150,3 +155,4 @@
         }
     }
 }
+

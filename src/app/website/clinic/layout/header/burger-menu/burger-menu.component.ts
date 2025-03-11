@@ -58,4 +58,17 @@ export class BurgerMenuComponent {
             this.displayTitle = this.pagesList[route] || ''; // Используем ваш объект для других заголовков
         }
     }
+    goToVk(): void {
+        window.open('https://vk.com/clinika03', '_blank');
+      }
+    
+      goToWhatsApp(): void {
+        const phoneNumber = '+79625790503';
+        const whatsappUrl = `https://wa.me/${phoneNumber}`;
+        window.open(whatsappUrl, '_blank');
+      }
+    
+      goToInstagram(): void {
+        window.open('https://www.instagram.com/clinika03?igsh=MWpuN252cGkyZ2trdg==', '_blank');
+      }
 }

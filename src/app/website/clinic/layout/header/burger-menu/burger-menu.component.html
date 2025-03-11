@@ -40,13 +40,14 @@
             <li (click)="closeMenu()" routerLink="/price-list">Прайс-лист</li>
             <li class="burger-other">
                 <div class="icons">
-                    <img src="assets/data/icon/header/whatsapp.svg" alt="" />
-                    <img src="assets/data/icon/header/vk.svg" alt="" />
-                    <img src="assets/data/icon/header/instagram.svg" alt="" />
+                    <img src="assets/data/icon/header/whatsapp.svg" alt="" (click)="goToWhatsApp()"  />
+                    <img src="assets/data/icon/header/vk.svg" alt="" (click)="goToVk()"/>
+                    <img src="assets/data/icon/header/instagram.svg" alt="" (click)="goToInstagram()"/>
                 </div>
                 <div>
                     <p>г.Набережные Челны, ул.Ахметшина,116</p>
-                    <p>+7(8552)25-05-03</p>
+                    <p>+7(8552) 25-05-03</p>
+                    <p>+7(9625) 79-05-03</p>
                 </div>
             </li>
         </ul>

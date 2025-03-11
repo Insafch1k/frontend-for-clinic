@@ -44,6 +44,25 @@ header {
         .search {
             background-color: white;
         }
+
+        @media (max-width: 1000px) {
+            width: 40%; // Изменяем ширину на 100% для адаптивности
+            justify-content: space-between; // Распределяем элементы по краям
+
+            h2 {
+                margin-right: 20px; // Добавляет отступ справа для каждого <h2>
+            }
+
+            .icons-head {
+                margin-left: auto; // Сдвигает иконки вправо
+            }
+        }
+        @media (max-width:903px) {
+            width: 45%;
+        }
+        @media (max-width:794px) {
+            width: 50%;
+        }
     }
 }
 
