@@ -72,4 +72,14 @@ export class AnalyzesComponent implements OnInit {
   openBlock(index: number) {
     this.isOpenCheckUp[index] = !this.isOpenCheckUp[index];
   }
+  downloadPriceListFromAssets(): void {
+    const fileName = 'Прайс на анализы Клиника-03.pdf'; // Замените на имя вашего файла
+    const filePath = `assets/data/pdfs/${fileName}`;
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 }
