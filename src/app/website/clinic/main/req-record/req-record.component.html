@@ -126,7 +126,10 @@
                     >
                         <small>Выберите специальность из списка.</small>
                     </div>
-                </div>                
+                </div>
+                <div *ngIf="showSuccessMessage" class="ok">
+                    <p>Успешно!</p>
+                </div>
             </div>
             <div>
                 <h1 class="title titles-m">

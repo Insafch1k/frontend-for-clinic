@@ -52,7 +52,9 @@ export class OurSpecialistsComponent implements OnInit {
         const element = this.specList.nativeElement;
         if (element) {
             const width = element.offsetWidth;
-            this.itemsToShow = Math.floor(width /180);
+            // Установите значение делителя в зависимости от ширины элемента
+            const divisor = width === 460 ? 180 : 244;
+            this.itemsToShow = Math.floor(width / divisor);
             this.updateVisibleSpecialists();
         }
     }

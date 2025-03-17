@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IBid } from './main-bid.interface';
 import { API_URL } from '../../core/constants/constant';
-import { catchError, tap } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class BidService {
     constructor(private http: HttpClient) {}
 
-    sendBid(sendData: IBid) {
+    sendBid(sendData: IBid): Observable<{ success: boolean }> {
         return this.http
             .post<{ success: boolean }>(`${API_URL}/main/records`, sendData)
             .pipe(
@@ -24,8 +24,7 @@ export class BidService {
                     this.handleError(err);
                     throw new Error(err.message);
                 })
-            )
-            .subscribe();
+            );
     }
 
     getSpecialties(): Observable<any[]> {
