@@ -52,7 +52,7 @@ export class OurSpecialistsComponent implements OnInit {
         const element = this.specList.nativeElement;
         if (element) {
             const width = element.offsetWidth;
-            this.itemsToShow = Math.floor(width / 204);
+            this.itemsToShow = Math.floor(width /180);
             this.updateVisibleSpecialists();
         }
     }
