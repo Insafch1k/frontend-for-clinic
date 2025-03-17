@@ -4,13 +4,13 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'reviewDate',
 })
 export class ReviewDatePipe implements PipeTransform {
-    transform(valuer: Date): string {
-        const value = new Date(valuer);
-        if (!(value instanceof Date) || isNaN(value.getTime())) {
+    transform(value: Date): string {
+        const date = new Date(value);
+        if (!(date instanceof Date) || isNaN(date.getTime())) {
             return ''; // Возвращаем пустую строку, если значение не является корректной датой
         }
 
-        // Определяем массивы для месяцев и дней
+        // Определяем массивы для месяцев
         const months = [
             'января',
             'февраля',
@@ -26,14 +26,13 @@ export class ReviewDatePipe implements PipeTransform {
             'декабря',
         ];
 
-        // Получение дня, месяца, года и времени
-        const day = value.getDate();
-        const month = months[value.getMonth()];
-        const year = value.getFullYear();
-        const hours = value.getHours().toString().padStart(2, '0');
-        const minutes = value.getMinutes().toString().padStart(2, '0');
+        // Получение дня и месяца
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
 
-        // Формирование строки даты
-        return `${day} ${month} ${year}\nв ${hours}:${minutes}`;
+        // Формирование строки даты без года
+        return `${day} ${month} в ${hours}:${minutes}`;
     }
 }

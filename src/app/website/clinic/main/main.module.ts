@@ -34,7 +34,7 @@ import { SpecialistsModule } from '../modules/specialists/specialists.module';
         EmergencyServiceComponent,
         MapComponent,
         AppointmentByChoiceComponent,
-        DateFormatDirective
+        DateFormatDirective,
     ],
     imports: [
         CommonModule,

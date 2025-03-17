@@ -17,11 +17,8 @@ export class PhoneFormatPipe implements PipeTransform {
             return 'Некорректный номер';
         }
 
-        // Форматируем номер
-        const formattedPhone = `+7(${phoneStr.slice(0, 3)})-${phoneStr.slice(
-            3,
-            5
-        )}${phoneStr.slice(5)}`;
+        // Форматируем номер, скрывая последние 5 цифр
+        const formattedPhone = `+7(${phoneStr.slice(0, 3)})-${phoneStr.slice(3, 5)}XXXXX`;
         return formattedPhone;
     }
 }

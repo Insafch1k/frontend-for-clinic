@@ -14,13 +14,6 @@
         padding: 0;
         margin: 0 20px;
 
-        @media (max-width: 480px) {
-            width: 100%;
-            max-width: 100%;
-            min-width: 100%;
-            justify-content: center;
-        }
-
         li {
             min-width: 224px;
             @media (max-width: 480px) {
@@ -29,26 +22,27 @@
             &:nth-last-child(n + 1) {
                 & .person-img {
                     height: 332px;
-                    // background-color: #ececec;
                     border-radius: 10px 10px 0 0;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     border: 1px solid #7eb3c1;
                     border-bottom: none;
-                    img{
+                    @media (max-width: 360px) {
+                        height: 200px;
+                    }
+                    img {
                         border-radius: 10px 10px 0 0;
                         height: 99.5%;
                         width: 99%;
                         object-fit: cover;
                     }
+                    
                 }
                 & .person-info {
                     border: 1px solid #7eb3c1;
-                    
                     height: 75px;
                     border-radius: 0 0 10px 10px;
-
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
@@ -65,10 +59,27 @@
                     }
                 }
             }
-            .person-img{
-                
+            .person-img {
+                @media (max-width: 480px) {
+                    height: auto;
+                    img {
+                        height: auto;
+                    }
+                }
+                @media (max-width: 420px) {
+                    height: 250px; // Adjust the height as needed
+                    img {
+                        height: 100%; // Ensure the image fits within the new height
+                    }
+                }
+                @media (max-width: 360px) {
+                    height: 200px; // Adjust the height as needed
+                    img {
+                        height: 98%; // Ensure the image fits within the new height
+                        width:95%;
+                    }
+                }
             }
-            
         }
     }
 }
@@ -82,10 +93,4 @@
 
 img {
     cursor: pointer;
-}
-
-.arrow {
-    @media (max-width: 480px) {
-        display: none;
-    }
 }
