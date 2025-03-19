@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppointmentService } from '../appointment.service';
 
 interface IDoctor {
@@ -23,7 +23,7 @@ interface IDay {
         state: string;
         time: string;
     }[];
-    day_id: number; // Добавляем day_id в интерфейс
+    day_id: number;
 }
 
 @Component({
@@ -40,12 +40,13 @@ export class AppointmentByChoiceComponent {
     selectedTime: string = '';
     doctorData!: IDoctor;
     showSuccessMessage: boolean = false;
+    showErrorMessage: boolean = false;
     isOpenDayDoctor!: {
         currentIndex: number;
         currentView: number;
         displayedSlots: string[];
         lenght: number;
-        days: IDay[]; // Используем интерфейс IDay
+        days: IDay[];
     };
 
     appointmentForm: FormGroup;
@@ -72,7 +73,7 @@ export class AppointmentByChoiceComponent {
     }
 
     phoneValidator(control: any) {
-        const phonePattern = /^(\+7|7|8)?[0-9]{10}$/;
+        const phonePattern = /^\+7[0-9]{10}$/;
         return phonePattern.test(control.value) ? null : { invalidPhone: true };
     }
 
@@ -85,8 +86,8 @@ export class AppointmentByChoiceComponent {
     onSpecialityChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement;
         const specialtyId = selectElement.value;
-        console.log('Selected specialty ID:', specialtyId); // Проверка выбранного specialty_id
-    
+        console.log('Selected specialty ID:', specialtyId);
+
         this.appointmentService.getServices(Number(specialtyId)).subscribe({
             next: (services) => {
                 console.log('Services received:', services);
@@ -109,7 +110,6 @@ export class AppointmentByChoiceComponent {
             }
         });
     }
-    
 
     onDoctorChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement;
@@ -140,23 +140,27 @@ export class AppointmentByChoiceComponent {
                 fio: `${this.appointmentForm.value.surname} ${this.appointmentForm.value.name}`,
                 day_id: this.isOpenDayDoctor.days[this.isOpenDayDoctor.currentView].day_id.toString(),
                 time: this.selectedTime,
-                mobile: this.appointmentForm.value.phone,
+                mobile: this.appointmentForm.value.phone.replace('+7', ''),
             };
-            console.log('Отправляемые данные:', appointmentData); // Вывод данных в консоль
-            this.appointmentService.createAppointment(appointmentData).subscribe(() => {
-                // Обработка успеха
+            console.log('Отправляемые данные:', appointmentData);
+    
+            this.appointmentService.createAppointment(appointmentData).subscribe({
+                next: () => {
+                    // Обработка успеха
+                    console.log('Запись успешно создана');
+                },
+                error: (err) => {
+                    // Обработка ошибки
+                    console.error('Ошибка при отправке данных:', err);
+                    this.showErrorMessage = true;
+                }
             });
         }
     }
-    
 
     fillDoctorsTimeSlots() {
         const days: IDay[] = [];
         let currentIndex = 0;
-        const endIndex = Math.min(
-            currentIndex + 7,
-            this.doctorData.available_times.length
-        );
         const slots: string[] = [];
     
         for (let slot of this.doctorData.available_times) {
@@ -186,7 +190,7 @@ export class AppointmentByChoiceComponent {
             }
         }
     
-        const displayedSlots = slots.slice(currentIndex, endIndex);
+        const displayedSlots = slots.slice(currentIndex, currentIndex + 7);
         this.isOpenDayDoctor = {
             currentIndex,
             displayedSlots,
@@ -196,44 +200,66 @@ export class AppointmentByChoiceComponent {
         };
     }
     
+
     scrollLeft() {
         if (this.isOpenDayDoctor.currentIndex > 0) {
             this.isOpenDayDoctor.currentIndex--;
             this.updateDisplayedSlots();
+            this.updateCurrentView();
         }
     }
-
+    
     scrollRight() {
-        const keys = Object.keys(this.getDoctorSlotDates());
-        if (this.isOpenDayDoctor.currentIndex + 7 < keys.length) {
+        if (this.isOpenDayDoctor.currentIndex + 7 < this.isOpenDayDoctor.days.length) {
             this.isOpenDayDoctor.currentIndex++;
             this.updateDisplayedSlots();
+            this.updateCurrentView();
         }
     }
-
     private updateDisplayedSlots() {
-        const keys = Object.keys(this.getDoctorSlotDates());
         const endIndex = Math.min(
             this.isOpenDayDoctor.currentIndex + 7,
-            keys.length
+            this.isOpenDayDoctor.days.length
         );
-        this.isOpenDayDoctor.displayedSlots = keys.slice(
-            this.isOpenDayDoctor.currentIndex,
-            endIndex
-        );
+        this.isOpenDayDoctor.displayedSlots = this.isOpenDayDoctor.days
+            .slice(this.isOpenDayDoctor.currentIndex, endIndex)
+            .map(day => day.day);
     }
+    
+
+    private updateCurrentView() {
+        // Обновляем currentView, чтобы отображать правильный день
+        this.isOpenDayDoctor.currentView = this.isOpenDayDoctor.currentIndex;
+        // Сбрасываем выбранное время при смене дня
+        this.selectedTime = '';
+        this.isOpenDayDoctor.days.forEach(day => {
+            day.isSelect = false;
+            day.slot.forEach(slot => {
+                slot.isSelect = false;
+            });
+        });
+        // Устанавливаем текущий день как выбранный
+        if (this.isOpenDayDoctor.days[this.isOpenDayDoctor.currentView]) {
+            this.isOpenDayDoctor.days[this.isOpenDayDoctor.currentView].isSelect = true;
+        }
+    }
+    
 
     private getDoctorSlotDates(): any[] {
         return this.doctorData ? this.doctorData.available_times : [];
     }
 
     selectDay(dayIndex: number) {
-        this.isOpenDayDoctor.days.forEach((day: any) => {
-            day.isSelect = false;
-        });
-        this.isOpenDayDoctor.currentView = dayIndex;
-        this.isOpenDayDoctor.days[dayIndex].isSelect =
-            !this.isOpenDayDoctor.days[dayIndex].isSelect;
+        const absoluteIndex = this.isOpenDayDoctor.currentIndex + dayIndex;
+        if (absoluteIndex >= 0 && absoluteIndex < this.isOpenDayDoctor.days.length) {
+            this.isOpenDayDoctor.days.forEach((day: any) => {
+                day.isSelect = false;
+            });
+            this.isOpenDayDoctor.currentView = absoluteIndex;
+            this.isOpenDayDoctor.days[absoluteIndex].isSelect = true;
+            // Сбрасываем выбранное время при смене дня
+            this.selectedTime = '';
+        }
     }
 
     getDayOfWeekAndMonth(date: string): string {
@@ -260,13 +286,14 @@ export class AppointmentByChoiceComponent {
     selectTimeSlot(time: string): void {
         const selectedDay = this.isOpenDayDoctor.days[this.isOpenDayDoctor.currentView];
         const selectedSlot = selectedDay.slot.find(slot => slot.time === time);
-        
-        if (selectedSlot && selectedSlot.state === 'accepts_all') {
+    
+        if (selectedSlot && (selectedSlot.state === 'accepts_all' || selectedSlot.state === 'temp_block')) {
             this.selectedTime = time;
             selectedSlot.isSelect = true;
         }
     }
     
+
     confirmAppointment() {
         this.appointmentConfirmed.emit();
     }
@@ -279,23 +306,44 @@ export class AppointmentByChoiceComponent {
     }
 
     confirmCode() {
-        const code = this.inputValue; // Получаем введенный код
-        const mobile = this.appointmentForm.value.phone; // Получаем номер телефона из формы
-    
+        const code = this.inputValue;
+        const mobile = this.appointmentForm.value.phone.replace('+7', '');
+
         this.appointmentService.confirmAppointment(code, mobile).subscribe({
             next: () => {
-                // Установите переменную в true для отображения сообщения
                 this.showSuccessMessage = true;
-                // Скрыть сообщение через 3 секунды
+                this.showErrorMessage = false;
                 setTimeout(() => {
                     this.showSuccessMessage = false;
                 }, 3000);
             },
             error: (err) => {
                 console.error('Ошибка при подтверждении записи:', err);
+                this.showErrorMessage = true;
+                this.showSuccessMessage = false;
             }
         });
     }
-    
-        
+
+    addPlusSeven(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input.value === '') {
+            input.value = '+7';
+        }
+    }
+
+    formatPhoneNumber(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input.value === '+7') {
+            input.value = '';
+        } else if (!input.value.startsWith('+7')) {
+            input.value = '+7' + input.value;
+        }
+        // Удаляем все символы, кроме цифр и +
+        input.value = input.value.replace(/[^0-9+]/g, '');
+        // Ограничиваем длину до 12 символов (включая +7)
+        if (input.value.length > 12) {
+            input.value = input.value.slice(0, 12);
+        }
+    }
 }

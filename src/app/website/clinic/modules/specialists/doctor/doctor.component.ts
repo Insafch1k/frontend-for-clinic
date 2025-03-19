@@ -38,6 +38,8 @@ export class DoctorComponent implements OnInit {
   isSend: boolean = false;
   confirmationCode: string = '';
   inputValue: string = '';
+  showErrorMessage: boolean = false;
+  showSuccessMessage: boolean = false;
 
   constructor(
     private readonly doctorServ: DoctorService,
@@ -48,7 +50,7 @@ export class DoctorComponent implements OnInit {
       serviceName: ['', Validators.required],
       surname: ['', Validators.required],
       name: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
+      phone: ['', [Validators.required, this.phoneValidator]],
       consent: [false, Validators.requiredTrue]
     });
   }
@@ -201,23 +203,31 @@ export class DoctorComponent implements OnInit {
     ).join('');
   }
 
-  formatPhoneNumber(phoneNumber: string): string {
-    // Удаляем все нецифровые символы
-    const cleaned = phoneNumber.replace(/\D/g, '');
-
-    // Проверяем, что номер имеет правильную длину (11 символов для российского номера без '+')
-    if (cleaned.length === 11) {
-      const countryCode = '+7';
-      const areaCode = cleaned.substring(1, 4);
-      const firstPart = cleaned.substring(4, 7);
-      const secondPart = cleaned.substring(7, 9);
-      const thirdPart = cleaned.substring(9, 11);
-
-      return `${countryCode} (${areaCode})-${firstPart}-${secondPart}-${thirdPart}`;
+  addPlusSeven(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.value === '') {
+      input.value = '+7';
     }
+  }
 
-    // Если номер не соответствует ожидаемому формату, возвращаем его без изменений
-    return phoneNumber;
+  formatPhoneNumber(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.value === '+7') {
+      input.value = '';
+    } else if (!input.value.startsWith('+7')) {
+      input.value = '+7' + input.value;
+    }
+    // Удаляем все символы, кроме цифр и +
+    input.value = input.value.replace(/[^0-9+]/g, '');
+    // Ограничиваем длину до 12 символов (включая +7)
+    if (input.value.length > 12) {
+      input.value = input.value.slice(0, 12);
+    }
+  }
+
+  phoneValidator(control: any) {
+    const phonePattern = /^\+7[0-9]{10}$/;
+    return phonePattern.test(control.value) ? null : { invalidPhone: true };
   }
 
   onSubmit() {
@@ -235,7 +245,7 @@ export class DoctorComponent implements OnInit {
 
     const appointmentData = {
       fio: `${this.appointmentForm.value.surname} ${this.appointmentForm.value.name}`,
-      mobile: this.appointmentForm.value.phone,
+      mobile: this.appointmentForm.value.phone.replace('+7', ''),
       day_id: selectedDateInfo.day_id.toString(), // Преобразуем day_id в строку
       time: this.selectedDate?.split(' ')[1],
     };
@@ -244,9 +254,13 @@ export class DoctorComponent implements OnInit {
       (response) => {
         console.log('Запись успешно создана:', response);
         this.isSend = true;
+        this.showSuccessMessage = true;
+        this.showErrorMessage = false;
       },
       (error) => {
         console.error('Ошибка при создании записи:', error);
+        this.showErrorMessage = true;
+        this.showSuccessMessage = false;
       }
     );
   }
@@ -259,17 +273,21 @@ export class DoctorComponent implements OnInit {
 
     const confirmationData = {
       code: this.confirmationCode,
-      mobile: this.appointmentForm.value.phone,
+      mobile: this.appointmentForm.value.phone.replace('+7', ''),
     };
 
     this.doctorServ.confirmAppointment(confirmationData.code, confirmationData.mobile).subscribe(
       (response) => {
         console.log('Запись успешно подтверждена:', response);
         this.isConfirmationSuccessful = true; // Устанавливаем флаг в true при успешном подтверждении
+        this.showSuccessMessage = true;
+        this.showErrorMessage = false;
       },
       (error) => {
         console.error('Ошибка при подтверждении записи:', error);
         this.isConfirmationSuccessful = false; // Сбрасываем флаг в случае ошибки
+        this.showErrorMessage = true;
+        this.showSuccessMessage = false;
       }
     );
   }

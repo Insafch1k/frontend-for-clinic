@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { API_URL } from '../../core/constants/constant';
 
 @Injectable({
@@ -36,7 +36,12 @@ export class AppointmentService {
 
   // Создание записи
   createAppointment(appointmentData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/appointments`, appointmentData);
+    return this.http.post<any>(`${this.apiUrl}/appointments`, appointmentData).pipe(
+      catchError((error) => {
+        console.error('Ошибка при создании записи:', error);
+        return throwError(error);
+      })
+    );
   }
 
   // Подтверждение записи

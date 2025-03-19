@@ -27,7 +27,7 @@
 
                 <div class="time">
                     <div class="date-scroll">
-                        <button *ngIf="doctorData.available_times.length > 7" (click)="scrollDates('left')" class="scroll-button left">
+                        <button *ngIf="doctorData.available_times.length > 3" (click)="scrollDates('left')" class="scroll-button left">
                             <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M4.8703 7.93594C4.93749 7.93594 5.00625 7.90937 5.05781 7.85781C5.16094 7.75469 5.16094 7.58594 5.05781 7.48281L1.52813 3.95312L5.00625 0.474998C5.10938 0.371873 5.10938 0.203124 5.00625 0.0999985C4.90313 -0.00312662 4.73438 -0.00312662 4.63125 0.0999985L0.964062 3.76562C0.860937 3.86875 0.860937 4.0375 0.964062 4.14062L4.68125 7.85781C4.73437 7.91094 4.80155 7.93594 4.8703 7.93594Z" fill="#0081EC" />
                             </svg>
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button *ngIf="doctorData.available_times.length > 7" (click)="scrollDates('right')" class="scroll-button right">
+                        <button *ngIf="doctorData.available_times.length > 3" (click)="scrollDates('right')" class="scroll-button right">
                             <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.1297 7.93594C1.06251 7.93594 1.00625 7.90937 0.954688 7.85781C0.851563 7.75469 0.851563 7.58594 0.954688 7.48281L4.48437 3.95312L0.954688 0.474998C0.851563 0.371873 0.851563 0.203124 0.954688 0.0999985C1.05781 -0.00312662 1.22656 -0.00312662 1.32969 0.0999985L5.00625 3.76562C5.10938 3.86875 5.10938 4.0375 5.00625 4.14062L1.32969 7.85781C1.27656 7.91094 1.20938 7.93594 1.1297 7.93594Z" fill="#0081EC" />
                             </svg>
@@ -152,7 +152,14 @@
               </div>
             </div>
             <div class="number-phone">
-              <input id="phone" formControlName="phone" required placeholder="Введите номер телефона" />
+              <input
+                id="phone"
+                formControlName="phone"
+                required
+                placeholder="Введите номер телефона"
+                (focus)="addPlusSeven($event)"
+                (input)="formatPhoneNumber($event)"
+              />
               <div class="error" *ngIf="appointmentForm.get('phone')?.invalid && appointmentForm.get('phone')?.touched">
                 <small>Введите корректный номер телефона.</small>
               </div>
@@ -171,6 +178,9 @@
         <div class="buttons-for">
           <div class="btn-wrapper">
             <button type="submit" [disabled]="appointmentForm.invalid">Отправить</button>
+          </div>
+          <div *ngIf="showErrorMessage" class="error-message">
+            Произошла ошибка при отправке данных. Пожалуйста, попробуйте позже.
           </div>
           <div *ngIf="isSend">
             <div class="push-wrap">
@@ -195,7 +205,10 @@
             </div>
               <div class="success-message" *ngIf="isConfirmationSuccessful">
                 Запись успешно подтверждена!
-              </div>
+              </div>  
+              <div *ngIf="showErrorMessage" class="error-message">
+                  Код подтверждения неверен. Пожалуйста, попробуйте еще раз.
+              </div>   
               <button type="button" class="podverdit" (click)="confirmAppointment()">Подтвердить</button>
             </div>
           </div>

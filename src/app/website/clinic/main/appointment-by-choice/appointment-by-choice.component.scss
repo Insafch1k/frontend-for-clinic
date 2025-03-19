@@ -85,7 +85,7 @@
         border-bottom: 1px solid black;
         padding: 5px 0px;
         select {
-            width: 250px;
+            width: 350px;
             border: none;
             appearance: none;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144"><path fill="black" d="M72 108l48-48H24z"/></svg>')
@@ -539,5 +539,10 @@ button {
 .success-message{
     text-align: center;
     color: #00ff40;
+    font-weight: 400;
+}
+.error-message{
+    text-align: center;
+    color: #ff0000;
     font-weight: 400;
 }

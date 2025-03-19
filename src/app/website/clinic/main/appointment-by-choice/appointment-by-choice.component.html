@@ -91,11 +91,11 @@
                         </div>
                     </div>
                     <div class="number-phone">
-                        <input id="phone" formControlName="phone" required placeholder="Введите номер телефона" />
+                        <input id="phone" formControlName="phone" required placeholder="Введите номер телефона" (focus)="addPlusSeven($event)" (input)="formatPhoneNumber($event)" />
                         <div *ngIf="appointmentForm.get('phone')?.invalid && appointmentForm.get('phone')?.touched" class="error">
                             <small>Введите корректный номер телефона.</small>
                         </div>
-                    </div>
+                    </div>           
                     <div class="address">
                         <p class="adr">Адрес</p>
                         <p class="adr-data">г.Набережные Челны, ул.Ахметшина, д.116</p>
@@ -116,6 +116,9 @@
                 </div>
                 <div class="btn-wrapper">
                     <button type="submit" [disabled]="!appointmentForm.valid">Отправить</button>
+                </div>
+                <div *ngIf="showErrorMessage" class="error-message">
+                    Произошла ошибка при отправке данных. Пожалуйста, попробуйте позже.
                 </div>
                 <div *ngIf="isSend">
                     <div class="push-wrap">
@@ -140,7 +143,10 @@
                         </div>
                         <div *ngIf="showSuccessMessage" class="success-message">
                             Запись успешно подтверждена!
-                        </div>          
+                        </div>      
+                        <div *ngIf="showErrorMessage" class="error-message">
+                            Код подтверждения неверен. Пожалуйста, попробуйте еще раз.
+                        </div>    
                         <p class="repeate">Отправить повторно через 5 мин.</p>
                         <button type="button" class="podverdit" (click)="confirmCode()">Подтвердить</button>           
                     </div>
