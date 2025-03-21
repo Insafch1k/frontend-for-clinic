@@ -37,7 +37,7 @@
                         width: 99%;
                         object-fit: cover;
                     }
-                    
+
                 }
                 & .person-info {
                     border: 1px solid #7eb3c1;
@@ -77,6 +77,13 @@
                     img {
                         height: 98%; // Ensure the image fits within the new height
                         width:95%;
+                    }
+                }
+                @media (max-width: 345px) {
+                    height: 185px; // Adjust the height as needed
+                    img {
+                        height: 90%; // Ensure the image fits within the new height
+                        width:80%;
                     }
                 }
             }

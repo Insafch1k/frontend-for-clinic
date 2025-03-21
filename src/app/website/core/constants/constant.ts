@@ -1,1 +1,1 @@
-export const API_URL = 'https://clinika03.ru/api';
+export const API_URL = 'https://rich-parks-start.loca.lt';

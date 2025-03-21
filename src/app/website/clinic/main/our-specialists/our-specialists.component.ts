@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild, OnInit } from '@angular/core';
 import { DoctorsService } from './doctors.service';
-import { IDoctor,  } from './doctor.interface';
+import { IDoctor } from './doctor.interface';
 import { Router } from '@angular/router';
 
 interface ISpecialist {
@@ -19,11 +19,11 @@ export class OurSpecialistsComponent implements OnInit {
     specialists: ISpecialist[] = [];
     visibleSpecialists: ISpecialist[] = [];
     currentStartIndex = 0;
-    itemsToShow = 6;
+    itemsToShow = 1; // Show one specialist at a time for mobile
 
     @ViewChild('specList') specList!: ElementRef;
 
-    constructor(private doctorsService: DoctorsService,private router: Router) {}
+    constructor(private doctorsService: DoctorsService, private router: Router) {}
 
     ngOnInit() {
         this.fetchDoctors();
@@ -53,8 +53,7 @@ export class OurSpecialistsComponent implements OnInit {
         if (element) {
             const width = element.offsetWidth;
             // Установите значение делителя в зависимости от ширины элемента
-            const divisor = width === 460 ? 180 : 244;
-            this.itemsToShow = Math.floor(width / divisor);
+            this.itemsToShow = width < 480 ? 1 : Math.floor(width / 244);
             this.updateVisibleSpecialists();
         }
     }

@@ -6,7 +6,7 @@
                 <select (change)="onSelectSpecialistFromDropdown($event)">
                     <option
                         *ngFor="let specialist of specialists; let i = index"
-                        [value]="i"
+                        [value]="specialist"
                         [selected]="selectedSpecialist === specialist"
                     >
                         {{ specialist }}

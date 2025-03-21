@@ -1,4 +1,4 @@
-<div class="specialists">
+<div class="specialists" (swipeleft)="next()" (swiperight)="prev()">
     <div (click)="prev()" class="arrow">
         <img src="assets/data/icon/other/arrow-left.svg" alt="Previous" />
     </div>
@@ -14,6 +14,7 @@
         </li>
     </ul>
     <div (click)="next()" class="arrow">
-        <img src="assets/data/icon/other/arrow-rigth.svg" alt="" />
+        <img src="assets/data/icon/other/arrow-rigth.svg" alt="Next" />
     </div>
 </div>
+
