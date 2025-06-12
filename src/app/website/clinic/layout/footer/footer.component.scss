@@ -100,8 +100,11 @@
         & .location {
             text-decoration: underline;
         }
-        & .text-grey {
-            color: #6f6f6f;
+        & .no-underline {
+            text-decoration: none;
+            .text-grey {
+                color: #6f6f6f;
+            }
         }
     }
 }

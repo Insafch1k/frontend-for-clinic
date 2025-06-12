@@ -109,7 +109,12 @@
             <div class="buttons-for">
                 <div class="agreement">
                     <input type="checkbox" formControlName="consent" id="consent" required />
-                    <label for="consent">даю согласие на обработку персональных данных в соответствии с <br /><p>“Политикой конфиденциальности”.</p></label>
+                    <label for="consent">
+                        даю согласие на обработку персональных данных в соответствии с <br />
+                        <a href="assets/data/pdfs/Политика_в_отношении_обработки_персональных_данных.pdf" target="_blank">
+                            <p>“Политикой конфиденциальности”</p>
+                        </a>
+                    </label>
                     <div *ngIf="appointmentForm.get('consent')?.invalid && appointmentForm.get('consent')?.touched" class="error">
                         <small class="error-consent">Вы должны согласиться на обработку данных.</small>
                     </div>

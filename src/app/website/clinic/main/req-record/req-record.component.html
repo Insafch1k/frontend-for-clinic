@@ -13,12 +13,12 @@
                         id="consent"
                         required
                     />
-                    <label for="consent"
-                        >даю согласие на обработку персональных данных в
-                        соответствии с “
-                        <p>Политикой конфиденциальности</p>
-                        ”.</label
-                    >
+                    <label for="consent">
+                        даю согласие на обработку персональных данных в соответствии с
+                        <a href="assets/data/pdfs/Политика_в_отношении_обработки_персональных_данных.pdf" target="_blank">
+                            <p>“Политикой конфиденциальности”</p>
+                        </a>
+                    </label>
                     <div
                         *ngIf="
                             appointmentForm.get('consent')?.invalid &&
